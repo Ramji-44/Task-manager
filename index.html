@@ -4,13 +4,12 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Task Manager</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-
     <link rel="stylesheet" href="style.css" type="text/css" />
-    
+  </head>
+  
   <body>
     <!-- Navigation Menu -->
-    <header class="navbar">
+     <header class="navbar">
       <div class="logo-section">
         <div class="logo-icon">TM</div>
         <div class="logo-text">TaskManager</div>
@@ -20,14 +19,15 @@
         <a href="#" class="active">Dashboard</a>
         <a href="#">Tasks</a>
         <a href="#">Profile</a>
-
+        
         <!-- Menu Lines -->
-        <div class="menu">
+        
+      </nav>
+      <div class="menu">
           <div class="menu-line"></div>
           <div class="menu-line"></div>
           <div class="menu-line"></div>
         </div>
-      </nav>
     </header>
 
     <!-- Title card -->
@@ -35,22 +35,21 @@
       <div class="line"></div>
       <h1>Task Dashboard</h1>
     </div>
-
+    
+    <!-- Entire body -->
     <div class="container1">
+      <!-- Create new task form - side content -->
       <section class="new-task">
         <form action="">
             <h3>📝 Create New Task</h3>
             <input type="text"name="taskname"placeholder="Task Name *"required class="active"/>
             <input type="email"name="email"placeholder="Assignee Email *" required class="active"/>
+            <div class="field">
+              <input type="date" id="dob" name="dateofbirth"  required class="active" />
+              <label for="dob">Due Date*</label>
+            </div>
 
-             
-  
-
-    <div class="field">
-      <input type="date" id="dob" name="dateofbirth"  required class="active" />
-       <label for="dob">Due Date*</label>
-    </div>
-
+    <!-- label floating styling -->
     <div class="field">
       <input type="time" id="time" name="Duetime" required />
        <label for="time">Due Time</label>
@@ -71,181 +70,163 @@
       <label for="hours">Estimated Hours</label>
     </div>
 
+    <input type="url" name="Project Url" placeholder="Project URL" />
+    <textarea name="task description"  cols="30" rows="1" placeholder="Task Description"></textarea>
+
+    <label for="progress" class="taskprogress-label">Task Progress</label>
+    <input type="range" id="progress" name="task progress" min="0" max="100" value="0">
+    <div class="progress-value">0%</div>
+
+    <label for="color" class="taskcolor-label">Task Color</label>
+    <input type="color" id="color" name="color">
+    
+    <div class="task-type">
+      <label for="">Task Type</label><br>
+      <input type="checkbox" name="Bugfix" id="bug" checked>
+      <label for="bug">Bug Fix</label>
+      <input type="checkbox" name="feature" id="feature">
+      <label for="feature">Feature</label><br>
+      <input type="checkbox" name="enhancement" id="enhance">
+      <label for="enhance">Enhancement</label>
+    </div>
+    
+    <div class="status-type">
+      <label for="">Status</label><br>
+      <input type="radio" name="pending" id="pending" checked>
+      <label for="pending">Pending</label>
+      <input type="radio" name="in progress" id="progress">
+      <label for="progress">In Progress</label><br>
+      <input type="radio" name="completed" id="completed">
+      <label for="completed">Completed</label>
+    </div>
+    
+    <div class="file-upload">
+      <input type="file" id="file" name="file" accept=".pdf,.doc,.docx,image/*" multiple>
+      <label for="file">
+        <div class="upload-area">
+          <p><i class="fa-solid fa-paperclip"></i></a> Click to upload attachments</p>
+          <small>Supported: PDF, DOC, Images</small>
+        </div>
+      </label>
+    </div>
+    
+    <!-- task buttons - create and reset -->
+    <div class="task-buttons">
+      <button type="submit" class="create-button">&#10003 Create Task</button>
+      <button type="reset" class="reset-button">&#10006 <br>Reset</button>
+    </div>
+  </form>
+</section>
+
+<!-- active tasks - nav bar -->
+<article class="container2">
+  <nav class="navigationbar">
+    <a href=""><h3>✅ Active Tasks</h3></a>
+    <ul>
+      <li><a href="" id="all">All</a></li>
+      <li><a href="">High</a></li>
+      <li><a href="">Medium</a></li>
+      <li><a href="">Low</a></li>
+    </ul>
+  </nav>
   
-
-
-              <input type="url" name="Project Url" placeholder="Project URL" />
-              
-              <textarea name="task description"  cols="30" rows="1" placeholder="Task Description"></textarea>
-
-             
-              <label for="progress" class="taskprogress-label">Task Progress</label>
-              <input type="range" id="progress" name="task progress" min="0" max="100" value="0">
-              <div class="progress-value">0%</div>
-             
-              
-              <label for="color" class="taskcolor-label">Task Color</label>
-              <input type="color" id="color" name="color">
-             
-              <div class="task-type">
-              <label for="">Task Type</label><br>
-              <input type="checkbox" name="Bugfix" id="bug" checked>
-              <label for="bug">Bug Fix</label>
-
-              <input type="checkbox" name="feature" id="feature">
-              <label for="feature">Feature</label><br>
-
-              <input type="checkbox" name="enhancement" id="enhance">
-              <label for="enhance">Enhancement</label>
-              </div>
-
-              <div class="status-type">
-              <label for="">Status</label><br>
-              <input type="radio" name="pending" id="pending" checked>
-              <label for="pending">Pending</label>
-
-              <input type="radio" name="in progress" id="progress">
-              <label for="progress">In Progress</label><br>
-
-              <input type="radio" name="completed" id="completed">
-              <label for="completed">Completed</label>
-              </div>
-
-              <div class="file-upload">
-                <input type="file" id="file" name="file" accept=".pdf,.doc,.docx,image/*" multiple>
-                <label for="file">
-                  <div class="upload-area">
-                    <p><i class="fa-solid fa-paperclip"></i></a> Click to upload attachments</p>
-                    <small>Supported: PDF, DOC, Images</small>
-                  </div>
-                </label>
-              </div>
-
-
-              <div class="task-buttons">
-                <button type="submit" class="create-button">&#10003 Create Task</button>
-                <button type="reset" class="reset-button">&#10006 <br>Reset</button>
-              </div>
-            </form>
-            </section>
+  <!-- active task content -->
+  <div class="active-task">
+<!--  content tasks 1 -->
+      <div class="content content1">
+        <h3>Design Homepage Mockup</h3>
+        <p class="text">Create wireframes and high-fidelity mockups for the new homepage redesign project with modern UI elements.</p>
+        
+        <p class="date">📅 Due: Oct 20, 2025</p>
+        <p class="name">👤 Sarah Johnson</p>
+        
+        <hr>
+        <div class="priority-status">
+          <span class="high"><span class="dot1"></span> HIGH</span>
+          <span class="inpro"><div class="dot2"></div>In Progress</span>
+        </div>
+      </div>
+      
+<!-- content tasks 2 -->
+       <div class="content content2">
+        <h3>Fix Login Authentication Bug</h3>
+        <p class="text">Resolve the issue where users are logged out unexpectedly after 5 minutes of inactivity.</p>
+       
+        <p class="date">📅 Due: Oct 15, 2025</p>
+        <p class="name">👤 Michael Chen</p>
+        
+        <hr>
+        <div class="priority-status">
+          <span class="high"><div class="dot3"></div>HIGH</span>
+          <span class="pending"><div class="dot4"></div>Pending</span>
+        </div>
+      </div>
+      
+<!-- content tasks 3 -->
+       <div class="content content3">
+        <h3>Update Documentation</h3>
+        <p class="text">Review and update the API documentation with the latest endpoint changes and examples.</p>
+        
+        <p class="date">📅 Due: Oct 25, 2025</p>
+        <p class="name">👤 Emily Rodriguez</p>
+        
+        <hr>
+        <div class="priority-status">
+          <span class="medium"><div class="dot5"></div>MEDIUM</span>
+          <span class="inpro"><div class="dot6"></div>In Progress</span>
+        </div>
+      </div>
+                
+  <!-- content tasks 4 -->
+        <div class="content content4">
+          <h3>Database Performance Optimization</h3>
+          <p class="text">Analyze and optimize slow-running queries to improve overall database performance by 30%.</p>
           
-        
-            <article class="container2">
-              
-              <nav class="navigationbar">
-                <a href=""><h3>✅ Active Tasks</h3></a>
-                <ul>
-                  <li><a href="" id="all">All</a></li>
-                  <li><a href="">High</a></li>
-                  <li><a href="">Medium</a></li>
-                  <li><a href="">Low</a></li>
-                </ul>
-              </nav>
-
-              <div class="active-task">
-                <!--  content tasks 1 -->
-                <div class="content content1">
-                  <h3>Design Homepage Mockup</h3>
-                  <p class="text">Create wireframes and high-fidelity mockups for the new homepage redesign project with modern UI elements.</p>
-                  
-                  
-                  <p class="date">📅 Due: Oct 20, 2025</p>
-                  <p class="name">👤 Sarah Johnson</p>
-                  
-                  <hr>
-                  
-                  <div class="priority-status">
-                  <span class="high"><span class="dot1"></span> HIGH</span>
-                  <span class="inpro"><div class="dot2"></div>In Progress</span>
-                  </div>
-                </div>
-
-                <!-- content tasks 2 -->
-                <div class="content content2">
-                  <h3>Fix Login Authentication Bug</h3>
-                  <p class="text">Resolve the issue where users are logged out unexpectedly after 5 minutes of inactivity.</p>
-
-                  <p class="date">📅 Due: Oct 15, 2025</p>
-                  <p class="name">👤 Michael Chen</p>
-
-                  <hr>
-
-                  <div class="priority-status">
-                    <span class="high"><div class="dot3"></div>HIGH</span>
-                    <span class="pending"><div class="dot4"></div>Pending</span>
-                  </div>
-                </div>
-
-                <!-- content tasks 3 -->
-                <div class="content content3">
-                  <h3>Update Documentation</h3>
-                  <p class="text">Review and update the API documentation with the latest endpoint changes and examples.</p>
-
-                  <p class="date">📅 Due: Oct 25, 2025</p>
-                  <p class="name">👤 Emily Rodriguez</p>
-
-                  <hr>
-
-                  <div class="priority-status">
-                    <span class="medium"><div class="dot5"></div>MEDIUM</span>
-                    <span class="inpro"><div class="dot6"></div>In Progress</span>
-                  </div>
-                </div>
+          <p class="date">📅 Due: Oct 30, 2025</p>
+          <p class="name">👤 David Kim</p>
+          
+          <hr>
+          <div class="priority-status">
+            <span class="medium"><div class="dot7"></div>MEDIUM</span>
+            <span class="pending"><div class="dot8"></div>Pending</span>
+          </div>
+        </div>
+  <!-- content task 5 -->
+     <div class="content content5">
+      <h3>Implement Dark Mode</h3>
+      <p class="text">Add dark mode theme support across the application with user preference persistance.</p>
+      
+      <p class="date">📅 Due: Nov 05, 2025</p>
+      <p class="name">👤 Alex Thompson</p>
+      
+      <hr>
+      <div class="priority-status">
+        <span class="low"><div class="dot9"></div>LOW</span>
+        <span class="pending"><div class="dot10"></div>Pending</span>
+      </div>
+    </div>
                 
+  <!-- content task 6 -->
+   <div class="content content6">
+    <h3>User Testing Session</h3>
+    <p class="text">Conduct user tesing sessions with 10 participants to gather feedback on the new interface.</p>
+    
+    <p class="date">📅 Due: Oct 28, 2025</p>
+    <p class="name">👤 Lisa Anderson</p>
+    
+    <hr>
+    
+    <div class="priority-status">
+      <span class="high"><div class="dot11"></div>HIGH</span>
+      <span class="completed"><div class="dot12"></div>completed</span>
+    </div>
+  </div>
+</div>   <!--active task div-->
+</div>     <!--container1 div-->
+</article>
 
-                <!-- content tasks 4 -->
-                <div class="content content4">
-                  <h3>Database Performance Optimization</h3>
-                  <p class="text">Analyze and optimize slow-running queries to improve overall database performance by 30%.</p>
-
-                  <p class="date">📅 Due: Oct 30, 2025</p>
-                  <p class="name">👤 David Kim</p>
-
-                  <hr>
-
-                  <div class="priority-status">
-                    <span class="medium"><div class="dot7"></div>MEDIUM</span>
-                    <span class="pending"><div class="dot8"></div>Pending</span>
-                  </div>
-                </div>
-
-                <!-- content task 5 -->
-                <div class="content content5">
-                  <h3>Implement Dark Mode</h3>
-                  <p class="text">Add dark mode theme support across the application with user preference persistance.</p>
-
-                  <p class="date">📅 Due: Nov 05, 2025</p>
-                  <p class="name">👤 Alex Thompson</p>
-
-                  <hr>
-
-                  <div class="priority-status">
-                    <span class="low"><div class="dot9"></div>LOW</span>
-                    <span class="pending"><div class="dot10"></div>Pending</span>
-                  </div>
-                </div>
-                
-                <!-- content task 6 -->
-                <div class="content content6">
-                  <h3>User Testing Session</h3>
-                  <p class="text">Conduct user tesing sessions with 10 participants to gather feedback on the new interface.</p>
-
-                  <p class="date">📅 Due: Oct 28, 2025</p>
-                  <p class="name">👤 Lisa Anderson</p>
-
-                  <hr>
-
-                  <div class="priority-status">
-                    <span class="high"><div class="dot11"></div>HIGH</span>
-                    <span class="completed"><div class="dot12"></div>completed</span>
-                  </div>
-                </div>
-
-                </div>   <!--active task div-->
-              </div>     <!--container1 div-->
-            </article>
-        
-  <footer>
+<!-- footer contents -->
+ <footer>
   <div class="footer-container">
     <div class="footer-section1">
       <h4>TaskManager</h4>
@@ -283,13 +264,14 @@
     </div>
     </div>
     <hr>
+    <!-- copyrights footer -->
     <div class="footer-bottom">
     <p>© 2025 TaskManager. All rights reserved. Built with <span class="heart">❤️</span> for productivity.</p>
     </div>
   
 </footer>
 
-  </body>
+</body>
 </html>
 
 <!--  tick code- &#10003 and  x code -&#10006 -->
