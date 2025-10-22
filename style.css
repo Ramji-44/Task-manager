@@ -41,7 +41,7 @@ body {
   background-color: var(--logo);
   font-size: 1.3em;
   font-weight: bolder;
-  border-radius: 8px;
+  border-radius: 6px;
   padding: 0 2px;
 }
 
@@ -72,7 +72,7 @@ body {
   padding: 0.4em 0.5em;
 }
 
-/* Menu  */
+/* Menu - Three lines */
 .menu {
   background-color: var(--gray);
   width: 1.6rem;
@@ -90,62 +90,66 @@ body {
   border-radius: 2px;
 }
 
-/* Responsive - using media queries */
-@media (max-width: 669px) {
-  .nav-links a {
+
+/* Responsive header - using media queries */
+/* Tablet view */
+@media (max-width:900px){
+  .nav-links a{
     display: none;
-  }
-  .navbar{
-    position: sticky;
   }
   .menu {
     display: block;
-    background-color: rgb(230, 230, 230);
-    border: 1px solid #ccc;
+    background-color: rgb(230,230,230);
+    border: 1px solid var(--white);
+    margin-right: 2em;
   }
-
-  .logo-section {
+  .logo-section{
+    display: flex;
+    align-items: center;
     padding-left: 2em;
   }
+  .navbar{
+    top: 0;
+    z-index: 1000;
+    width: 100%;
+    height: 8vh;
+    background-color: var(--white);
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+  }
 }
 
-@media(max-width:378px){
-  .menu{
-    margin-right: -3rem;
+@media (max-width: 430px) {
+  .navbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between; /* logo left, menu right */
+    z-index: 1000;
+    position: fixed;
+    top: 0;
+    width: 100%;
+    height: 60px;
+    background-color: white;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
   }
-  
-  .logo-text{
-    font-size: 1.2rem;
-  }
-}
-@media(max-width:434px){
-  .menu{
-    margin-left: 2rem;
-  }
-  .logo-text{
+  .logo-text {
     font-size: 1rem;
   }
-  .logo-icon{
-    font-size: .7rem;
-    width: 2rem;
-    height: 1.2rem;
-    border-radius: 4px;
-    padding: 4px 8px;
-  }
-  .title h1{
-    font-size: 1.7rem;
+  .logo-section{
+    margin-left: 2em;
   }
 }
+
+
 /* Title card */
 .title {
   display: flex;
   align-items: center;
-  margin-top: 1em;
-  padding: 2em 0 0 3.5em;
+  margin-top: 2em;
+  margin-bottom: 1rem;
+  padding-left: 3em;
+  /* border: 1px solid red; */
 }
-.title h1 {
-  margin-left: 0.3em;
-}
+
 .title div {
   width: 3px;
   height: 1.9rem;
@@ -153,6 +157,8 @@ body {
   border-radius: 10px;
   background-color: var(--logo);
 }
+
+
 /* Create task and active tasks */
 
 
@@ -192,11 +198,14 @@ body {
 /* floating label use */
 .field{
   position: relative;
+  width: 100%;
+  padding-right:2em;
 }
-.field input,select{
-  width: 91%;
+.field input,
+.field select{
+  width: 100%;
   background:transparent;
-  outline: none;
+  box-sizing: border-box;
 }
 .field label{
   padding: 0 2px;
@@ -378,7 +387,6 @@ form .active{
   border-radius: 20px;
   font-size: 1.1em;
   padding: .5em 1em;
-  margin: .3em;
 }
 .navigationbar #all{
   color: var(--white);
@@ -396,6 +404,9 @@ form .active{
   color: #000;
   padding: 1.5em;
   border-radius: 10px;
+}
+.content:hover{
+  transform: translateY(-10px);
 }
 .content h3{
   font-size: 1.2em;
@@ -652,7 +663,6 @@ form .active{
 .footer-container li{
   list-style-type: none;
   margin-bottom: 1em;
-  text-align: justify;
 }
 .footer-container li a,p{
   text-decoration: none;
@@ -665,3 +675,109 @@ form .active{
   align-items: center;
   background-color: var(--white);
 }
+
+
+/* -------- Responsive Layout ---------- */
+
+/*  Tablet View (max-width: 900px) */
+@media (max-width: 900px) {
+  .container1 {
+    display: grid;
+    grid-template-columns: 1fr; 
+    justify-items: center; 
+    align-items: center; 
+    width: 100%;
+    gap: 2em;
+    padding: 1em 2em;
+    max-width: 800px;
+    margin: 0 auto; /* centers the container itself */
+  }
+
+  .active-task {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .new-task, .create-task {
+    width: 100%;
+    max-width: 600px; 
+  }
+}
+
+
+/*  Mobile view  */
+@media (max-width: 600px) {
+  body {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    overflow-x: hidden;
+  }
+
+  header{
+    width: 100%;
+    margin: 0 auto;
+    padding: 1em;
+    text-align: center;
+    box-sizing: border-box;
+  }
+  .container1 {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    max-width: 100%;
+    padding: 0 1em;
+    margin: 0 auto;
+    box-sizing: border-box;
+    margin-top: 0;
+  }
+  .new-task,
+  .active-task {
+    width: 100%;
+    max-width: 400px; /* max width for mobile phones. */
+    margin: 0 auto;
+  }
+  .navigationbar li a{
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    margin-top: 1em;
+  }
+  .active-task {
+    display: grid;
+    grid-template-columns: 1fr; /* one box per row */
+    gap: .5em;
+  }
+  .footer-container{
+    display:flex;
+    flex-direction: column;
+    justify-content: center;
+    text-align: center;
+  }
+  .footer-container h4{
+    margin-top: 1em;
+  }
+  .footer-bottom p{
+    padding: 1em;
+    text-align: center;
+  }
+}
+
+/* Task manager title fixed. */
+@media (max-width: 430px) {
+  body {
+    padding-top: 70px; 
+  }
+  .title h1{
+    font-size: 1.5rem;
+  }
+  .title {
+    margin-top: 0.5em; 
+    padding-left: 1em;
+  }
+  .logo-icon{
+    margin-left: -2em;
+  }
+}
+
