@@ -668,7 +668,9 @@ form .active{
   align-items: center;
   background-color: var(--white);
 }
-
+.footer-container li a:hover{
+  color: var(--logo);
+}
 
 /* -------- Responsive Layout ---------- */
 
