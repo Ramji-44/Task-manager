@@ -182,13 +182,13 @@ body {
 }
 /* Form inputs and select are styled */
 .new-task input,select{
-  margin: .7em 1.3em;
+  margin: 1em 1.3em;
   padding: .8em;
   border-radius: 6px;
   border: 1px solid var(--bordercolor);
 }
 .new-task label{
-  padding-left: 1em;
+  padding-left: 1.2em;
 }   
 
 /* floating label used */
@@ -209,7 +209,7 @@ body {
   background-color: var(--white);
   pointer-events: none;
   transition: 0.3s ease all;
-  top: 3px;
+  top: 6px;
   left: 28px;
   font-size: 12px;
   color: var(--highlight);
@@ -218,21 +218,29 @@ body {
 /* Text area input */
 .new-task textarea{
   font-size: 1rem;
+  margin: .8em 1.2em auto 1.2em;
   color: var(--gray);
-  margin: 1.2em;
-  padding: 2.7rem 1.3rem;
   border-radius: 6px;
+  padding: .5em;
+  cursor:text;
   border: 1px solid var(--bordercolor);
 }
-
+.new-task textarea::placeholder{
+  font-family: "Arial",sans-serif;
+  padding: 2em 1em;
+}
 /*  Task Progress input */
 .taskprogress-label{
   color: var(--gray);
   font-weight: 600;
+  margin-top: 2em;
+  margin-bottom: .3em;
 }
 .new-task input[type="range"]{
+  margin: 0 1.2em;
   padding: 0;
   accent-color: rgb(81, 81, 247);
+  cursor: pointer;
 }
 
 .progress-value{
@@ -240,17 +248,17 @@ body {
   font-weight: bolder;
   text-align: center;
 } 
-
-
 /* Task color input */
 .new-task input[type="color"]{
   width: auto;
   height: 2rem;
   padding: 0 2px;
+  cursor: pointer;
 }
 .taskcolor-label{
   color: var(--gray);
   font-weight: 600;
+  margin-top: 1.5em;
 }
 /* Task Type input */
 .task-type{
@@ -263,8 +271,11 @@ body {
   margin-right: -1em;
   vertical-align: middle;
   accent-color: var(--highlight);
+  margin-left: 1.6em;
 }
-
+.task-type label{
+  cursor: pointer;
+}
 /* status input */
 .status-type{
   margin-top: 1.3rem;
@@ -277,7 +288,9 @@ body {
   vertical-align: middle;
   accent-color: var(--highlight);
 }
-
+.status-type label{
+  cursor: pointer;
+}
 /* file upload input */
 .file-upload {
   width: 100%;
@@ -320,6 +333,7 @@ body {
   border: 1px solid var(--highlight);
   border-radius: 8px;
   font-weight: 600;
+  cursor: pointer;
 }
 .task-buttons .reset-button{
   color: #000;
@@ -328,6 +342,7 @@ body {
   border: 1px solid rgb(231,231,231);
   border-radius: 8px;
   font-weight: 600;
+  cursor: pointer;
 }
 /* Red Color border for certain input fields */
 form .active{
@@ -690,6 +705,12 @@ footer hr {
     max-width: 800px;
     margin: 0 auto; 
   }
+  .task-type br{
+    display: none;
+  }
+  .status-type br{
+    display: none;
+  }
   /* Two columns displaying in active tasks */
   .active-task {
     grid-template-columns: repeat(2, 1fr);
@@ -702,7 +723,7 @@ footer hr {
 } 
 
 /*Midsize-Tablets for the screen size (501px to 700px)*/
-@media (min-width: 501px) and (max-width: 750px) {
+@media (min-width: 501px) and (max-width: 899px) {
     .container1 {
     display: flex;
     flex-direction: column;  
@@ -713,6 +734,12 @@ footer hr {
     margin: 0 auto;
     padding: 1.5em;
     box-sizing: border-box;
+  }
+  .task-type br{
+    display: none;
+  }
+  .status-type br{
+    display: none;
   }
    .navigationbar ul{
     display: flex;
@@ -856,7 +883,7 @@ footer hr {
   .active-task {
     display: grid;
     grid-template-columns: 1fr; /* one box per row */
-    gap: .5em;
+    gap: 1em;
   }
   /* Footer Section */
   .footer-container{

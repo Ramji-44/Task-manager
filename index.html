@@ -40,7 +40,7 @@
     <div class="container1">
       <!-- Create new task form - side content -->
       <section class="new-task">
-        <form action="submit-task" method="post">
+        <form action="#" method="post">
             <h3>📝 Create New Task</h3>
             <input type="text"name="taskname"placeholder="Task Name *"required class="active"/>
             <input type="email"name="email"placeholder="Assignee Email *" required class="active"/>
@@ -51,7 +51,7 @@
 
     <!-- label floating styling -->
     <div class="field">
-      <input type="time" id="time" name="Duetime" required />
+      <input type="time" id="time" name="Duetime"/>
        <label for="time">Due Time</label>
     </div>
 
@@ -71,7 +71,8 @@
     </div>
 
     <input type="url" name="Project Url" placeholder="Project URL" />
-    <textarea name="task description"  cols="30" rows="1" placeholder="Task Description"></textarea>
+
+    <textarea name="task description"  cols="30" rows="5" placeholder="Task Description" id="descrip"></textarea>
 
     <label for="progress" class="taskprogress-label">Task Progress</label>
     <input type="range" id="progress" name="task progress" min="0" max="100" value="0" class="track">
@@ -85,18 +86,18 @@
       <input type="checkbox" name="Bugfix" id="bug" checked>
       <label for="bug">Bug Fix</label>
       <input type="checkbox" name="feature" id="feature">
-      <label for="feature">Feature</label><br>
+      <label for="feature">Feature</label> <br>
       <input type="checkbox" name="enhancement" id="enhance">
       <label for="enhance">Enhancement</label>
     </div>
     
     <div class="status-type">
       <label for="">Status</label><br>
-      <input type="radio" name="pending" id="pending" checked>
+      <input type="radio" name="status" id="pending" checked>
       <label for="pending">Pending</label>
-      <input type="radio" name="in progress" id="progress">
-      <label for="progress">In Progress</label><br>
-      <input type="radio" name="completed" id="completed">
+      <input type="radio" name="status" id="progress2">
+      <label for="progress2">In Progress</label><br>
+      <input type="radio" name="status" id="completed">
       <label for="completed">Completed</label>
     </div>
     
@@ -104,7 +105,7 @@
       <input type="file" id="file" name="file" accept=".pdf,.doc,.docx,image/*" multiple>
       <label for="file">
         <div class="upload-area">
-          <p><i class="fa-solid fa-paperclip"></i></a> Click to upload attachments</p>
+          <p>🔗Click to upload attachments</p>
           <small>Supported: PDF, DOC, Images</small>
         </div>
       </label>
@@ -137,8 +138,8 @@
         <h3>Design Homepage Mockup</h3>
         <p class="text">Create wireframes and high-fidelity mockups for the new homepage redesign project with modern UI elements.</p>
         
-        <p class="date"><span class="calender-icon"><img src="/assets/calender-img.png" alt="calender-image"></span> Due: Oct 20, 2025</p>
-        <p class="name"><span class="user-icon"><img src="/assets/person-img.jpg" alt="user-image"></span> Sarah Johnson</p>
+        <p class="date"><span class="calender-icon"><img src="calender-img.png" alt="calender-image"></span> Due: Oct 20, 2025</p>
+        <p class="name"><span class="user-icon"><img src="person-img.jpg" alt="user-image"></span> Sarah Johnson</p>
         
         <hr>
         <div class="priority-status">
@@ -152,8 +153,8 @@
         <h3>Fix Login Authentication Bug</h3>
         <p class="text">Resolve the issue where users are logged out unexpectedly after 5 minutes of inactivity.</p>
        
-        <p class="date"><span class="calender-icon"><img src="/assets/calender-img.png" alt="calender-image"></span> Due: Oct 15, 2025</p>
-        <p class="name"><span class="user-icon"><img src="/assets/person-img.jpg" alt="user-image"></span> Michael Chen</p>
+        <p class="date"><span class="calender-icon"><img src="calender-img.png" alt="calender-image"></span> Due: Oct 15, 2025</p>
+        <p class="name"><span class="user-icon"><img src="person-img.jpg" alt="user-image"></span> Michael Chen</p>
         
         <hr>
         <div class="priority-status">
@@ -167,8 +168,8 @@
         <h3>Update Documentation</h3>
         <p class="text">Review and update the API documentation with the latest endpoint changes and examples.</p>
         
-        <p class="date"><span class="calender-icon"><img src="/assets/calender-img.png" alt="calender-image"></span> Due: Oct 25, 2025</p>
-        <p class="name"><span class="user-icon"><img src="/assets/person-img.jpg" alt="user-image"></span> Emily Rodriguez</p>
+        <p class="date"><span class="calender-icon"><img src="calender-img.png" alt="calender-image"></span> Due: Oct 25, 2025</p>
+        <p class="name"><span class="user-icon"><img src="person-img.jpg" alt="user-image"></span> Emily Rodriguez</p>
         
         <hr>
         <div class="priority-status">
@@ -182,8 +183,8 @@
           <h3>Database Performance Optimization</h3>
           <p class="text">Analyze and optimize slow-running queries to improve overall database performance by 30%.</p>
           
-          <p class="date"><span class="calender-icon"><img src="/assets/calender-img.png" alt="calender-image"></span> Due: Oct 30, 2025</p>
-          <p class="name"><span class="user-icon"><img src="/assets/person-img.jpg" alt="user-image"></span> David Kim</p>
+          <p class="date"><span class="calender-icon"><img src="calender-img.png" alt="calender-image"></span> Due: Oct 30, 2025</p>
+          <p class="name"><span class="user-icon"><img src="person-img.jpg" alt="user-image"></span> David Kim</p>
           
           <hr>
           <div class="priority-status">
@@ -196,8 +197,8 @@
       <h3>Implement Dark Mode</h3>
       <p class="text">Add dark mode theme support across the application with user preference persistance.</p>
       
-      <p class="date"><span class="calender-icon"><img src="/assets/calender-img.png" alt="calender-image"></span> Due: Nov 05, 2025</p>
-      <p class="name"><span class="user-icon"><img src="/assets/person-img.jpg" alt="user-image"></span> Alex Thompson</p>
+      <p class="date"><span class="calender-icon"><img src="calender-img.png" alt="calender-image"></span> Due: Nov 05, 2025</p>
+      <p class="name"><span class="user-icon"><img src="person-img.jpg" alt="user-image"></span> Alex Thompson</p>
       
       <hr>
       <div class="priority-status">
@@ -211,8 +212,8 @@
     <h3>User Testing Session</h3>
     <p class="text">Conduct user tesing sessions with 10 participants to gather feedback on the new interface.</p>
     
-    <p class="date"><span class="calender-icon"><img src="/assets/calender-img.png" alt="calender-image"></span> Due: Oct 28, 2025</p>
-    <p class="name"><span class="user-icon"><img src="/assets/person-img.jpg" alt="user-image"></span> Lisa Anderson</p>
+    <p class="date"><span class="calender-icon"><img src="calender-img.png" alt="calender-image"></span> Due: Oct 28, 2025</p>
+    <p class="name"><span class="user-icon"><img src="person-img.jpg" alt="user-image"></span> Lisa Anderson</p>
     
     <hr>
     
