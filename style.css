@@ -671,7 +671,10 @@ form .active{
 .footer-container li a:hover{
   color: var(--logo);
 }
-
+footer hr {
+  width: 80%; /* reduces  line length */
+  margin: 0.5em auto;
+}
 /* -------- Responsive Layout ---------- */
 
  /* Tablet View (max-width: 900px)*/
