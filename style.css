@@ -709,11 +709,16 @@ form .active{
     padding: 1.5em;
     box-sizing: border-box;
   }
+   .navigationbar ul{
+    display: flex;
+    align-items: center;
+    width: 100%;
+    justify-content: space-around;
+  }
   .navigationbar li a{
     display: flex;
-    flex-wrap: wrap;
-    align-items: center;
     margin-top: 1em;
+    padding: .4em 1em;
   }
   .active-task {
     display: grid;
@@ -813,6 +818,9 @@ form .active{
     box-sizing: border-box;
     margin-top: 0;
   }
+  .title{
+    margin-bottom: 2.5em;
+  }
   .new-task,
   .active-task {
     width: 100%;
@@ -827,12 +835,18 @@ form .active{
     padding:  1em 2.5em;
   }
   /* Active tasks section */
-  .navigationbar li a{
+   .navigationbar ul{
     display: flex;
     align-items: center;
-    gap: 5px;
-    margin-top: 1em;
+    width: 100%;
+    justify-content: space-between;
   }
+  .navigationbar li a{
+    display: flex;
+    margin-top: 1em;
+    padding: .4em .6em;
+  }
+
   .active-task {
     display: grid;
     grid-template-columns: 1fr; /* one box per row */
@@ -857,7 +871,7 @@ form .active{
 /* Task manager title  */
 @media (max-width: 430px) {
   body {
-    padding-top: 70px; 
+    padding-top: 90px; 
   }
   .title h1{
     font-size: 1.5rem;
