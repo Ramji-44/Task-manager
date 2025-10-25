@@ -1,6 +1,6 @@
 :root {
   --white: #fff;
-  --logo: rgb(118, 49, 247);
+  --logo: rgb(133, 76, 238);
   --gray: rgb(139, 139, 139);
   --highlight: rgba(81, 81, 247, 0.87);
   --bordercolor:rgb(221, 221, 221);
@@ -63,19 +63,24 @@ body {
   font-size: 1.1em;
   text-decoration: none;
   color: var(--gray);
-  padding: 0.2em 1.4em;
+  padding: 0.3em 1.4em;
+}
+.nav-links a:hover{
+  color: var(--highlight);
+  background-color: rgb(238, 235, 235);
+  border-radius: 6px;
 }
 
 .nav-links .active {
   color: var(--highlight);
   background-color: rgb(238, 235, 235);
   border-radius: 6px;
-  padding: 0.4em 0.5em;
+  padding: 0.3em 0.5em;
 }
 
 /* Menu - Three lines */
 .menu {
-  background-color: var(--gray);
+  background-color: rgb(235, 235, 235);
   width: 1.6rem;
   padding: 4px 4px;
   border-radius: 4px;
@@ -91,62 +96,13 @@ body {
   border-radius: 2px;
 }
 
-
-/* Responsive header - using media queries */
-/* Tablet view */
-@media (max-width:900px){
-  .nav-links a{
-    display: none;
-  }
-  .menu {
-    display: block;
-    background-color: rgb(230,230,230);
-    border: 1px solid var(--white);
-    margin-right: 2em;
-  }
-  .logo-section{
-    display: flex;
-    align-items: center;
-    padding-left: 2em;
-  }
-  .navbar{
-    top: 0;
-    z-index: 1000;
-    width: 100%;
-    height: 8vh;
-    background-color: var(--white);
-    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-  }
-}
-
-@media (max-width: 430px) {
-  .navbar {
-    display: flex;
-    align-items: center;
-    justify-content: space-between; /* logo left, menu right */
-    z-index: 1000;
-    position: fixed;
-    top: 0;
-    width: 100%;
-    height: 60px;
-    background-color: white;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-  }
-  .logo-text {
-    font-size: 1rem;
-  }
-  .logo-section{
-    margin-left: 2em;
-  }
-}
-
 /* Task Manager Title  */
 .title {
   display: flex;
   align-items: center;
   margin-top: 2em;
   margin-bottom: 1rem;
-  padding-left: 3em;
+  margin-left: 3.4em;
 }
 
 .title div {
@@ -163,7 +119,7 @@ body {
   padding: 2em 3.8em 0 4em;
   gap: 2em;
   display: grid;
-  grid-template-columns: .6fr 2fr;
+  grid-template-columns: .6fr 1fr;
 }
 /* New Task Form */
 .new-task h3{
@@ -175,7 +131,7 @@ body {
   flex-direction: column;
   background-color: var(--white);
   border-radius: 8px;
-  font-family: "Arial";
+  font-family: "Arial",sans-serif;
   box-shadow: 
     0px 0px 2px rgba(0,0,0,0.2),  /* top shadow */
     0 5px 10px rgba(0,0,0,0.2);  
@@ -214,6 +170,7 @@ body {
   font-size: 12px;
   color: var(--highlight);
 }
+/* priority level input */
 
 /* Text area input */
 .new-task textarea{
@@ -269,9 +226,9 @@ body {
   width: 20px;
   height: 20px;
   margin-right: -1em;
+  margin-left: 1.6em;
   vertical-align: middle;
   accent-color: var(--highlight);
-  margin-left: 1.6em;
 }
 .task-type label{
   cursor: pointer;
@@ -285,6 +242,7 @@ body {
   width: 20px;
   height: 20px;
   margin-right: -1em;
+  margin-left: 1.6em;
   vertical-align: middle;
   accent-color: var(--highlight);
 }
@@ -381,6 +339,10 @@ form .active{
   font-size: 1.1em;
   padding: .5em 1em;
 }
+.navigationbar li a:hover{
+   color: var(--white);
+  background-color: var(--highlight);
+}
 .navigationbar #all{
   color: var(--white);
   background-color: var(--highlight);
@@ -398,7 +360,6 @@ form .active{
   padding: 1.5em;
   border-radius: 10px;
   transition: 0.2s ease-in-out;
-  box-shadow: 3px 3px 3px var(--bordercolor);
 }
 /* hover effects */
 .content:hover{
@@ -690,40 +651,68 @@ footer hr {
   width: 80%; /* reduces  line length */
   margin: 0.5em auto;
 }
+
 /* -------- Responsive Layout ---------- */
 
- /* Tablet View (max-width: 900px)*/
-@media (max-width: 900px){
-  .container1 {
-    display: grid;
-    grid-template-columns: 1fr; 
-    justify-items: center; 
-    align-items: center; 
+/*  Tablet views for 501px to 600px  */
+@media (min-width:501px) and (max-width:600px){
+  .navbar{
     width: 100%;
-    gap: 2em;
-    padding: 1em 2em;
-    max-width: 800px;
-    margin: 0 auto; 
+    height: 10vh;
   }
-  .task-type br{
-    display: none;
-  }
-  .status-type br{
-    display: none;
-  }
-  /* Two columns displaying in active tasks */
-  .active-task {
-    grid-template-columns: repeat(2, 1fr);
+    .nav-links{
+      display: none;
+    }
+    .menu{
+      display: block;
+    }
+    .container1{
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-start;
+      gap: 2em;
+      width: 100%;
+      margin: 0 auto;
+      padding: 1.5em;
+    }
+    .new-task{
+      width: 100%;
+    }
+    .active-task{
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 1em;
+    }
+    .title{
+      margin: 0;
+      padding: 0;
+      margin: 3em 1em 2em;
+    }
+    .logo-section{
+      margin: 0;
+      padding: 0;
+      margin-left: 1.5em;
+    }
+    .menu{
+      margin: 0;
+      padding: 4px;
+      margin-right: 2em;
+    }
+    .navigationbar li a{
+      display: flex;
+    }
+    .navigationbar li{
+      margin: 1em .5em;
+    }
   }
 
-  .new-task, .create-task {
-    width: 100%;
-    max-width: 800px; 
-  }
-} 
-
-/*Midsize-Tablets for the screen size (501px to 700px)*/
-@media (min-width: 501px) and (max-width: 899px) {
+/*  Tablet views for 601px to 880px */
+@media (min-width: 601px) and (max-width: 880px) {
+    .navbar{
+      height: 8vh;
+      width: 100%;
+    }
     .container1 {
     display: flex;
     flex-direction: column;  
@@ -752,34 +741,46 @@ footer hr {
     margin-top: 1em;
     padding: .4em 1.3em;
   }
+  .new-task{
+    width: 100%;
+  }
   .active-task {
     display: grid;
     grid-template-columns:  1fr; 
     gap: 1em;
     justify-content: center;
   }
+  .logo-section{
+    margin-left: -2.5em;
+  }
+  .nav-links{
+    padding: 0;
+    margin-right: .4em;
+  }
   .title {
-    margin-top: 2em;
-    margin-bottom: 1.2em;
-    padding-left: 1.5em;
+    margin: 2em auto 2em 1em;
   }
   /* Footer in  2 column grid */
   .footer-container {
+    width: 100%;
     display: grid;
     grid-template-columns: repeat(2, 1fr);
-    gap: 1em;
+    /* gap: 1em; */
     justify-items: center;
     text-align: center;
-    padding: 2em 1.5em;
+    margin-top: 2em;
     width: 100%;
-    max-width: 700px;
-    margin: 0 auto;
     box-sizing: border-box;
   }
 } 
 
-/* large  Tablet  for the screen widths 880 to 1024px */
-@media (min-width: 880px) and (max-width: 1025px) {
+/* large  Tablet  for the screen widths 881 to 1024px */
+@media (min-width: 881px) and (max-width: 1024px) {
+  .navbar{
+    height: 8vh;
+    padding: 0;
+    margin: 0;
+  }
   .container1 {
     display: flex;
     flex-direction: column;    
@@ -792,14 +793,30 @@ footer hr {
     padding: 2em 2.5em 3em 2.5em;
     box-sizing: border-box;
   }
-
+  .title{
+    padding: 0;
+    margin: 0;
+  }
+  .logo-section{
+    padding: 0;
+    margin-left: 2.5em;
+  }
+  .nav-links{
+    padding: 0;
+    margin-right: 1em;
+  }
   /* Create New Task section */
   .new-task {
     width: 100%;
     max-width: 950px;
     margin: 0 auto;
   }
-
+  .task-type br{
+    display: none;
+  }
+  .status-type br{
+    display: none;
+  }
   .new-task form {
     width: 100%;
     padding: 2em;
@@ -814,7 +831,6 @@ footer hr {
     padding: 2em;
     box-sizing: border-box;
   }
-
   .active-task {
     display: grid;
     grid-template-columns: repeat(2, 1fr); /* 2 box per row */
@@ -838,6 +854,37 @@ footer hr {
     width: 100%;
     overflow-x: hidden;
   }
+  .navbar{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: fixed;
+    top: 0;
+    height: 8vh;
+  }
+ .logo-section{
+  padding: 0;
+  margin-left: 1em;
+ }
+ .nav-links{
+  display: none;
+ }
+   .menu {
+    display: block;
+    margin-right: 1em;
+  }
+  .title{
+    margin-top: 6em;
+    margin-bottom: 1.6em;
+    padding:0 1.3em;
+    margin-left: -1em;
+  }
+  .title div{
+    width: 4px;
+  }
+  .title h1{
+    font-size: 1.3em;
+  }
   .container1 {
     display: flex;
     flex-direction: column;
@@ -852,6 +899,12 @@ footer hr {
   }
   .title{
     margin-bottom: 2.5em;
+  }
+  .task-type br{
+    display: block;
+  }
+  .status-type br{
+    display: block;
   }
   .new-task,
   .active-task {
@@ -901,20 +954,4 @@ footer hr {
   }
 }
 
-/* Task manager title  */
-@media (max-width: 430px) {
-  body {
-    padding-top: 90px; 
-  }
-  .title h1{
-    font-size: 1.5rem;
-  }
-  .title {
-    margin-top: 0.5em; 
-    padding-left: 1em;
-  }
-  .logo-icon{
-    margin-left: -2em;
-  }
-}
 

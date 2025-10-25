@@ -15,19 +15,18 @@
         <div class="logo-text">TaskManager</div>
       </div>
 
-      <nav class="nav-links">
-        <a href="#" class="active">Dashboard</a>
-        <a href="#">Tasks</a>
-        <a href="#">Profile</a>
-        
         <!-- Menu Lines -->
-        
-      </nav>
       <div class="menu">
           <div class="menu-line"></div>
           <div class="menu-line"></div>
           <div class="menu-line"></div>
         </div>
+
+        <nav class="nav-links">
+        <a href="#" class="active">Dashboard</a>
+        <a href="#">Tasks</a>
+        <a href="#">Profile</a>
+       </nav>
     </header>
 
     <!-- Title card -->
@@ -40,16 +39,17 @@
     <div class="container1">
       <!-- Create new task form - side content -->
       <section class="new-task">
-        <form action="#" method="post">
+        <form action="">
             <h3>📝 Create New Task</h3>
             <input type="text"name="taskname"placeholder="Task Name *"required class="active"/>
             <input type="email"name="email"placeholder="Assignee Email *" required class="active"/>
+
+          <!---label floating styling --->
             <div class="field">
               <input type="date" id="dob" name="dateofbirth"  required class="active" />
               <label for="dob">Due Date*</label>
             </div>
 
-    <!-- label floating styling -->
     <div class="field">
       <input type="time" id="time" name="Duetime"/>
        <label for="time">Due Time</label>
@@ -57,16 +57,15 @@
 
     <div class="field">
       <label for="priority">Priority Level *</label>
-    <select name="Prioritylevel" id="priority">
+    <select name="Prioritylevel" id="priority" required>
         <option value="Low">Low Priority</option>
         <option value="Medium">Medium Priority</option>
         <option value="High">High Priority</option>
       </select>
-      
     </div>
 
     <div class="field">
-      <input type="number" name="Estimated Hours" id="hours" required value="54" />
+      <input type="number" name="Estimated Hours" id="hours" required value="54" onkeydown="return event.keyCode !== 69 && event.keyCode !== 187 && event.keyCode !== 189" />
       <label for="hours">Estimated Hours</label>
     </div>
 
@@ -96,7 +95,7 @@
       <input type="radio" name="status" id="pending" checked>
       <label for="pending">Pending</label>
       <input type="radio" name="status" id="progress2">
-      <label for="progress2">In Progress</label><br>
+      <label for="progress2">In Progress</label> <br>
       <input type="radio" name="status" id="completed">
       <label for="completed">Completed</label>
     </div>
