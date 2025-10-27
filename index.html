@@ -124,13 +124,20 @@
 <!-- active tasks - nav bar -->
 <article class="container2">
   <nav class="navigationbar">
-    <a href=""><h3>✅ Active Tasks</h3></a>
-    <ul>
-      <li><a href="" id="all">All</a></li>
-      <li><a href="">High</a></li>
-      <li><a href="">Medium</a></li>
-      <li><a href="">Low</a></li>
-    </ul>
+  <a><h3>✅ Active Tasks</h3></a>
+
+  <!-- Hidden radio buttons -->
+  <input type="radio" name="filter" id="all" checked>
+  <input type="radio" name="filter" id="high">
+  <input type="radio" name="filter" id="medium">
+  <input type="radio" name="filter" id="low">
+
+  <div class="nav-buttons">
+    <label for="all" >All</label>
+    <label for="high" >High</label>
+    <label for="medium">Medium</label>
+    <label for="low" >Low</label>
+  </div>
   </nav>
   
   <!-- active task content -->

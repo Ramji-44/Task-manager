@@ -160,6 +160,7 @@ body {
 .field input,
 .field select{
   width: 100%;
+  background-color: var(--white);
   box-sizing: border-box;
 }
 .field label{
@@ -187,7 +188,7 @@ body {
 }
 .new-task textarea::placeholder{
   font-family: "Arial",sans-serif;
-  padding: 2em 1em;
+  padding: 2.2em 0em;
 }
 /*  Task Progress input */
 .taskprogress-label{
@@ -321,34 +322,37 @@ form .active{
     0 5px 10px rgba(0,0,0,0.2);
 }
 /* Navigation Bar on the active tasks content */
-.navigationbar a{
-  text-decoration: none;
-  color: #000;
+
+.navigationbar input[type="radio"] {
+  display: none;
 }
-.navigationbar{
+.navigationbar {
   display: flex;
   flex-wrap: wrap;
   align-items: center;
   justify-content: space-between;
   margin-bottom: 1.2em;
 }
-.navigationbar li{
-  display: inline-block;
+.nav-buttons {
+  display: flex;
+  gap: .5em;
 }
-.navigationbar li a{
+.nav-buttons label {
   border: 1px solid var(--bordercolor);
   background-color: var(--white);
   border-radius: 20px;
   font-size: 1.1em;
-  padding: .5em 1em;
+  padding: .4em 1em;
+  cursor: pointer;
+  transition: 0.2s;
 }
-.navigationbar li a:hover{
-   color: var(--white);
+
+#all:checked ~ .nav-buttons label[for="all"],
+#high:checked ~ .nav-buttons label[for="high"],
+#medium:checked ~ .nav-buttons label[for="medium"],
+#low:checked ~ .nav-buttons label[for="low"] {
   background-color: var(--highlight);
-}
-.navigationbar #all{
   color: var(--white);
-  background-color: var(--highlight);
 }
 /* Active Tasks contents using Grid layout */
 .active-task{
@@ -702,18 +706,26 @@ footer hr {
       padding: 4px;
       margin-right: 2em;
     }
-    .navigationbar li a{
-      display: flex;
+    .navigationbar a{
+      width: 100%;
+      padding: 0;
     }
-    .navigationbar li{
-      margin: 1em .5em;
+    .navigationbar .nav-buttons{
+      width: 100%;
+      margin-top: 1em;
+      display: flex;
+      justify-content: space-between;
+    }
+    .nav-buttons button{
+      font-size: 1.1em;
+      padding: .5em 1.2em;
     }
   }
 
 /*  Tablet views for 601px to 880px */
 @media (min-width: 601px) and (max-width: 880px) {
     .navbar{
-      height: 8vh;
+      height: 10vw;
       width: 100%;
     }
     .container1 {
@@ -732,17 +744,6 @@ footer hr {
   }
   .status-type br{
     display: none;
-  }
-   .navigationbar ul{
-    display: flex;
-    align-items: center;
-    width: 100%;
-    justify-content: space-around;
-  }
-  .navigationbar li a{
-    display: flex;
-    margin-top: 1em;
-    padding: .4em 1.3em;
   }
   .new-task{
     width: 100%;
@@ -782,7 +783,7 @@ footer hr {
 
   .navbar{
     width: 100%;
-    max-height: 10vw;  /* 10% of viewport width */
+    max-height: 8vw;  /* 10% of viewport width */
     padding: 0;
     margin: 0;
   }
@@ -866,6 +867,7 @@ footer hr {
     position: fixed;
     top: 0;
     height: 8vh;
+    z-index: 9999;
   }
  .logo-section{
   padding: 0;
@@ -948,19 +950,13 @@ footer hr {
     padding:  1em 2.5em;
   }
   /* Active tasks section */
-   .navigationbar ul{
-    display: flex;
-    align-items: center;
-    width: 100%;
-    justify-content: space-between;
-  }
-  .navigationbar li a{
-    display: flex;
+  /*  Active tasks container navigationbar */
+  .nav-buttons{
     margin-top: 1em;
-    padding: .4em .8em;
-    gap: 0.2em;
   }
-
+  .nav-buttons label{
+    padding:.3em .8em;
+  }
   .active-task {
     display: grid;
     grid-template-columns: 1fr; /* one box per row */
@@ -981,5 +977,26 @@ footer hr {
     text-align: center;
   }
 }
-
+@media (max-width:350px){
+  .container1{
+    width: 350px;
+  }
+  .container2{
+    max-width: 310px;
+  }
+  .nav-buttons label{
+    padding: .2em .5em;
+  }
+}
+@media (min-width:430px) and (max-width:499px){
+  .new-task{
+    max-width: 430px;
+  }
+  .navigationbar{
+    max-width: 430px;
+  }
+  .container2 ,.active-task{
+    max-width: 430px;
+  }
+} 
 
