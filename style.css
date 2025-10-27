@@ -322,10 +322,6 @@ form .active{
     0 5px 10px rgba(0,0,0,0.2);
 }
 /* Navigation Bar on the active tasks content */
-
-.navigationbar input[type="radio"] {
-  display: none;
-}
 .navigationbar {
   display: flex;
   flex-wrap: wrap;
@@ -337,23 +333,51 @@ form .active{
   display: flex;
   gap: .5em;
 }
+
+/*  hide radios */
+input[type="radio"][name="filter"] {
+  display: none;
+}
+ 
 .nav-buttons label {
-  border: 1px solid var(--bordercolor);
-  background-color: var(--white);
-  border-radius: 20px;
-  font-size: 1.1em;
-  padding: .4em 1em;
   cursor: pointer;
-  transition: 0.2s;
+  border: 1px solid var(--bordercolor);
+  background: var(--white);
+  padding: .4em 1em;
+  border-radius: 20px;
+  font-size: 1.05em;
+  transition: 0.15s ease;
 }
 
-#all:checked ~ .nav-buttons label[for="all"],
-#high:checked ~ .nav-buttons label[for="high"],
-#medium:checked ~ .nav-buttons label[for="medium"],
-#low:checked ~ .nav-buttons label[for="low"] {
+/* highlight the selected label */
+#all:checked ~ .navigationbar .nav-buttons label[for="all"],
+#high:checked ~ .navigationbar .nav-buttons label[for="high"],
+#medium:checked ~ .navigationbar .nav-buttons label[for="medium"],
+#low:checked ~ .navigationbar .nav-buttons label[for="low"] {
   background-color: var(--highlight);
   color: var(--white);
+  border-color: var(--highlight);
 }
+
+/* filtering  hide non-matching cards */
+#high:checked ~ .active-task .content:not(.high),
+#medium:checked ~ .active-task .content:not(.medium),
+#low:checked ~ .active-task .content:not(.low) {
+  display: none;
+}
+
+/* show all  */
+#all:checked ~ .active-task .content {
+  display: block;
+}
+/* blocks*/ 
+.active-task .content {
+  display: block;
+}
+
+
+
+
 /* Active Tasks contents using Grid layout */
 .active-task{
   display: grid;
@@ -951,11 +975,22 @@ footer hr {
   }
   /* Active tasks section */
   /*  Active tasks container navigationbar */
-  .nav-buttons{
+  .nav-buttons {
+    width: 100%;
+    display: flex;        
+    justify-content: space-evenly;   
+    align-items: center;
+    gap: 0.6em;               
     margin-top: 1em;
+
   }
-  .nav-buttons label{
-    padding:.3em .8em;
+  .nav-buttons label {     
+    width: 100%;      
+    text-align: center;        
+    padding: 0.5em 0.98em;
+    font-size: 0.95em;         
+    border-radius: 20px;
+    box-sizing: border-box;  
   }
   .active-task {
     display: grid;

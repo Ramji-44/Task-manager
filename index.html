@@ -123,27 +123,26 @@
 
 <!-- active tasks - nav bar -->
 <article class="container2">
-  <nav class="navigationbar">
-  <a><h3>✅ Active Tasks</h3></a>
-
-  <!-- Hidden radio buttons -->
   <input type="radio" name="filter" id="all" checked>
   <input type="radio" name="filter" id="high">
   <input type="radio" name="filter" id="medium">
   <input type="radio" name="filter" id="low">
 
+  <nav class="navigationbar">
+  <a><h3>✅ Active Tasks</h3></a>
+
   <div class="nav-buttons">
-    <label for="all" >All</label>
-    <label for="high" >High</label>
+    <label for="all">All</label>
+    <label for="high">High</label>
     <label for="medium">Medium</label>
-    <label for="low" >Low</label>
+    <label for="low">Low</label>
   </div>
-  </nav>
-  
+</nav>
+
   <!-- active task content -->
   <div class="active-task">
 <!--  content tasks 1 -->
-      <div class="content content1">
+      <div class="content content1 high">
         <h3>Design Homepage Mockup</h3>
         <p class="text">Create wireframes and high-fidelity mockups for the new homepage redesign project with modern UI elements.</p>
         
@@ -158,7 +157,7 @@
       </div>
       
 <!-- content tasks 2 -->
-       <div class="content content2">
+       <div class="content content2 high">
         <h3>Fix Login Authentication Bug</h3>
         <p class="text">Resolve the issue where users are logged out unexpectedly after 5 minutes of inactivity.</p>
        
@@ -173,7 +172,7 @@
       </div>
       
 <!-- content tasks 3 -->
-       <div class="content content3">
+       <div class="content content3 medium">
         <h3>Update Documentation</h3>
         <p class="text">Review and update the API documentation with the latest endpoint changes and examples.</p>
         
@@ -188,7 +187,7 @@
       </div>
                 
   <!-- content tasks 4 -->
-        <div class="content content4">
+        <div class="content content4 medium">
           <h3>Database Performance Optimization</h3>
           <p class="text">Analyze and optimize slow-running queries to improve overall database performance by 30%.</p>
           
@@ -202,7 +201,7 @@
           </div>
         </div>
   <!-- content task 5 -->
-     <div class="content content5">
+     <div class="content content5 low">
       <h3>Implement Dark Mode</h3>
       <p class="text">Add dark mode theme support across the application with user preference persistance.</p>
       
@@ -217,7 +216,7 @@
     </div>
                 
   <!-- content task 6 -->
-   <div class="content content6">
+   <div class="content content6 high">
     <h3>User Testing Session</h3>
     <p class="text">Conduct user tesing sessions with 10 participants to gather feedback on the new interface.</p>
     
