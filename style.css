@@ -788,11 +788,20 @@ footer hr {
     padding: 1.5em;
     box-sizing: border-box;
   }
-  .task-type br{
+  .task-status br{
     display: none;
   }
-  .status-type br{
-    display: none;
+  .task-status{
+    padding: 0;
+    margin: 0;
+    margin-top: -1em;
+  }
+
+  .task-type #taskhead{
+    margin-right: 1em;
+  }
+  .status-type #statushead{
+    margin-right: 2.6em;
   }
   .new-task{
     width: 100%;
@@ -866,11 +875,19 @@ footer hr {
     max-width: 950px;
     margin: 0 auto;
   }
-  .task-type br{
+  .task-status br{
     display: none;
   }
-  .status-type br{
-    display: none;
+  .task-status{
+    padding: 0;
+    margin: 0;
+    margin-top: -1em;
+  }
+  .task-type #taskhead{
+    margin-right: 1em;
+  }
+  .status-type #statushead{
+    margin-right: 2.6em;
   }
   .new-task form {
     width: 100%;
