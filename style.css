@@ -185,6 +185,7 @@ body {
   padding: .5em;
   cursor:text;
   border: 1px solid var(--bordercolor);
+  color: black;
 }
 .new-task textarea::placeholder{
   font-family: "Arial",sans-serif;
