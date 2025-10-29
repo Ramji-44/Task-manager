@@ -17,17 +17,18 @@ body {
   font-family: "Arial", sans-serif;
   background-color: #fff;
   box-sizing: border-box;
+  background-color: rgb(250, 250, 250);
 }
 
 /* Navigation Menu Styling */
 .navbar {
   width: 100%;
+  height: 10vh;
   display: flex;
   justify-content: space-between;
   align-items: center;
   background-color: var(--white);
   box-shadow: 0 2px 5px var(--boxshadow);
-  height: 10vh;
 }
 /* Task Manager - Logo  */
 .logo-section {
@@ -53,23 +54,25 @@ body {
 }
 /* anchor tag in the navigation bar styling */
 .nav-links {
-  margin-right: 4em;
+  gap: 3em;
+  width: 100%;
+  margin-right: 3.8em;
   display: flex;
+  justify-content: flex-end;
   align-items: center;
-  gap: 1em;
 }
 
 .nav-links a {
   font-size: 1.1em;
   text-decoration: none;
   color: var(--gray);
-  padding: 0.3em 1.4em;
+  padding: 0.3em .5em;
 }
-/* .nav-links a:hover{
+.nav-links a:hover{
   color: var(--highlight);
   background-color: rgb(238, 235, 235);
   border-radius: 6px;
-} */
+}
 
 .nav-links .active {
   color: var(--highlight);
@@ -80,10 +83,10 @@ body {
 
 /* Menu - Three lines */
 .menu {
-  background-color: rgb(235, 235, 235);
-  width: 1.6rem;
-  padding: 4px 4px;
-  border-radius: 4px;
+  background-color: rgb(245, 245, 245);
+  width: 2.2rem;
+  padding: 4px 0;
+  border-radius: 8px;
   cursor: pointer;
 }
 .menu-toggle {
@@ -93,10 +96,10 @@ body {
   display: none;
 }
 .menu-line {
-  width: 1rem;
+  width: 1.4rem;
   height: 2px;
   background-color: black;
-  margin: 3px auto;
+  margin: 4px auto;
   border-radius: 2px;
 }
 
@@ -145,6 +148,7 @@ body {
   margin: 1em 1.3em;
   padding: .8em;
   border-radius: 6px;
+  background-color: var(--white);
   border: 1px solid var(--bordercolor);
 }
 .new-task label{
@@ -387,6 +391,7 @@ input[type="radio"][name="filter"] {
   grid-template-columns: repeat(2,1fr);
   grid-template-rows: 1fr 1fr;
   gap: 1em;
+  cursor: pointer;
 }
 .active-task .content{
   border: 1px solid var(--bordercolor);
@@ -692,14 +697,19 @@ footer hr {
 @media (min-width:499px) and (max-width:600px){
   .navbar{
     width: 100%;
-    height: 8vh;
+    height: 60px;
   }
     .nav-links{
       display: none;
     }
     .menu{
       display: block;
+      margin-right: 1.5em;
     }
+/* When checkbox is checked → show menu */
+  .menu-toggle:checked ~ .nav-links {
+    display: flex;
+  }
     .container1{
       display: flex;
       flex-direction: column;
@@ -721,7 +731,12 @@ footer hr {
     .title{
       margin: 0;
       padding: 0;
-      margin: 3em 1em 2em;
+      font-size: 0.8em;
+      margin-top: 3em;
+      margin-left: 2em;
+    }
+    .title div{
+      margin:0 .5em;
     }
     .logo-section{
       margin: 0;
@@ -731,10 +746,6 @@ footer hr {
     .nav-links a {
     display: block;
     }
-   .menu {
-    display: block;
-    cursor: pointer;
-  }
     .nav-links {
     display: none;
     flex-direction: column;
@@ -750,16 +761,6 @@ footer hr {
   .nav-links a{
     border-radius: 8px;
   }
- 
-   /* When checkbox is checked → show menu */
-  .menu-toggle:checked ~ .nav-links {
-    display: flex;
-  }
-    .menu{
-      margin: 0;
-      padding: 4px;
-      margin-right: 2em;
-    }
     .navigationbar a{
       width: 100%;
       padding: 0;
@@ -769,10 +770,6 @@ footer hr {
       margin-top: 1em;
       display: flex;
       justify-content: space-between;
-    }
-    .nav-buttons button{
-      font-size: 1.1em;
-      padding: .5em 1.2em;
     }
    /* Footer in  2 column grid */
   .footer-container {
@@ -795,7 +792,7 @@ footer hr {
 /*  Tablet views for 601px to 880px */
 @media (min-width: 601px) and (max-width: 880px) {
     .navbar{
-      height: 8vw;
+      height: 60px;
       width: 100%;
     }
     .container1 {
@@ -829,7 +826,7 @@ footer hr {
   }
   .active-task {
     display: grid;
-    grid-template-columns:  1fr; 
+    grid-template-columns:  1fr 1fr; 
     gap: 1em;
     justify-content: center;
   }
@@ -838,10 +835,18 @@ footer hr {
   }
   .nav-links{
     padding: 0;
-    margin-right: .4em;
+    margin-right: 1.2em;
   }
   .title {
-    margin: 2em auto 2em 1em;
+    margin:0;
+    padding:0;
+    font-size: 0.9rem;
+    margin-top: 2.5em;
+    margin-left: 1.5em;
+  }
+  .title div{
+    margin: 0;
+    margin-right: 0.5em;
   }
   /* Footer in  2 column grid */
   .footer-container {
@@ -854,6 +859,9 @@ footer hr {
     width: 100%;
     box-sizing: border-box;
   }
+  .footer-bottom{
+    height: 6vh;
+  }
 } 
 
 /* large  Tablet  for the screen widths 881 to 1024px */
@@ -861,7 +869,7 @@ footer hr {
 
   .navbar{
     width: 100%;
-    max-height: 8vw;  /* 10% of viewport width */
+    max-height: 70px;  /* 10% of viewport width */
     padding: 0;
     margin: 0;
   }
@@ -877,22 +885,18 @@ footer hr {
     padding: 2em 2.5em 3em 2.5em;
     box-sizing: border-box;
   }
-  .title{
-    padding: 0;
-    margin: 0;
-  }
   .logo-section{
     padding: 0;
-    margin-left: 2.5em;
+    margin-left: 3em;
   }
   .nav-links{
     padding: 0;
-    margin-right: 1em;
+    margin: 0;
+    margin-right: 3em;
   }
   /* Create New Task section */
   .new-task {
     width: 100%;
-    max-width: 950px;
     margin: 0 auto;
   }
   .task-status br{
@@ -914,7 +918,6 @@ footer hr {
     padding: 2em;
     box-sizing: border-box;
   }
-
   /* Active Task section */
   .container2 {
     width: 100%;
@@ -929,15 +932,16 @@ footer hr {
     gap: 1.5em;
     justify-content: center;
   }
-
   /* Title position */
   .title {
+    margin: 0;
     margin-top: 2em;
-    margin-bottom: 1.5em;
-    padding-left: 2.2em;
+    margin-left: 2.5em;
+  }
+  .footer-bottom{
+    height: 5vh;
   }
 }
-
 /*  Mobile view responsive layouts. */
 @media (max-width:499px) {
   body {
@@ -952,7 +956,7 @@ footer hr {
     align-items: center;
     position: fixed;
     top: 0;
-    height: 8vh;
+    height: 60px;
     z-index: 9999;
   }
  .logo-section{
@@ -971,35 +975,36 @@ footer hr {
     display: none;
     flex-direction: column;
     width: 100%;
-    background-color: #fff;
+    background-color: var(--white);
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
     position: absolute;
-    top: 8vh; /* right below navbar */
+    top: 60px; /* right below navbar */
     left: 0;
     text-align: center;
     padding: 1em 0;
   }
- 
-   /* When checkbox is checked → show menu */
+   /* When checkbox is checked - show menu */
   .menu-toggle:checked ~ .nav-links {
     display: flex;
   }
-
   /* Style mobile links */
   .nav-links a {
     display: block;
   }
-  .title{
-    margin-top: 6em;
-    margin-bottom: 1.6em;
-    padding:0 1.3em;
-    margin-left: -1em;
-  }
   .title div{
-    width: 4px;
+    margin: 0 0.5em;
+    padding: 0;
+  }
+  .title{
+    margin: 0;
+    margin-left: 1em;
+    margin-top: 5.5rem;
+    margin-bottom: 1.5rem;
   }
   .title h1{
     font-size: 1.3em;
+    padding: 0;
+    margin: 0;
   }
   .container1 {
     display: flex;
@@ -1013,9 +1018,6 @@ footer hr {
     box-sizing: border-box;
     margin-top: 0;
   }
-  .title{
-    margin-bottom: 2.5em;
-  }
   .task-type br{
     display: block;
   }
@@ -1025,7 +1027,6 @@ footer hr {
   .new-task,
   .active-task {
     width: 100%;
-    max-width: 400px; /* max width for mobile phones. */
     margin: 0 auto;
   }
   .new-task form {
@@ -1049,7 +1050,6 @@ footer hr {
     align-items: center;
     gap: 0.6em;               
     margin-top: 1em;
-
   }
   .nav-buttons label {     
     width: 100%;      
@@ -1079,30 +1079,65 @@ footer hr {
     text-align: center;
   }
 }
-@media (max-width:350px){
-  .container1{
+/*  Smaller width screen mobiles */
+@media (max-width:360px){
+.navbar .logo-text{
+    font-size: 1.2em;
+  }
+.container1{
     width: 350px;
   }
-  .container2{
-    max-width: 310px;
+.navbar{
+    width: 100%;
+    height: 50px;
   }
-  .nav-buttons label{
-    padding: .2em .5em;
+.nav-links {
+    display: none;
+    flex-direction: column;
+    width: 100%;
+    background-color: var(--white);
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    position: absolute;
+    top: 50px; /* right below navbar */
+    left: 0;
+    text-align: center;
+    padding: 1em 0;
   }
-}
-
-@media (min-width:400px) and (max-width:499px){
-  .title{
+.title{
+    font-size: .9em;
     margin-top: 6em;
+    margin-bottom: 1.5em;
   }
-  .new-task{
-    max-width: 430px;
-  }
-  .navigationbar{
-    max-width: 430px;
-  }
-  .new-task,.container2,.active-task{
-    max-width: 430px;
-  }
-} 
+.new-task{
+  width: 100%;
+  padding: 0;
+ }
+.container2{
+  margin: 0;
+  padding: 0;
+}
+.active-task{
+  padding: 1em;
+}
+/* Navigation Bar on the active tasks content */
+.navigationbar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  margin: 1.2em 1.2em .5em;
+}
+.nav-buttons {
+  display: flex;
+}
+.nav-buttons label {
+  cursor: pointer;
+  border: 1px solid var(--bordercolor);
+  background: var(--white);
+  border-radius: 18px;
+  font-size: 1em;
+  transition: 0.15s ease;
+  padding:0.2em;
+  margin: 0;
+}
+}
 
