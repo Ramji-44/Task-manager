@@ -156,12 +156,17 @@ body {
   position: relative;
   width: 100%;
   padding-right:2em;
+  cursor: pointer;
 }
 .field input,
 .field select{
   width: 100%;
   background-color: var(--white);
   box-sizing: border-box;
+  cursor: pointer;
+}
+.field input{
+  cursor: pointer;
 }
 .field label{
   padding: 0 2px;
@@ -678,16 +683,16 @@ input[type="radio"][name="filter"] {
 }
 footer hr {
   width: 80%; /* reduces  line length */
-  margin: 0.5em auto;
+  margin: 0 auto;
 }
 
 /* -------- Responsive Layout ---------- */
 
-/*  Tablet views for 501px to 600px  */
-@media (min-width:501px) and (max-width:600px){
+/*  Tablet views for 499px to 600px  */
+@media (min-width:499px) and (max-width:600px){
   .navbar{
     width: 100%;
-    height: 10vh;
+    height: 8vh;
   }
     .nav-links{
       display: none;
@@ -769,12 +774,28 @@ footer hr {
       font-size: 1.1em;
       padding: .5em 1.2em;
     }
+   /* Footer in  2 column grid */
+  .footer-container {
+    width: 100%;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    justify-items: center;
+    text-align: center;
+    margin-top: 2em;
+    width: 100%;
+    box-sizing: border-box;
+  }
+  .footer-bottom p{
+    text-align: center;
+    padding: 0 1em;
+    margin: 0;
+  }
   }
 
 /*  Tablet views for 601px to 880px */
 @media (min-width: 601px) and (max-width: 880px) {
     .navbar{
-      height: 10vw;
+      height: 8vw;
       width: 100%;
     }
     .container1 {
@@ -827,7 +848,6 @@ footer hr {
     width: 100%;
     display: grid;
     grid-template-columns: repeat(2, 1fr);
-    /* gap: 1em; */
     justify-items: center;
     text-align: center;
     margin-top: 2em;
@@ -919,7 +939,7 @@ footer hr {
 }
 
 /*  Mobile view responsive layouts. */
-@media (max-width: 500px) {
+@media (max-width:499px) {
   body {
     margin: 0;
     padding: 0;
@@ -989,7 +1009,7 @@ footer hr {
     width: 100%;
     max-width: 100%;
     padding: 0 1em;
-    margin: 0 auto;
+    margin: 0 auto ;
     box-sizing: border-box;
     margin-top: 0;
   }
@@ -1006,6 +1026,11 @@ footer hr {
   .active-task {
     width: 100%;
     max-width: 400px; /* max width for mobile phones. */
+    margin: 0 auto;
+  }
+  .new-task form {
+    width: 100%;
+    box-sizing: border-box;
     margin: 0 auto;
   }
   /* Buttons section */
@@ -1065,14 +1090,18 @@ footer hr {
     padding: .2em .5em;
   }
 }
-@media (min-width:430px) and (max-width:499px){
+
+@media (min-width:400px) and (max-width:499px){
+  .title{
+    margin-top: 6em;
+  }
   .new-task{
     max-width: 430px;
   }
   .navigationbar{
     max-width: 430px;
   }
-  .container2 ,.active-task{
+  .new-task,.container2,.active-task{
     max-width: 430px;
   }
 } 
