@@ -219,6 +219,7 @@ select {
   color: var(--highlight);
   font-weight: bolder;
   text-align: center;
+  margin-top: 1.2em;
 }
 /* Task color input */
 .new-task input[type="color"] {
@@ -283,7 +284,8 @@ select {
   cursor: pointer;
 }
 .file-upload p {
-  margin: 0.5em 0;
+  color: black;
+  margin-bottom: 1em;
   font-size: 1rem;
 }
 .file-upload small {
@@ -297,10 +299,13 @@ select {
   align-items: center;
   justify-content: space-around;
   margin: 2em 1.2em;
+  gap: 1em;
 }
 .task-buttons .create-button {
-  padding: 1.6em 4.4em;
+  padding: 1.8em 4.4em;
+  width: 60%;
   color: var(--white);
+  white-space: nowrap;
   background-color: var(--highlight);
   border: 1px solid var(--highlight);
   border-radius: 8px;
@@ -308,8 +313,9 @@ select {
   cursor: pointer;
 }
 .task-buttons .reset-button {
+  width: 40%;
   color: #000;
-  padding: 1em 2em;
+  padding: 1.2em 2em;
   background-color: rgb(231, 231, 231);
   border: 1px solid rgb(231, 231, 231);
   border-radius: 8px;
@@ -389,7 +395,7 @@ input[type="radio"][name="filter"] {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   grid-template-rows: 1fr 1fr;
-  gap: 1em;
+  gap: 1.5em;
   cursor: pointer;
 }
 .active-task .content {
@@ -728,7 +734,7 @@ footer hr {
   .active-task {
     display: grid;
     grid-template-columns: 1fr;
-    gap: 1em;
+    gap: 1.5em;
   }
   .title {
     margin: 0;
@@ -1080,7 +1086,7 @@ footer hr {
   }
 
   .task-buttons .create-button {
-    width: 70%;
+    width: 60%;
     padding: 1em 1.2em;
     font-size: 1em;
   }
@@ -1111,7 +1117,7 @@ footer hr {
   .active-task {
     display: grid;
     grid-template-columns: 1fr; /* one box per row */
-    gap: 1em;
+    gap: 1.5em;
   }
   /* Footer Section */
   .footer-container {
@@ -1169,6 +1175,7 @@ footer hr {
   }
   .active-task {
     padding: 1em;
+    gap: 1.5em;
   }
   /* Navigation Bar on the active tasks content */
   .navigationbar {
