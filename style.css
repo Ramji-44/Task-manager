@@ -1,6 +1,6 @@
 :root {
   --white: #fff;
-  --logo: rgb(133, 76, 238);
+  --logo: blueviolet;
   --gray: rgb(139, 139, 139);
   --highlight: rgba(81, 81, 247, 0.87);
   --bordercolor: rgb(221, 221, 221);
@@ -102,7 +102,6 @@ body {
   margin: 4px auto;
   border-radius: 2px;
 }
-
 /* Task Manager Title  */
 .title {
   display: flex;
@@ -203,7 +202,7 @@ select {
 }
 /*  Task Progress input */
 .taskprogress-label {
-  color: var(--gray);
+  color: #757575;
   font-weight: 600;
   margin-top: 2em;
   margin-bottom: 0.3em;
@@ -229,7 +228,7 @@ select {
   cursor: pointer;
 }
 .taskcolor-label {
-  color: var(--gray);
+  color: #757575;
   font-weight: 600;
   margin-top: 1.5em;
 }
@@ -241,12 +240,14 @@ select {
   cursor: pointer;
   width: 20px;
   height: 20px;
-  margin-right: -1em;
-  margin-left: 1.6em;
+  margin-left: 1.5em;
+  margin-right: -2.3em;
   vertical-align: middle;
   accent-color: var(--highlight);
 }
-.task-type label {
+.task-type #task-label {
+  padding: 0 2em;
+  vertical-align: middle;
   cursor: pointer;
 }
 /* status input */
@@ -254,15 +255,17 @@ select {
   margin-top: 1.3rem;
 }
 .status-type input[type="radio"] {
+  margin-left: 1.5em;
   cursor: pointer;
   width: 20px;
   height: 20px;
-  margin-right: -1em;
-  margin-left: 1.6em;
+  margin-right: -2.3em;
   vertical-align: middle;
   accent-color: var(--highlight);
 }
-.status-type label {
+.status-type #status-label {
+  padding: 0 2em;
+  vertical-align: middle;
   cursor: pointer;
 }
 /* file upload input */
@@ -302,20 +305,21 @@ select {
   gap: 1em;
 }
 .task-buttons .create-button {
-  padding: 1.8em 4.4em;
-  width: 60%;
+  text-align: center;
+  padding: 1.6em 0;
+  width: 70%;
   color: var(--white);
   white-space: nowrap;
-  background-color: var(--highlight);
-  border: 1px solid var(--highlight);
   border-radius: 8px;
   font-weight: 600;
   cursor: pointer;
+  background-color: var(--highlight);
+  border: 1px solid var(--highlight);
 }
 .task-buttons .reset-button {
-  width: 40%;
+  width: 30%;
   color: #000;
-  padding: 1.2em 2em;
+  padding: 1em 0;
   background-color: rgb(231, 231, 231);
   border: 1px solid rgb(231, 231, 231);
   border-radius: 8px;
@@ -394,9 +398,8 @@ input[type="radio"][name="filter"] {
 .active-task {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
-  grid-template-rows: 1fr 1fr;
+  /* grid-template-rows: minmax(300px,1fr); */
   gap: 1.5em;
-  cursor: pointer;
 }
 .active-task .content {
   border: 1px solid var(--bordercolor);
@@ -404,6 +407,7 @@ input[type="radio"][name="filter"] {
   padding: 1.5em;
   border-radius: 10px;
   transition: 0.2s ease-in-out;
+  cursor: pointer;
 }
 /* hover effects */
 .content:hover {
@@ -513,7 +517,6 @@ input[type="radio"][name="filter"] {
   border-radius: 50%;
   background-color: var(--medium);
 }
-
 /*  3nd content */
 .content3 .text {
   color: var(--gray);
@@ -660,12 +663,11 @@ input[type="radio"][name="filter"] {
 }
 
 /* Footer styling */
-
 .footer-container {
   width: 100%;
   display: flex;
   flex-wrap: wrap;
-  justify-content: space-between;
+  justify-content: space-around;
   padding: 2em 4em;
   margin-top: 3em;
   background-color: var(--white);
@@ -701,290 +703,8 @@ footer hr {
 
 /* -------- Responsive Layout ---------- */
 
-/*  Tablet views for 499px to 600px  */
-@media (min-width: 499px) and (max-width: 600px) {
-  .navbar {
-    width: 100%;
-    height: 60px;
-  }
-  .nav-links {
-    display: none;
-  }
-  .menu {
-    display: block;
-    margin-right: 1.5em;
-  }
-  /* When checkbox is checked → show menu */
-  .menu-toggle:checked ~ .nav-links {
-    display: flex;
-  }
-  .container1 {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: flex-start;
-    gap: 2em;
-    width: 100%;
-    margin: 0 auto;
-    padding: 1.5em;
-  }
-  .new-task {
-    width: 100%;
-  }
-  .active-task {
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: 1.5em;
-  }
-  .title {
-    margin: 0;
-    padding: 0;
-    font-size: 0.8em;
-    margin-top: 3em;
-    margin-left: 2em;
-  }
-  .title div {
-    margin: 0 0.5em;
-  }
-  .logo-section {
-    margin: 0;
-    padding: 0;
-    margin-left: 1.5em;
-  }
-  .nav-links a {
-    display: block;
-  }
-  .nav-links {
-    display: none;
-    flex-direction: column;
-    width: 100%;
-    background-color: var(--white);
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
-    position: absolute;
-    top: 8vh; /* right below navbar */
-    left: 0;
-    text-align: center;
-    padding: 2em 0;
-  }
-  .nav-links a {
-    border-radius: 8px;
-  }
-  .navigationbar a {
-    width: 100%;
-    padding: 0;
-  }
-  .navigationbar .nav-buttons {
-    width: 100%;
-    margin-top: 1em;
-    display: flex;
-    justify-content: space-between;
-  }
-  .task-buttons {
-    justify-content: space-between;
-    margin: 2em 1.2em;
-    gap: 1.5em;
-  }
-
-  .task-buttons .create-button {
-    width: 60%;
-    padding: 1.2em 1.3em;
-    font-size: 1.05em;
-  }
-
-  .task-buttons .reset-button {
-    width: 40%;
-    padding: 0.7em 1.2em;
-    font-size: 1em;
-  }
-  /* Footer in  2 column grid */
-  .footer-container {
-    width: 100%;
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    justify-items: center;
-    text-align: center;
-    margin-top: 2em;
-    width: 100%;
-    box-sizing: border-box;
-  }
-  .footer-bottom p {
-    text-align: center;
-    padding: 0 1em;
-    margin: 0;
-  }
-}
-
-/*  Tablet views for 601px to 880px */
-@media (min-width: 601px) and (max-width: 880px) {
-  .navbar {
-    height: 60px;
-    width: 100%;
-  }
-  .container1 {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: flex-start;
-    gap: 2em;
-    width: 100%;
-    margin: 0 auto;
-    padding: 1.5em;
-    box-sizing: border-box;
-  }
-  .task-status br {
-    display: none;
-  }
-  .task-status {
-    padding: 0;
-    margin: 0;
-    margin-top: -1em;
-  }
-
-  .task-type #taskhead {
-    margin-right: 1em;
-  }
-  .status-type #statushead {
-    margin-right: 2.6em;
-  }
-  .new-task {
-    width: 100%;
-  }
-  .active-task {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 1em;
-    justify-content: center;
-  }
-  .logo-section {
-    margin-left: -2.5em;
-  }
-  .nav-links {
-    padding: 0;
-    margin-right: 1.2em;
-  }
-  .title {
-    margin: 0;
-    padding: 0;
-    font-size: 0.9rem;
-    margin-top: 2.5em;
-    margin-left: 1.5em;
-  }
-  .title div {
-    margin: 0;
-    margin-right: 0.5em;
-  }
- .task-buttons {
-    justify-content: space-between;
-    margin: 2em 1.2em;
-    gap: 1.5em;
-  }
-
-  .task-buttons .create-button {
-    width: 60%;
-    padding: 1.2em 1.3em;
-    font-size: 1.05em;
-  }
-
-  .task-buttons .reset-button {
-    width: 40%;
-    padding: 0.7em 1.2em;
-    font-size: 1em;
-  }
-  /* Footer in  2 column grid */
-  .footer-container {
-    width: 100%;
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    justify-items: center;
-    text-align: center;
-    margin-top: 2em;
-    width: 100%;
-    box-sizing: border-box;
-  }
-  .footer-bottom {
-    height: 6vh;
-  }
-}
-
-/* large  Tablet  for the screen widths 881 to 1024px */
-@media (min-width: 881px) and (max-width: 1024px) {
-  .navbar {
-    width: 100%;
-    max-height: 70px; /* 10% of viewport width */
-    padding: 0;
-    margin: 0;
-  }
-  .container1 {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: flex-start;
-    gap: 2.5em;
-    width: 100%;
-    max-width: 1000px;
-    margin: 0 auto;
-    padding: 2em 2.5em 3em 2.5em;
-    box-sizing: border-box;
-  }
-  .logo-section {
-    padding: 0;
-    margin-left: 3em;
-  }
-  .nav-links {
-    padding: 0;
-    margin: 0;
-    margin-right: 3em;
-  }
-  /* Create New Task section */
-  .new-task {
-    width: 100%;
-    margin: 0 auto;
-  }
-  .task-status br {
-    display: none;
-  }
-  .task-status {
-    padding: 0;
-    margin: 0;
-    margin-top: -1em;
-  }
-  .task-type #taskhead {
-    margin-right: 1em;
-  }
-  .status-type #statushead {
-    margin-right: 2.6em;
-  }
-  .new-task form {
-    width: 100%;
-    padding: 2em;
-    box-sizing: border-box;
-  }
-  /* Active Task section */
-  .container2 {
-    width: 100%;
-    max-width: 950px;
-    margin: 0 auto;
-    padding: 2em;
-    box-sizing: border-box;
-  }
-  .active-task {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr); /* 2 box per row */
-    gap: 1.5em;
-    justify-content: center;
-  }
-  /* Title position */
-  .title {
-    margin: 0;
-    margin-top: 2em;
-    margin-left: 2.5em;
-  }
-  .footer-bottom {
-    height: 5vh;
-  }
-}
 /*  Mobile view responsive layouts. */
-@media (max-width: 499px) {
+@media (max-width: 600px) {
   body {
     margin: 0;
     padding: 0;
@@ -1016,7 +736,7 @@ footer hr {
     display: none;
     flex-direction: column;
     width: 100%;
-    background-color: var(--white);
+    background:var(--white);
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
     position: absolute;
     top: 60px; /* right below navbar */
@@ -1033,7 +753,8 @@ footer hr {
     display: block;
   }
   .title div {
-    margin: 0 0.5em;
+    margin: 0;
+    margin-right: 0.5em;
     padding: 0;
   }
   .title {
@@ -1048,16 +769,27 @@ footer hr {
     margin: 0;
   }
   .container1 {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    width: 100%;
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows:1fr;
     max-width: 100%;
+    margin: 0;
     padding: 0 1em;
-    margin: 0 auto;
     box-sizing: border-box;
-    margin-top: 0;
+  }
+  .new-task form{
+    width: 100%;
+    padding: 0;
+  }
+  .container2{
+    margin: 0;
+    padding: 0 1em;
+  }
+  .navigationbar{
+    padding: 1em 0;
+  }
+  .navigationbar .nav-buttons label{
+    padding: 0.5em;
   }
   .task-type br {
     display: block;
@@ -1084,13 +816,11 @@ footer hr {
     margin: 1.5em 1.2em;
     gap: 0.8em;
   }
-
   .task-buttons .create-button {
     width: 60%;
     padding: 1em 1.2em;
     font-size: 1em;
   }
-
   .task-buttons .reset-button {
     width: 30%;
     padding: 0.5em 1.1em;
@@ -1118,6 +848,7 @@ footer hr {
     display: grid;
     grid-template-columns: 1fr; /* one box per row */
     gap: 1.5em;
+    margin-bottom: 1em;
   }
   /* Footer Section */
   .footer-container {
@@ -1134,88 +865,156 @@ footer hr {
     text-align: center;
   }
 }
-
-/*  Smaller width mobile screens */
-@media (max-width: 360px) {
-  .navbar .logo-text {
-    font-size: 1.2em;
+/* Smaller mobile screen widths below 350px */
+@media (max-width: 350px) {
+  body {
+    overflow-x: hidden;
+  }
+  .status-type #status-label{
+    padding-right: 1.5em;
+  }
+  .title{
+    margin: 5.53m 0 1.3em 1.3em;
   }
   .container1 {
-    width: 350px;
-  }
-  .navbar {
-    width: 100%;
-    height: 50px;
-  }
-  .nav-links {
-    display: none;
-    flex-direction: column;
-    width: 100%;
-    background-color: var(--white);
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
-    position: absolute;
-    top: 50px; /* right below navbar */
-    left: 0;
-    text-align: center;
-    padding: 1em 0;
-  }
-  .title {
-    font-size: 0.9em;
-    margin-top: 6em;
-    margin-bottom: 1.5em;
+    display: grid;
+    grid-template-columns: 1fr;
+    justify-items: center;
+    align-items: start;
+    margin: 0 auto;
+    padding: 0 0.5em;
+    box-sizing: border-box;
   }
   .new-task form {
     width: 100%;
+    max-width: 300px;
+    margin: 0 auto;
     padding: 0;
-    margin: 0;
+    box-sizing: border-box;
   }
   .container2 {
-    margin: 0;
-    padding: 0;
+    width: 100%;
+    max-width: 300px;
+    margin: 0 auto;
+    padding: 0 0.5em;
+    box-sizing: border-box;
   }
   .active-task {
-    padding: 1em;
+    grid-template-columns: 1fr;
+    gap: 1em;
+    padding: 0.3em;
+  }
+  .navigationbar{
+    max-width: 300px;
+    margin: 0 0.3em;
+  }
+}
+/*  Tablet views for 601px to 1024px */
+@media (min-width: 601px) and (max-width: 1024px) {
+  .navbar {
+    height: 60px;
+    width: 100%;
+  }
+  .logo-section {
+    margin-left: -2.5em;
+  }
+  .nav-links {
+    padding: 0;
+    margin-right: 1.2em;
+  }
+  .title {
+    margin: 0;
+    padding: 0;
+    font-size: 0.9rem;
+    margin-top: 2.5em;
+    margin-left: 2em;
+  }
+  .title div {
+    margin: 0;
+    margin-right: 0.5em;
+  }
+  .container1 {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 2em;
+    width: 100%;
+    margin: 0;
+    padding: 1.5em 2em;
+    box-sizing: border-box;
+  }
+  .task-status br {
+    display: none;
+  }
+  .task-status {
+    margin: 0;
+    margin-top: -1em;
+  }
+  .task-type{
+    white-space: nowrap;
+  }
+  .task-type #task-label{
+    padding-right: 0;
+  }
+  .status-type #status-label{
+    padding-right: 0;
+  }
+  .status-type{
+    white-space: nowrap;
+  }
+  .task-type #taskhead {
+    margin-right: 1em;
+  }
+  .status-type #statushead {
+    margin-right: 2.6em;
+  }
+   .new-task {
+    width: 100%;
+    margin: 0 auto;
+  }
+  .container2{
+    width: 100%;
+    display: grid;
+    grid-template-columns: 1fr;
+  }
+   .active-task {
+    display: grid;
+    grid-template-columns: repeat(auto-fit,minmax(300px,1fr));
+    /* grid-template-rows: 1fr; */
+    gap: 1.5em;
+    width: 100%;
+    box-sizing: border-box;
+    justify-items: stretch; 
+  }
+  
+ .task-buttons {
+    justify-content: space-between;
+    margin: 2em 1.2em;
     gap: 1.5em;
   }
-  /* Navigation Bar on the active tasks content */
-  .navigationbar {
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-    margin: 1.2em 1.2em 0.5em;
-  }
-  .nav-buttons {
-    display: flex;
-  }
-  .nav-buttons label {
-    cursor: pointer;
-    border: 1px solid var(--bordercolor);
-    background: var(--white);
-    border-radius: 18px;
-    font-size: 1em;
-    transition: 0.15s ease;
-    padding: 0.4em 0.5em;
-    margin: 0;
-  }
-  .priority-status {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-top: 1em;
-    gap: 0em;
-  }
-  .task-buttons {
-    margin: 2em 1.2em;
-    gap: 1em;
-  }
   .task-buttons .create-button {
-    width: 65%;
-    padding: 1.1em;
-    font-size: 0.95em;
+    width: 60%;
+    padding: 1.2em 1.3em;
+    font-size: 1.05em;
   }
   .task-buttons .reset-button {
-    width: 35%;
-    padding: 0.6em 1em;
-    font-size: 0.9em;
+    width: 40%;
+    padding: 0.7em 1.2em;
+    font-size: 1em;
+  }
+  /* Footer in  2 column grid */
+  .footer-container {
+    width: 100%;
+    display: grid;
+    grid-template-columns:repeat(2,1fr);
+    justify-items: center;
+    text-align: center;
+    margin-top: 2em;
+    width: 100%;
+    box-sizing: border-box;
+  }
+  .footer-bottom {
+    height: 5vh;
   }
 }
