@@ -15,16 +15,12 @@
         <a href="#"><div class="logo-icon">TM</div></a>
         <div class="logo-text">TaskManager</div>
       </div>
-
-    <!-- Hidden checkbox for menu toggle -->
-        <input type="checkbox" id="menu-toggle" class="menu-toggle" />
-
-        <!-- Menu lines -->
-        <label for="menu-toggle" class="menu">
+      <!-- Menu Icon -->
+        <div class="menu" id="menuBtn">
           <div class="menu-line"></div>
           <div class="menu-line"></div>
           <div class="menu-line"></div>
-        </label>
+        </div>
 
         <nav class="nav-links">
         <a href="#" class="active">Dashboard</a>
@@ -40,7 +36,7 @@
     </div>
     
     <!-- Entire body -->
-    <div class="container1">
+    <main class="container1">
       <!-- Create new task form - side content -->
       <section class="new-task">
         <form action="#">
@@ -79,7 +75,7 @@
     <textarea name="task description"  cols="30" rows="5" placeholder="Task Description" id="descrip"></textarea>
 
     <label for="progress" class="taskprogress-label">Task Progress</label>
-    <input type="range" id="progress" name="task progress" min="0" max="100" value="0" class="track">
+    <input type="range" id="progress" name="task progress" min="0" max="100" value="0" step="1">
     <span class="progress-value">0%</span>
 
     <label for="color" class="taskcolor-label">Task Color</label>
@@ -234,9 +230,10 @@
       <span class="completed"><span class="dot12"></span>completed</span>
     </div>
   </div>
+
 </div>   <!--active task div-->
 </article>
-</div>     <!--container1 div-->
+</main>     <!--container1 -->
 
 
 <!-- footer contents -->
@@ -285,6 +282,7 @@
   
 </footer>
 
+<script src="script.js"></script>
 </body>
 </html>
 
