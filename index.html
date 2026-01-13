@@ -39,40 +39,50 @@
     <main class="container1">
       <!-- Create new task form - side content -->
       <section class="new-task">
-        <form action="#">
+        <form  id="taskForm" >
             <h3>&#128221 Create New Task</h3>
-            <input type="text"name="taskname"placeholder="Task Name *"required class="active"/>
-            <input type="email"name="email"placeholder="Assignee Email *" required class="active"/>
+
+            <input type ="text" name="taskname" placeholder="Task Name *"  class = "active" id="taskname" />
+             <small class="error">name is required</small>
+
+            <input type ="email" name="email" placeholder="Assignee Email *"  class = "active" id="email"/>
+             <small class="error"></small>
 
           <!---label floating styling --->
             <div class="field">
-              <input type="date" id="dob" name="dateofbirth"  required class="active" />
+              <input type="date" id="dob" name="dateofbirth"   class="active" />
               <label for="dob">Due Date*</label>
+               <small class="error"></small>
             </div>
 
     <div class="field">
       <input type="time" id="time" name="Duetime"/>
        <label for="time">Due Time</label>
+        <small class="error"></small>
     </div>
 
     <div class="field">
       <label for="priority">Priority Level *</label>
-    <select name="Prioritylevel" id="priority" required>
+    <select name="Prioritylevel" id="priority" >
       <option value="" hidden >Select an option</option>
         <option value="Low">Low Priority</option>
         <option value="Medium">Medium Priority</option>
         <option value="High">High Priority</option>
       </select>
+       <small class="error"></small>
     </div>
 
     <div class="field">
       <input type="number" name="Estimated Hours" id="hours" />
       <label for="hours">Estimated Hours</label>
+       <small class="error"></small>
     </div>
 
-    <input type="url" name="Project Url" placeholder="Project URL" />
+    <input type="url" name="Project Url" placeholder="Project URL" id="project-url"/>
+     <small class="error"></small>
 
     <textarea name="task description"  cols="30" rows="5" placeholder="Task Description" id="descrip"></textarea>
+     <small class="error"></small>
 
     <label for="progress" class="taskprogress-label">Task Progress</label>
     <input type="range" id="progress" name="task progress" min="0" max="100" value="0" step="1">
@@ -80,6 +90,7 @@
 
     <label for="color" class="taskcolor-label">Task Color</label>
     <input type="color" id="color" name="color">
+     <small class="error"></small>
     
     <div class="task-status">
     <div class="task-type">
@@ -90,6 +101,7 @@
       <label for="feature" id="task-label">Feature</label> <br>
       <input type="checkbox" name="enhancement" id="enhance">
       <label for="enhance" id="task-label">Enhancement</label>
+       <small class="error"></small>
     </div>
     
     <div class="status-type">
@@ -101,6 +113,7 @@
       <input type="radio" name="status" id="completed">
       <label for="completed" id="status-label">Completed</label>
     </div>
+     <small class="error"></small>
     </div>
     
     <div class="file-upload">
@@ -123,19 +136,15 @@
 
 <!-- active tasks - nav bar -->
 <article class="container2">
-  <input type="radio" name="filter" id="all" checked>
-  <input type="radio" name="filter" id="high">
-  <input type="radio" name="filter" id="medium">
-  <input type="radio" name="filter" id="low">
 
   <nav class="navigationbar">
   <a><h3>&#9989 Active Tasks</h3></a>
   
   <div class="nav-buttons">
-    <label for="all">All</label>
-    <label for="high">High</label>
-    <label for="medium">Medium</label>
-    <label for="low">Low</label>
+    <label data-filter="all">All(<span id="all-count">0</span>)</label>
+    <label data-filter="high">High(<span id="high-count">0</span>)</label>
+    <label data-filter="medium">Medium(<span id="medium-count">0</span>)</label>
+    <label data-filter="low">Low(<span id="low-count">0</span>)</label>
   </div>
 </nav>
 

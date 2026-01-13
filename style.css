@@ -195,6 +195,7 @@ body {
   cursor: text;
   border: 1px solid var(--bordercolor);
   color: black;
+  resize: none;
 }
 .new-task textarea::placeholder {
   font-family: "Arial", sans-serif;
@@ -365,32 +366,17 @@ input[type="radio"][name="filter"] {
   font-size: 1.05em;
   transition: 0.15s ease;
 }
-
-/* highlight the selected label */
-#all:checked ~ .navigationbar .nav-buttons label[for="all"],
-#high:checked ~ .navigationbar .nav-buttons label[for="high"],
-#medium:checked ~ .navigationbar .nav-buttons label[for="medium"],
-#low:checked ~ .navigationbar .nav-buttons label[for="low"] {
+.nav-buttons .active {
   background-color: var(--highlight);
   color: var(--white);
   border-color: var(--highlight);
 }
 
-/* filtering  hide non-matching cards */
-#high:checked ~ .active-task .content:not(.high),
-#medium:checked ~ .active-task .content:not(.medium),
-#low:checked ~ .active-task .content:not(.low) {
-  display: none;
-}
-
-/* show all  */
-#all:checked ~ .active-task .content {
-  display: block;
-}
 /* blocks*/
-.active-task .content {
-  display: block;
-}
+/* .active-task .content {
+   display: block; 
+  transition: all 0.3s ease;
+} */
 
 /* Active Tasks contents using Grid layout */
 .active-task {
@@ -781,12 +767,6 @@ footer hr {
     margin: 0;
     padding: 0 1em;
   }
-  .navigationbar{
-    padding: 1em 0;
-  }
-  .navigationbar .nav-buttons label{
-    padding: 0.5em;
-  }
   .task-type br {
     display: block;
   }
@@ -826,19 +806,20 @@ footer hr {
   /*  Active tasks container navigationbar */
   .nav-buttons {
     width: 100%;
-    display: flex;
-    justify-content: space-evenly;
-    align-items: center;
-    gap: 0.6em;
     margin-top: 1em;
+    display: flex;
+    flex-wrap: nowrap;
+    align-items:center;
+    gap: 0.5em;
   }
   .nav-buttons label {
     width: 100%;
     text-align: center;
-    padding: 0.5em 0.98em;
-    font-size: 0.95em;
-    border-radius: 20px;
-    box-sizing: border-box;
+    padding: 0.4em 0.5em;
+    font-size: 1em;
+  }
+    .navigationbar{
+    padding: 1em 0;
   }
   .active-task {
     display: grid;
@@ -900,9 +881,8 @@ footer hr {
     gap: 1em;
     padding: 0.2em;
   }
-  .navigationbar{
-    max-width: 300px;
-    margin: 0 0.3em;
+  .nav-buttons label{
+    padding: 0.5em 0;
   }
 }
 /*  Tablet views for 601px to 1024px */
@@ -1053,4 +1033,13 @@ footer hr {
     gap: 0;
     padding: 0;
   }
+}
+
+.new-task .error{
+  font-size: 12px;
+  color: rgb(214,21,21);
+  margin: -0.7em 0 0 1.5em;
+  padding: 0;
+  height: 14px;
+  visibility: hidden;
 }
