@@ -152,6 +152,8 @@ body {
   border-radius: 6px;
   background-color: var(--white);
   border: 1px solid var(--bordercolor);
+  outline: none;
+  transition: border-color 0.2s ease;
 }
 .new-task label {
   padding-left: 1.2em;
@@ -202,32 +204,39 @@ body {
   padding: 2.2em 0em;
 }
 /*  Task Progress input */
-.taskprogress-label {
+.borderbox.rangeinput .taskprogress-label {
   color: #757575;
-  margin-top: 2em;
-  margin-bottom: 0.3em;
+  padding: 0;
+  margin: 0 0 0 0.5em;
 }
 .new-task input[type="range"] {
-  margin: 0 1em;
-  padding: 0;
+  width: 100%;
+  margin: 0 0.6em;
+  padding: 0.3em 0;
   accent-color: rgb(81, 81, 247);
   cursor: pointer;
 }
-
-.progress-value {
+.borderbox.rangeinput .progress-value {
   color: var(--highlight);
   font-weight: bolder;
-  text-align: center;
-  margin-top: 0.5em;
+  display: flex;
+  justify-content: center;
+  margin-bottom: 0.6em;
+}
+.borderbox.rangeinput{
+  margin: 0.8em 0.5em;
+  padding: 0;
+  padding-right: 1.5em;
 }
 /* Task color input */
 .new-task input[type="color"] {
-  width: auto;
+  width: 100%;
   height: 2rem;
   padding: 0 2px;
+  margin-bottom: 1.2em;
   cursor: pointer;
 }
-.taskcolor-label {
+.borderbox .taskcolor-label {
   color: #757575;
   margin-top: 1.5em;
 }
@@ -244,7 +253,7 @@ body {
   vertical-align: middle;
   accent-color: var(--highlight);
 }
-.task-type #task-label {
+.task-type .task-label {
   padding: 0 2em;
   vertical-align: middle;
   cursor: pointer;
@@ -262,7 +271,7 @@ body {
   vertical-align: middle;
   accent-color: var(--highlight);
 }
-.status-type #status-label {
+.status-type .status-label {
   padding: 0 2em;
   vertical-align: middle;
   cursor: pointer;
@@ -295,6 +304,28 @@ body {
   display: block;
   margin-top: 0.5em;
 }
+.file-upload.borderbox .error-msg{
+  margin: 2.5em 1.2em 0 1.2em;
+}
+input[type="text"],input[type="email"],input[type="url"],input[type="range"]{
+    width: 100%;
+}
+#descrip{
+    width: 100%;
+    margin-bottom: 0.6em;
+}
+.borderbox{
+    padding-right: 2.2em;
+}
+.new-task .error-msg{
+  font-size: 14px;
+  color: rgb(214,21,21);
+  margin: -0.6em 0 0 1.2em;
+  display: flex;
+  align-items: center;
+  gap: 0.4em;
+  visibility: hidden;
+}
 /* buttons - create task and reset */
 .task-buttons {
   display: flex;
@@ -325,9 +356,12 @@ body {
   font-weight: 600;
   cursor: pointer;
 }
-/* Red Color border for certain input fields */
-form .active {
-  border: 2px solid red;
+.borderbox input:focus,
+.borderbox textarea:focus,
+.borderbox select:focus,
+.field input:focus,
+.field select:focus{
+  border-color: var(--highlight);
 }
 
 /* container 2 - active tasks contents*/
@@ -352,11 +386,6 @@ form .active {
   gap: 0.5em;
 }
 
-/*  hide radios */
-input[type="radio"][name="filter"] {
-  display: none;
-}
-
 .nav-buttons label {
   cursor: pointer;
   border: 1px solid var(--bordercolor);
@@ -371,12 +400,6 @@ input[type="radio"][name="filter"] {
   color: var(--white);
   border-color: var(--highlight);
 }
-
-/* blocks*/
-/* .active-task .content {
-   display: block; 
-  transition: all 0.3s ease;
-} */
 
 /* Active Tasks contents using Grid layout */
 .active-task {
@@ -773,6 +796,9 @@ footer hr {
   .status-type br {
     display: block;
   }
+  .status-type .status-label{
+    padding-right: 0;
+  }
   .new-task,
   .active-task {
     width: 100%;
@@ -847,7 +873,14 @@ footer hr {
   body {
     overflow-x: hidden;
   }
-  .status-type #status-label{
+    .task-type{
+    padding: 0;
+  }
+  .status-type{
+    padding:0;
+  }
+  .status-type .status-label{
+    padding: 0 2em;
     padding-right: 1.5em;
   }
   .title{
@@ -1033,13 +1066,4 @@ footer hr {
     gap: 0;
     padding: 0;
   }
-}
-
-.new-task .error{
-  font-size: 12px;
-  color: rgb(214,21,21);
-  margin: -0.7em 0 0 1.5em;
-  padding: 0;
-  height: 14px;
-  visibility: hidden;
 }

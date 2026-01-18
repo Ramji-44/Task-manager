@@ -38,27 +38,50 @@
     <!-- Entire body -->
     <main class="container1">
       <!-- Create new task form - side content -->
-      <section class="new-task">
+          <section class="new-task">
         <form  id="taskForm" >
             <h3>&#128221 Create New Task</h3>
 
-            <input type ="text" name="taskname" placeholder="Task Name *"  class = "active" id="taskname" />
+            <div class="borderbox">
+            <input type ="text" name="taskname" placeholder="Task Name *" id="taskname" />
+            <span class="error-msg">
+              <i class="fa-solid fa-circle-exclamation" style="color: #ff0000;"></i>
              <small class="error">name is required</small>
+            </span>
+            </div>
 
-            <input type ="email" name="email" placeholder="Assignee Email *"  class = "active" id="email"/>
+            <div class="borderbox">
+            <input type ="email" name="email" placeholder="Assignee Email *" id="email"/>
+            <span class="error-msg">
+              <i class="fa-solid fa-circle-exclamation" style="color: #ff0000;"></i>
              <small class="error"></small>
+            </span>
+              </div>
 
+            <div class="borderbox">
+              <input type="text" name="personname" placeholder="Person Name *" id="personname">
+              <span class="error-msg">
+              <i class="fa-solid fa-circle-exclamation" style="color: #ff0000;"></i>
+             <small class="error"></small>
+            </span>
+            </div>
           <!---label floating styling --->
             <div class="field">
-              <input type="date" id="dob" name="dateofbirth"   class="active" />
+              <input type="date" id="dob" name="dateofbirth" />
               <label for="dob">Due Date*</label>
-               <small class="error"></small>
+              <span class="error-msg">
+              <i class="fa-solid fa-circle-exclamation" style="color: #ff0000;"></i>
+             <small class="error"></small>
+            </span>
             </div>
 
     <div class="field">
       <input type="time" id="time" name="Duetime"/>
-       <label for="time">Due Time</label>
-        <small class="error"></small>
+       <label for="time">Due Time*</label>
+       <span class="error-msg">
+              <i class="fa-solid fa-circle-exclamation" style="color: #ff0000;"></i>
+             <small class="error"></small>
+            </span>
     </div>
 
     <div class="field">
@@ -69,61 +92,75 @@
         <option value="Medium">Medium Priority</option>
         <option value="High">High Priority</option>
       </select>
-       <small class="error"></small>
+      <span class="error-msg">
+              <i class="fa-solid fa-circle-exclamation" style="color: #ff0000;"></i>
+             <small class="error"></small>
+            </span>
     </div>
 
     <div class="field">
       <input type="number" name="Estimated Hours" id="hours" />
-      <label for="hours">Estimated Hours</label>
-       <small class="error"></small>
+      <label for="hours">Estimated Hours*</label>
+      <span class="error-msg">
+              <i class="fa-solid fa-circle-exclamation" style="color: #ff0000;"></i>
+             <small class="error"></small>
+            </span>
     </div>
 
-    <input type="url" name="Project Url" placeholder="Project URL" id="project-url"/>
-     <small class="error"></small>
+    <div class="borderbox">
+    <input type="url" name="Project Url" placeholder="Project URL*" id="project-url"/>
+          <span class="error-msg">
+              <i class="fa-solid fa-circle-exclamation" style="color: #ff0000;"></i>
+             <small class="error"></small>
+          </span>
+    </div>
 
-    <textarea name="task description"  cols="30" rows="5" placeholder="Task Description" id="descrip"></textarea>
-     <small class="error"></small>
+    <div class="borderbox">
+    <textarea name="task description"  cols="30" rows="5" placeholder="Task Description*" id="descrip"></textarea>
+    <span class="error-msg">
+          <i class="fa-solid fa-circle-exclamation" style="color: #ff0000;"></i>
+          <small class="error"></small>
+      </span>
+    </div>
 
-    <label for="progress" class="taskprogress-label">Task Progress</label>
+    <div class="borderbox rangeinput">
+    <label for="progress" class="taskprogress-label">Task Progress*</label>
     <input type="range" id="progress" name="task progress" min="0" max="100" value="0" step="1">
     <span class="progress-value">0%</span>
-
-    <label for="color" class="taskcolor-label">Task Color</label>
-    <input type="color" id="color" name="color">
-     <small class="error"></small>
-    
+    <span class="error-msg">
+          <i class="fa-solid fa-circle-exclamation" style="color: #ff0000;"></i>
+          <small class="error"></small>
+      </span>
+    </div>
+      </div>
+      
     <div class="task-status">
-    <div class="task-type">
-      <label for="" id="taskhead">Task Type</label><br>
+    <div class="task-type borderbox">
+      <label for="" id="taskhead">Task Type*</label><br>
       <input type="checkbox" name="Bugfix" id="bug">
-      <label for="bug" id="task-label">Bug Fix</label>
+      <label for="bug" class="task-label">Bug Fix</label>
       <input type="checkbox" name="feature" id="feature">
-      <label for="feature" id="task-label">Feature</label> <br>
+      <label for="feature" class="task-label">Feature</label> <br>
       <input type="checkbox" name="enhancement" id="enhance">
-      <label for="enhance" id="task-label">Enhancement</label>
-       <small class="error"></small>
+      <label for="enhance" class="task-label">Enhancement</label>
+
+      <span class="error-msg">
+          <i class="fa-solid fa-circle-exclamation" style="color: #ff0000;"></i>
+          <small class="error"></small>
     </div>
     
-    <div class="status-type">
-      <label for="" id="statushead">Status</label><br>
+    <div class="status-type borderbox">
+      <label for="" id="statushead">Status*</label><br>
       <input type="radio" name="status" id="pending">
-      <label for="pending" id="status-label">Pending</label>
+      <label for="pending" class="status-label">Pending</label>
       <input type="radio" name="status" id="progress2">
-      <label for="progress2" id="status-label">In Progress</label> <br>
+      <label for="progress2" class="status-label">In Progress</label> <br>
       <input type="radio" name="status" id="completed">
-      <label for="completed" id="status-label">Completed</label>
+      <label for="completed" class="status-label">Completed</label>
+      <span class="error-msg">
+          <i class="fa-solid fa-circle-exclamation" style="color: #ff0000;"></i>
+          <small class="error"></small>
     </div>
-     <small class="error"></small>
-    </div>
-    
-    <div class="file-upload">
-      <input type="file" id="file" name="file" accept=".pdf,.doc,.docx,image/*" multiple>
-      <label for="file">
-        <div class="upload-area">
-          <p><i class="fa-solid fa-paperclip"></i> Click to upload attachments</p>
-          <small>Supported: PDF, DOC, Images</small>
-        </div>
-      </label>
     </div>
     
     <!-- task buttons - create and reset -->
