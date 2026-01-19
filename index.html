@@ -39,7 +39,7 @@
     <main class="container1">
       <!-- Create new task form - side content -->
           <section class="new-task">
-        <form  id="taskForm" >
+        <form  id="taskform" >
             <h3>&#128221 Create New Task</h3>
 
             <div class="borderbox">
@@ -50,6 +50,14 @@
             </span>
             </div>
 
+             <div class="borderbox">
+              <input type="text" name="personname" placeholder="Assignee Name *" id="assigneename">
+              <span class="error-msg">
+              <i class="fa-solid fa-circle-exclamation" style="color: #ff0000;"></i>
+             <small class="error"></small>
+            </span>
+            </div>
+            
             <div class="borderbox">
             <input type ="email" name="email" placeholder="Assignee Email *" id="email"/>
             <span class="error-msg">
@@ -58,13 +66,6 @@
             </span>
               </div>
 
-            <div class="borderbox">
-              <input type="text" name="personname" placeholder="Person Name *" id="personname">
-              <span class="error-msg">
-              <i class="fa-solid fa-circle-exclamation" style="color: #ff0000;"></i>
-             <small class="error"></small>
-            </span>
-            </div>
           <!---label floating styling --->
             <div class="field">
               <input type="date" id="dob" name="dateofbirth" />
