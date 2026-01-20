@@ -39,12 +39,12 @@
     <main class="container1">
       <!-- Create new task form - side content -->
           <section class="new-task">
-        <form  id="taskform" >
+        <form  id="taskform" novalidate>
             <h3>&#128221 Create New Task</h3>
 
             <div class="borderbox">
             <input type ="text" name="taskname" placeholder="Task Name *" id="taskname" />
-            <span class="error-msg">
+            <span class="error-box">
               <i class="fa-solid fa-circle-exclamation" style="color: #ff0000;"></i>
              <small class="error">name is required</small>
             </span>
@@ -52,7 +52,7 @@
 
              <div class="borderbox">
               <input type="text" name="personname" placeholder="Assignee Name *" id="assigneename">
-              <span class="error-msg">
+              <span class="error-box">
               <i class="fa-solid fa-circle-exclamation" style="color: #ff0000;"></i>
              <small class="error"></small>
             </span>
@@ -60,7 +60,7 @@
             
             <div class="borderbox">
             <input type ="email" name="email" placeholder="Assignee Email *" id="email"/>
-            <span class="error-msg">
+            <span class="error-box">
               <i class="fa-solid fa-circle-exclamation" style="color: #ff0000;"></i>
              <small class="error"></small>
             </span>
@@ -70,7 +70,7 @@
             <div class="field">
               <input type="date" id="dob" name="dateofbirth" />
               <label for="dob">Due Date*</label>
-              <span class="error-msg">
+              <span class="error-box">
               <i class="fa-solid fa-circle-exclamation" style="color: #ff0000;"></i>
              <small class="error"></small>
             </span>
@@ -79,7 +79,7 @@
     <div class="field">
       <input type="time" id="time" name="Duetime"/>
        <label for="time">Due Time*</label>
-       <span class="error-msg">
+       <span class="error-box">
               <i class="fa-solid fa-circle-exclamation" style="color: #ff0000;"></i>
              <small class="error"></small>
             </span>
@@ -93,32 +93,32 @@
         <option value="Medium">Medium Priority</option>
         <option value="High">High Priority</option>
       </select>
-      <span class="error-msg">
+      <span class="error-box">
               <i class="fa-solid fa-circle-exclamation" style="color: #ff0000;"></i>
              <small class="error"></small>
             </span>
     </div>
 
     <div class="field">
-      <input type="number" name="Estimated Hours" id="hours" />
+      <input type="number" name="EstimatedHours" id="hours" min="0" max="24" />
       <label for="hours">Estimated Hours*</label>
-      <span class="error-msg">
+      <span class="error-box">
               <i class="fa-solid fa-circle-exclamation" style="color: #ff0000;"></i>
              <small class="error"></small>
             </span>
     </div>
 
     <div class="borderbox">
-    <input type="url" name="Project Url" placeholder="Project URL*" id="project-url"/>
-          <span class="error-msg">
+    <input type="url" name="ProjectUrl" placeholder="Project URL*" id="project-url" />
+          <span class="error-box">
               <i class="fa-solid fa-circle-exclamation" style="color: #ff0000;"></i>
              <small class="error"></small>
           </span>
     </div>
 
     <div class="borderbox">
-    <textarea name="task description"  cols="30" rows="5" placeholder="Task Description*" id="descrip"></textarea>
-    <span class="error-msg">
+    <textarea name="taskdescription"  cols="30" rows="5" placeholder="Task Description*" id="descrip"></textarea>
+    <span class="error-box">
           <i class="fa-solid fa-circle-exclamation" style="color: #ff0000;"></i>
           <small class="error"></small>
       </span>
@@ -126,9 +126,9 @@
 
     <div class="borderbox rangeinput">
     <label for="progress" class="taskprogress-label">Task Progress*</label>
-    <input type="range" id="progress" name="task progress" min="0" max="100" value="0" step="1">
+    <input type="range" id="progress" name="taskprogress" min="0" max="100" value="0" step="1">
     <span class="progress-value">0%</span>
-    <span class="error-msg">
+    <span class="error-box">
           <i class="fa-solid fa-circle-exclamation" style="color: #ff0000;"></i>
           <small class="error"></small>
       </span>
@@ -145,20 +145,21 @@
       <input type="checkbox" name="enhancement" id="enhance">
       <label for="enhance" class="task-label">Enhancement</label>
 
-      <span class="error-msg">
+      <span class="error-box">
           <i class="fa-solid fa-circle-exclamation" style="color: #ff0000;"></i>
           <small class="error"></small>
     </div>
+  </span>
     
     <div class="status-type borderbox">
       <label for="" id="statushead">Status*</label><br>
       <input type="radio" name="status" id="pending">
       <label for="pending" class="status-label">Pending</label>
-      <input type="radio" name="status" id="progress2">
-      <label for="progress2" class="status-label">In Progress</label> <br>
+      <input type="radio" name="status" id="inprogress">
+      <label for="inprogress" class="status-label">In Progress</label> <br>
       <input type="radio" name="status" id="completed">
       <label for="completed" class="status-label">Completed</label>
-      <span class="error-msg">
+      <span class="error-box">
           <i class="fa-solid fa-circle-exclamation" style="color: #ff0000;"></i>
           <small class="error"></small>
     </div>

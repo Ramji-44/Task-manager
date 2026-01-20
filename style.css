@@ -30,7 +30,7 @@ body {
   background-color: var(--white);
   box-shadow: 0 2px 5px var(--boxshadow);
 }
-.logo-section a{
+.logo-section a {
   text-decoration: none;
   cursor: pointer;
 }
@@ -131,7 +131,7 @@ body {
 }
 /* New Task Form */
 .new-task h3 {
- margin: 1em 0.55em 0.4em;  /* Top left/right bottom */
+  margin: 1em 0.55em 0.4em; /* Top left/right bottom */
 }
 .new-task form {
   border-color: var(--white);
@@ -140,13 +140,14 @@ body {
   background-color: var(--white);
   border-radius: 10px;
   font-family: "Arial", sans-serif;
-  box-shadow: 0px 0px 2px rgba(0, 0, 0, 0.2),
+  box-shadow:
+    0px 0px 2px rgba(0, 0, 0, 0.2),
     /* top shadow */ 0 5px 10px rgba(0, 0, 0, 0.2);
   padding: 0.5em 1em;
 }
 /* Form inputs and select are styled */
 .new-task input,
-.new-task select{
+.new-task select {
   margin: 1em 1.3em;
   padding: 0.8em;
   border-radius: 6px;
@@ -224,13 +225,13 @@ body {
   justify-content: center;
   margin-bottom: 0.2em;
 }
-.borderbox.rangeinput{
+.borderbox.rangeinput {
   margin: 0 0.6em;
   margin-top: 0.8em;
   padding: 0;
   padding-right: 1em;
 }
-.borderbox.rangeinput .error-msg{
+.borderbox.rangeinput .error-box {
   margin: 0 0.7em;
 }
 
@@ -238,7 +239,7 @@ body {
 .task-type {
   margin-top: 1em;
 }
-.task-type.borderbox .error-msg{
+.task-type.borderbox .error-box {
   margin: 0 1.4em;
 }
 .task-type input[type="checkbox"] {
@@ -259,7 +260,7 @@ body {
 .status-type {
   margin-top: 0.8em;
 }
-.status-type.borderbox .error-msg{
+.status-type.borderbox .error-box {
   margin: 0 1.4em;
 }
 .status-type input[type="radio"] {
@@ -277,19 +278,19 @@ body {
   cursor: pointer;
 }
 
-input[type="text"],input[type="email"],input[type="url"],input[type="range"]{
-    width: 100%;
+input[type="text"],input[type="email"],input[type="url"],input[type="range"] {
+  width: 100%;
 }
-#descrip{
-    width: 100%;
-    margin-bottom: 0.6em;
+#descrip {
+  width: 100%;
+  margin-bottom: 0.6em;
 }
-.borderbox{
-    padding-right: 2.2em;
+.borderbox {
+  padding-right: 2.2em;
 }
-.new-task .error-msg{
+.new-task .error-box {
   font-size: 14px;
-  color: rgb(214,21,21);
+  color: rgb(214, 21, 21);
   margin: -0.6em 0 0 1.2em;
   display: flex;
   align-items: center;
@@ -330,7 +331,7 @@ input[type="text"],input[type="email"],input[type="url"],input[type="range"]{
 .borderbox textarea:focus,
 .borderbox select:focus,
 .field input:focus,
-.field select:focus{
+.field select:focus {
   border-color: var(--highlight);
 }
 
@@ -340,7 +341,8 @@ input[type="text"],input[type="email"],input[type="url"],input[type="range"]{
   border-radius: 10px;
   border: 1px solid var(--white);
   background-color: var(--white);
-  box-shadow: 0 0px 2px rgba(0, 0, 0, 0.2),
+  box-shadow:
+    0 0px 2px rgba(0, 0, 0, 0.2),
     /* top shadow */ 0 5px 10px rgba(0, 0, 0, 0.2);
 }
 /* Navigation Bar on the active tasks content */
@@ -375,7 +377,7 @@ input[type="text"],input[type="email"],input[type="url"],input[type="range"]{
 .active-task {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
-  grid-template-rows: repeat(2,1fr);
+  grid-template-rows: repeat(2, 1fr);
   gap: 1.5em;
 }
 .active-task .content {
@@ -397,7 +399,7 @@ input[type="text"],input[type="email"],input[type="url"],input[type="range"]{
 /* calender and user icons */
 .calender-icon img {
   width: 15px;
-  vertical-align:middle;
+  vertical-align: middle;
   margin-right: 5px;
 }
 .user-icon img {
@@ -711,7 +713,7 @@ footer hr {
     display: none;
     flex-direction: column;
     width: 100%;
-    background:var(--white);
+    background: var(--white);
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
     position: absolute;
     top: 60px; /* right below navbar */
@@ -719,10 +721,11 @@ footer hr {
     text-align: center;
     padding: 1em 0;
   }
-  .nav-links.show {    /* for Javascript className .show*/
-  display: flex;
-  gap: 1.5em;
-}
+  .nav-links.show {
+    /* for Javascript className .show*/
+    display: flex;
+    gap: 1.5em;
+  }
   /* Style mobile links */
   .nav-links a {
     display: block;
@@ -746,17 +749,17 @@ footer hr {
   .container1 {
     display: grid;
     grid-template-columns: 1fr;
-    grid-template-rows:1fr;
+    grid-template-rows: 1fr;
     max-width: 100%;
     margin: 0;
     padding: 0 1em;
     box-sizing: border-box;
   }
-  .new-task form{
+  .new-task form {
     width: 100%;
     padding: 0;
   }
-  .container2{
+  .container2 {
     margin: 0;
     padding: 0 1em;
   }
@@ -766,7 +769,7 @@ footer hr {
   .status-type br {
     display: block;
   }
-  .status-type .status-label{
+  .status-type .status-label {
     padding-right: 0;
   }
   .new-task,
@@ -805,7 +808,7 @@ footer hr {
     margin-top: 1em;
     display: flex;
     flex-wrap: nowrap;
-    align-items:center;
+    align-items: center;
     gap: 0.5em;
   }
   .nav-buttons label {
@@ -814,7 +817,7 @@ footer hr {
     padding: 0.4em 0.5em;
     font-size: 1em;
   }
-    .navigationbar{
+  .navigationbar {
     padding: 1em 0;
   }
   .active-task {
@@ -843,17 +846,17 @@ footer hr {
   body {
     overflow-x: hidden;
   }
-    .task-type{
+  .task-type {
     padding: 0;
   }
-  .status-type{
-    padding:0;
+  .status-type {
+    padding: 0;
   }
-  .status-type .status-label{
+  .status-type .status-label {
     padding: 0 2em;
     padding-right: 1.5em;
   }
-  .title{
+  .title {
     margin: 5.53m 0 1.3em 1.3em;
   }
   .container1 {
@@ -884,7 +887,7 @@ footer hr {
     gap: 1em;
     padding: 0.2em;
   }
-  .nav-buttons label{
+  .nav-buttons label {
     padding: 0.5em 0;
   }
 }
@@ -930,16 +933,16 @@ footer hr {
     margin: 0;
     margin-top: -1em;
   }
-  .task-type{
+  .task-type {
     white-space: nowrap;
   }
-  .task-type #task-label{
+  .task-type #task-label {
     padding-right: 0;
   }
-  .status-type #status-label{
+  .status-type #status-label {
     padding-right: 0;
   }
-  .status-type{
+  .status-type {
     white-space: nowrap;
   }
   .task-type #taskhead {
@@ -948,26 +951,26 @@ footer hr {
   .status-type #statushead {
     margin-right: 2.6em;
   }
-   .new-task {
+  .new-task {
     width: 100%;
     margin: 0 auto;
   }
-  .container2{
+  .container2 {
     width: 100%;
     display: grid;
     grid-template-columns: 1fr;
   }
-   .active-task {
+  .active-task {
     display: grid;
-    grid-template-columns: repeat(auto-fit,minmax(300px,1fr));
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
     /* grid-template-rows: 1fr; */
     gap: 1.5em;
     width: 100%;
     box-sizing: border-box;
-    justify-items: stretch; 
+    justify-items: stretch;
   }
-  
- .task-buttons {
+
+  .task-buttons {
     justify-content: space-between;
     margin: 2em 1.2em;
     gap: 1.5em;
@@ -986,7 +989,7 @@ footer hr {
   .footer-container {
     width: 100%;
     display: grid;
-    grid-template-columns:repeat(2,1fr);
+    grid-template-columns: repeat(2, 1fr);
     justify-items: center;
     text-align: center;
     margin-top: 2em;
@@ -998,41 +1001,41 @@ footer hr {
   }
 }
 /*Small size laptops and tablet in landsacpe*/
- @media (min-width:1025px) and (max-width:1150px){
-  .navbar{
+@media (min-width: 1025px) and (max-width: 1150px) {
+  .navbar {
     width: 100%;
     height: 60px;
     overflow-x: hidden;
   }
-  .logo-section{
+  .logo-section {
     padding: 0;
     padding-left: 2em;
   }
-  .nav-links{
+  .nav-links {
     margin: 0;
     padding-right: 2em;
   }
-  .title{
+  .title {
     margin: 3em 0 2em;
     padding-left: 2em;
   }
-  .title div{
+  .title div {
     margin: 0;
     margin-right: 0.5em;
   }
-  .container1{
+  .container1 {
     padding: 0 2em;
   }
-  .new-task form{
+  .new-task form {
     width: 100%;
     max-width: 350px;
   }
-  .active-task{
+  .active-task {
     display: grid;
-    grid-template-columns: repeat(auto-fit,minmax(250px,1fr));
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
     gap: 1em;
   }
-  .priority-status{
+  .priority-status {
     gap: 0;
     padding: 0;
   }

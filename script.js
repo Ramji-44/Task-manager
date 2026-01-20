@@ -73,70 +73,126 @@ const progress = document.getElementById("progress");
 const percent = document.querySelector(".progress-value");
 
 // checkbox & radio
-const taskCheckbox = document.querySelectorAll('.task-type input[type="checkbox"]',);
+const taskCheckbox = document.querySelectorAll(
+  '.task-type input[type="checkbox"]');
 const statusRadio = document.querySelectorAll('input[name="status"]');
 
-
 form.addEventListener("submit", (e) => {
-  e.preventDefault();
-
-  clearError();
-
-  validateInputs();
+  // clearError();
+if(!validateInputs()){
+    e.preventDefault();
+}
 });
 
+// validation function 
 function validateInputs() {
-  let success = true;  
+  let valid = true;  
 
-// validation conditions
-
+  // validation conditions
+// taskName 
   if (taskName.value.trim() === "") {
     showError(taskName, "Task Name is required");
-    success = false;
+    valid = false;
+  }
+  else{
+    clearError(taskName)
   }
 
-  if (email.value.trim() === "") {
-    showError(email, "Email is required");
-    success = false;
-  }
-
+// Assigneee name
   if (assigneeName.value.trim() === "") {
     showError(assigneeName, "Assignee Name is required");
-    success = false;
+    valid = false;
+  }
+  else if(!AssigneeNameChar(assigneeName.value.trim())){
+    showError(assigneeName,"Name does not contain special characters")
+    valid = false
+  }
+  else if(!AssigneeNameNum(assigneeName.value.trim())){
+    showError(assigneeName,"Name does not include numbers")
+    valid = false
+  }
+  else{
+    clearError(assigneeName)
   }
 
+// email
+  if (email.value.trim() === "") {
+    showError(email, "Email is required");
+    valid = false;
+  }
+  else if(!EmailValidation(email.value.trim())){
+    showError(email,"Enter valid Email")
+    valid = false
+  }
+  else{
+    clearError(email)
+  }
+
+// date
   if (date.value === "") {
     showError(date, "Due date is required");
-    success = false;
+    valid = false;
+  }
+  else{
+    clearError(date)
   }
 
+// time
   if (time.value === "") {
     showError(time, "Due time is required");
-    success = false;
+    valid = false;
   }
+  else{
+    clearError(time)
+  }
+
+// select - priority
   if (priority.value === "") {
     showError(priority, "Select priority level");
-    success = false;
+    valid = false;
+  }
+  else{
+    clearError(priority)
   }
 
+// hour
   if (hoursInput.value === "" || hoursInput.value <= 0) {
     showError(hoursInput, "Enter valid hours");
-    success = false;
+    valid = false;
   }
-
+  else{
+    clearError(hoursInput)
+  }
+  
+// url 
   if (url.value.trim() === "") {
     showError(url, "Project URL is required");
-    success = false;
+    valid = false;
+  }
+  else if(!projecturl(url.value.trim())){
+    showError(url,"Enter valid url")
+    valid = false
+  }
+  else{
+    clearError(url)
   }
 
+// text area
   if (textArea.value.trim() === "") {
     showError(textArea, "Task description is required");
-    success = false;
+    valid = false;
+  }
+  else{
+    clearError(textArea)
   }
 
+// progress
   if (progress.value == 0) {
     showError(progress, "Progress must be greater than 0");
-    success = false;
+    valid = false;
+  }
+  else{
+    clearError(progress)
   }
 
   // (checkbox) Task type validation
@@ -149,7 +205,10 @@ function validateInputs() {
 
   if (!taskChecked) {
     showError(taskCheckbox[0], "select at least one task type");
-    success = false;
+    valid = false;
+  }
+  else{
+    clearError(taskCheckbox[0])
   }
 
   // (radio) status validation
@@ -162,62 +221,92 @@ function validateInputs() {
 
   if (!statusChecked) {
     showError(statusRadio[0], "Select task status");
-    success = false;
+    valid = false;
   }
-  if (success) {
+  else{
+    clearError(statusRadio[0])
+  }
+
+// prints
+  if (valid) {
     alert("Task created successfully");
-    form.submit();
   }
+  return valid
 }
 
 // error message function
 
 function showError(input, message) {
-  const parent = input.closest("div");
-  const errorMsg = parent.querySelector(".error-msg");
-  const errorText = parent.querySelector(".error");
+  const parent = input.parentElement
 
-  errorText.innerText = message;
-  errorMsg.style.visibility = "visible";
+  const errorBox = parent.querySelector(".error-box");
+  const small = parent.querySelector(".error");
+
+  small.innerText = message;  // displays error msg
+  errorBox.style.visibility = "visible";   // beacuse by default, in css i gave hidden
+
+  parent.classList.add('error')
+  parent.classList.remove('success')
 }
 
 // clear error messages
 
-function clearError() {
-  const errorContent = document.querySelectorAll(".error-msg");
+function clearError(input){
+  const parent = input.parentElement
+  const errorBox = parent.querySelector(".error-box");
+  const small = parent.querySelector('.error')
 
-  errorContent.forEach(function (icon_msg) {
-    icon_msg.style.visibility = "hidden";
-    icon_msg.querySelector(".error").innerText = "";
-  });
+  small.innerText = ""    // empties
+  errorBox.style.visibility = "hidden"   // hides error 
+
+  parent.classList.add('success')
+  parent.classList.remove('error')
 }
 
 // hides error msg when input focused and typing...
-const inputs = document.querySelectorAll("input,select,textarea");
+const allInputs = document.querySelectorAll("input,select,textarea");
 
-inputs.forEach(function (input) {
-  input.addEventListener("input", () => {
-    const parent = input.closest("div");
+allInputs.forEach((input) => {
+  input.addEventListener('input', () => {
+    const parent = input.closest("div")
 
-    if (parent) {
-      const errorMsg = parent.querySelector(".error-msg");
-      if (errorMsg) {
-        errorMsg.style.visibility = "hidden";
+
+    if(!parent) // stop code if closest div not found
+      return
+
+      const errorBox = parent.querySelector(".error-box")
+      const small = parent.querySelector('.error')
+      if(errorBox){
+        errorBox.style.visibility = "hidden"  // hides box
       }
-    }
-  });
-});
+      if(small)
+        small.innerText = ""  // clears input field
+  })
+})
 
-// charcters restricted in hours input
-hoursInput.addEventListener("keydown", (e) => {
-  if (
-    e.key === "e" ||
-    e.key === "E" ||
-    e.key === "+" ||
-    e.key === "-" ||
-    e.key === "."
-  ) {
-    e.preventDefault();
+// Assignee Name 
+function AssigneeNameChar(name){
+  const acceptwords = /^[a-zA-Z0-9.]+$/
+  return acceptwords.test(name)
+}
+function AssigneeNameNum(numberspresent){
+  const notaccept = /^[^0-9]+$/;
+  return notaccept.test(numberspresent)
+}
+
+// Email validation RegEx
+function EmailValidation(mail){
+  const emailregex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/
+  return emailregex.test(mail)
+}
+
+hoursInput.addEventListener("input", function () {
+  // only numbers allowed
+  this.value = this.value.replace(/[^1-9]/g, "");
+
+  //  0 to 24 only accepts
+  if (this.value > 24) {
+    this.value = 24;
   }
 });
 
@@ -229,3 +318,10 @@ progress.addEventListener("input", () => {
 form.addEventListener("reset", () => {
   percent.textContent = "0%";
 });
+
+// project url
+ function projecturl(prourl){
+  const Urlformat = /^https:\/\/(www\.)?[a-zA-Z0-9-]+\.[a-zA-Z]{2,}(\/.*)?$/
+  return Urlformat.test(prourl)
+ }
+
