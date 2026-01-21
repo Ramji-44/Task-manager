@@ -146,8 +146,7 @@ body {
   padding: 0.5em 1em;
 }
 /* Form inputs and select are styled */
-.new-task input,
-.new-task select {
+.new-task input{
   margin: 1em 1.3em;
   padding: 0.8em;
   border-radius: 6px;
@@ -167,8 +166,7 @@ body {
   padding-right: 2.2em;
   cursor: pointer;
 }
-.field input,
-.field select {
+.field input{
   width: 100%;
   background-color: var(--white);
   box-sizing: border-box;
@@ -297,6 +295,90 @@ input[type="text"],input[type="email"],input[type="url"],input[type="range"] {
   gap: 0.4em;
   visibility: hidden;
 }
+.fa-circle-exclamation {   /*warning icon */
+  color: #ff0000;
+}
+.new-task .error.input{
+  border: 1px solid red;
+}
+.new-task .success.input{
+  border: 1px solid greenyellow;
+}
+.selectAnOption span img{
+  width: 15px;
+  height: 13px;
+  position: absolute;
+  right: 5px;
+  bottom: 1px;
+}
+.selectAnOption span{
+  position: relative;
+}
+.selectAnOption{
+  display: flex;
+  justify-content: space-between;
+}
+.option span img{
+  width: 15px;
+  height: 13px;
+  position: absolute;
+  right: 5px;
+  vertical-align: middle;
+}
+.option span{
+  position: relative;
+}
+.option{
+  display: flex;
+  justify-content: space-between;
+}
+.option img{
+  display: none;
+}
+
+/* custom dropdown  */
+.dropdown{
+  position: relative;
+  font-size: 14px;
+}
+.field.dropdown{
+  padding: 0 1.2em;
+  padding-top: 1em;
+}
+
+.selectAnOption{
+  padding: 0.7em;
+  cursor: pointer;
+  border-radius: 6px;
+  box-sizing: border-box;
+  background-color: var(--white);
+  border: 1px solid var(--boxshadow);
+}
+.dropdown-options{
+  font-size: 10pt;
+  display: none;  /*hides options*/
+  position:absolute;
+  left: 1.2em;
+  right: 1.2em;
+  border: 1px solid var(--boxshadow);
+  background-color: var(--white);
+  border-top: none;
+  z-index: 1000;
+  border-radius: 6px;
+}
+.option{
+  padding: 0.5em 0.8em;
+  cursor: pointer;
+}
+.option:hover{
+  background-color: var(--highlight);
+  border-radius: 6px;
+  color: var(--white);
+}
+.field.dropdown .error-box{   /*dropdown error msg */
+  margin: 0;
+  margin-top: 0.3em;
+}
 /* buttons - create task and reset */
 .task-buttons {
   display: flex;
@@ -328,10 +410,7 @@ input[type="text"],input[type="email"],input[type="url"],input[type="range"] {
   cursor: pointer;
 }
 .borderbox input:focus,
-.borderbox textarea:focus,
-.borderbox select:focus,
-.field input:focus,
-.field select:focus {
+.field input:focus{
   border-color: var(--highlight);
 }
 

@@ -6,54 +6,46 @@ menuBtn.addEventListener("click", () => {
   navLinks.classList.toggle("show");
 });
 
-/* Filter the navigation bar */
 
-const navLabels = document.querySelectorAll(".nav-buttons label");
-const taskBox = document.querySelectorAll(".active-task .content");
+// custom dropdown 
+let drop = document.querySelectorAll(".dropdown");
 
-// all-high-medium-low
-const allCount = document.getElementById("all-count");
-const highCount = document.getElementById("high-count");
-const mediumCount = document.getElementById("medium-count");
-const lowCount = document.getElementById("low-count");
+drop.forEach(function (select) {
+  let selectAnopt = select.querySelector(".selectAnOption");
+  let optionContainer = select.querySelector(".dropdown-options");
+  let optionItems = optionContainer.querySelectorAll(".option");
 
-function updateCounts() {
-  let high = 0;
-  let medium = 0;
-  let low = 0;
 
-  taskBox.forEach(function (cards) {
-    if (cards.classList.contains("high")) high++;
-    else if (cards.classList.contains("medium")) medium++;
-    else if (cards.classList.contains("low")) low++;
+  // toggle if open -> close, close -> open
+  selectAnopt.addEventListener("click", () => {
+    if (optionContainer.style.display === "block") {  // open 
+      optionContainer.style.display = "none";  // close
+    } else {
+      optionContainer.style.display = "block";  // open
+    }
   });
 
-  allCount.textContent = high + medium + low; // adds (high+medium+low) = all
-  highCount.textContent = high;
-  mediumCount.textContent = medium;
-  lowCount.textContent = low;
-}
+  // hide dropdown and pick selected item to display
+  optionItems.forEach((opt) => {
+    opt.addEventListener("click", () => {
 
-updateCounts(); // function called
+      let arrow = selectAnopt.querySelector("span").outerHTML  // arrow icon
+  
+      selectAnopt.innerHTML = opt.textContent +  arrow 
+      optionContainer.style.display = "none";
 
-navLabels[0].classList.add("active"); // highlight color for only all
-
-navLabels.forEach(function (label) {
-  label.onclick = function () {
-    var filter = this.dataset.filter; // -ex:label.dataset.filter = high,medium,low
-
-    navLabels.forEach(function (del) {
-      del.classList.remove("active"); // removes the navLabels[0] "active" class
+      clearError(selectAnopt)  // error-box call(form validation)
     });
+  });
 
-    this.classList.add("active"); // highlights only clicked filter
-
-    taskBox.forEach(function (cards) {
-      cards.style.display =
-        filter === "all" || cards.classList.contains(filter) ? "block" : "none";
-    });
-  };
+  // close
+  window.addEventListener("click", (e) => {
+    if (!select.contains(e.target)) {
+      optionContainer.style.display = "none";
+    }
+  });
 });
+
 
 /* Form Validation */
 
@@ -65,7 +57,7 @@ const assigneeName = document.getElementById("assigneename");
 const email = document.getElementById("email");
 const date = document.getElementById("dob");
 const time = document.getElementById("time");
-const priority = document.getElementById("priority");
+const priority = document.querySelector(".selectAnOption");
 const hoursInput = document.getElementById("hours");
 const url = document.getElementById("project-url");
 const textArea = document.getElementById("descrip");
@@ -78,7 +70,6 @@ const taskCheckbox = document.querySelectorAll(
 const statusRadio = document.querySelectorAll('input[name="status"]');
 
 form.addEventListener("submit", (e) => {
-  // clearError();
 if(!validateInputs()){
     e.preventDefault();
 }
@@ -147,7 +138,7 @@ function validateInputs() {
   }
 
 // select - priority
-  if (priority.value === "") {
+  if (priority.textContent.includes("Select an option")) {
     showError(priority, "Select priority level");
     valid = false;
   }
@@ -264,7 +255,7 @@ function clearError(input){
 }
 
 // hides error msg when input focused and typing...
-const allInputs = document.querySelectorAll("input,select,textarea");
+const allInputs = document.querySelectorAll("input,textarea");
 
 allInputs.forEach((input) => {
   input.addEventListener('input', () => {
@@ -324,4 +315,3 @@ form.addEventListener("reset", () => {
   const Urlformat = /^https:\/\/(www\.)?[a-zA-Z0-9-]+\.[a-zA-Z]{2,}(\/.*)?$/
   return Urlformat.test(prourl)
  }
-

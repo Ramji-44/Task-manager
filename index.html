@@ -45,7 +45,7 @@
             <div class="borderbox">
             <input type ="text" name="taskname" placeholder="Task Name *" id="taskname" />
             <span class="error-box">
-              <i class="fa-solid fa-circle-exclamation" style="color: #ff0000;"></i>
+              <i class="fa-solid fa-circle-exclamation"></i>
              <small class="error">name is required</small>
             </span>
             </div>
@@ -53,7 +53,7 @@
              <div class="borderbox">
               <input type="text" name="personname" placeholder="Assignee Name *" id="assigneename">
               <span class="error-box">
-              <i class="fa-solid fa-circle-exclamation" style="color: #ff0000;"></i>
+              <i class="fa-solid fa-circle-exclamation"></i>
              <small class="error"></small>
             </span>
             </div>
@@ -61,7 +61,7 @@
             <div class="borderbox">
             <input type ="email" name="email" placeholder="Assignee Email *" id="email"/>
             <span class="error-box">
-              <i class="fa-solid fa-circle-exclamation" style="color: #ff0000;"></i>
+              <i class="fa-solid fa-circle-exclamation"></i>
              <small class="error"></small>
             </span>
               </div>
@@ -71,7 +71,7 @@
               <input type="date" id="dob" name="dateofbirth" />
               <label for="dob">Due Date*</label>
               <span class="error-box">
-              <i class="fa-solid fa-circle-exclamation" style="color: #ff0000;"></i>
+              <i class="fa-solid fa-circle-exclamation"></i>
              <small class="error"></small>
             </span>
             </div>
@@ -80,30 +80,30 @@
       <input type="time" id="time" name="Duetime"/>
        <label for="time">Due Time*</label>
        <span class="error-box">
-              <i class="fa-solid fa-circle-exclamation" style="color: #ff0000;"></i>
+              <i class="fa-solid fa-circle-exclamation"></i>
              <small class="error"></small>
             </span>
     </div>
 
-    <div class="field">
-      <label for="priority">Priority Level *</label>
-    <select name="Prioritylevel" id="priority" >
-      <option value="" hidden >Select an option</option>
-        <option value="Low">Low Priority</option>
-        <option value="Medium">Medium Priority</option>
-        <option value="High">High Priority</option>
-      </select>
+    <div class="field dropdown">
+      <label for="priority">Priority Level*</label>
+      <div class="selectAnOption">Select an option <span><img src="arrow down.png" alt="arrow down"></span> </div>
+        <div class="dropdown-options">
+          <div class="option">Low priority <span><img src="arrow down.png" alt="arrow down"></span></div>
+          <div class="option">Medium Priority <span><img src="arrow down.png" alt="arrow down"></span></div>
+          <div class="option">High Priority <span><img src="arrow down.png" alt="arrow down"></span></div>
+        </div>
       <span class="error-box">
-              <i class="fa-solid fa-circle-exclamation" style="color: #ff0000;"></i>
+              <i class="fa-solid fa-circle-exclamation"></i>
              <small class="error"></small>
             </span>
     </div>
 
-    <div class="field">
+    <div class="field hour">
       <input type="number" name="EstimatedHours" id="hours" min="0" max="24" />
       <label for="hours">Estimated Hours*</label>
       <span class="error-box">
-              <i class="fa-solid fa-circle-exclamation" style="color: #ff0000;"></i>
+              <i class="fa-solid fa-circle-exclamation"></i>
              <small class="error"></small>
             </span>
     </div>
@@ -111,7 +111,7 @@
     <div class="borderbox">
     <input type="url" name="ProjectUrl" placeholder="Project URL*" id="project-url" />
           <span class="error-box">
-              <i class="fa-solid fa-circle-exclamation" style="color: #ff0000;"></i>
+              <i class="fa-solid fa-circle-exclamation"></i>
              <small class="error"></small>
           </span>
     </div>
@@ -119,7 +119,7 @@
     <div class="borderbox">
     <textarea name="taskdescription"  cols="30" rows="5" placeholder="Task Description*" id="descrip"></textarea>
     <span class="error-box">
-          <i class="fa-solid fa-circle-exclamation" style="color: #ff0000;"></i>
+          <i class="fa-solid fa-circle-exclamation"></i>
           <small class="error"></small>
       </span>
     </div>
@@ -129,7 +129,7 @@
     <input type="range" id="progress" name="taskprogress" min="0" max="100" value="0" step="1">
     <span class="progress-value">0%</span>
     <span class="error-box">
-          <i class="fa-solid fa-circle-exclamation" style="color: #ff0000;"></i>
+          <i class="fa-solid fa-circle-exclamation"></i>
           <small class="error"></small>
       </span>
     </div>
@@ -146,7 +146,7 @@
       <label for="enhance" class="task-label">Enhancement</label>
 
       <span class="error-box">
-          <i class="fa-solid fa-circle-exclamation" style="color: #ff0000;"></i>
+          <i class="fa-solid fa-circle-exclamation"></i>
           <small class="error"></small>
     </div>
   </span>
@@ -160,7 +160,7 @@
       <input type="radio" name="status" id="completed">
       <label for="completed" class="status-label">Completed</label>
       <span class="error-box">
-          <i class="fa-solid fa-circle-exclamation" style="color: #ff0000;"></i>
+          <i class="fa-solid fa-circle-exclamation"></i>
           <small class="error"></small>
     </div>
     </div>
