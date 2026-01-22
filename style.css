@@ -1119,3 +1119,48 @@ footer hr {
     padding: 0;
   }
 }
+
+/* Toast notification  styling */
+
+#toast-container{
+  width: 400px;
+  color: #0e7a1f;
+  font-weight: bold;
+  padding: 0.5em 1em;
+  position: fixed;
+  top: 80px;
+  left: 50%;
+  z-index: 9999;
+  border-radius: 10px;
+  text-align: center;
+  transform: translateX(-50%);
+  background-color: #f0f7f3;
+  border: 1px solid #93DA97;
+  box-shadow: 3px 4px 5px var(--boxshadow);
+  gap: 15px; 
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  visibility: hidden;
+}
+.tick{
+  height: 28px;
+  width: 28px;
+  background-color: #20d63c;
+  border-radius: 50%;
+  position: relative;
+  flex-shrink: 0;
+}
+/* border to  Tick mark style*/
+.tick::after{
+  content: '';
+  position: absolute;
+  left: 10px;
+  top: 3px;
+  width: 6px;
+  height: 12px;
+  border: solid white;
+  border-width: 0 3.5px 3.5px 0;
+  transform: rotate(45deg);
+}

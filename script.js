@@ -70,8 +70,11 @@ const taskCheckbox = document.querySelectorAll(
 const statusRadio = document.querySelectorAll('input[name="status"]');
 
 form.addEventListener("submit", (e) => {
-if(!validateInputs()){
-    e.preventDefault();
+  e.preventDefault();
+
+if(validateInputs()){
+    showToast()   // successful - Notification
+    form.reset()  // resets after validates
 }
 });
 
@@ -218,11 +221,9 @@ function validateInputs() {
     clearError(statusRadio[0])
   }
 
-// prints
-  if (valid) {
-    alert("Task created successfully");
-  }
+// returns valid with  true or false
   return valid
+// console.log(valid) 
 }
 
 // error message function
@@ -315,3 +316,13 @@ form.addEventListener("reset", () => {
   const Urlformat = /^https:\/\/(www\.)?[a-zA-Z0-9-]+\.[a-zA-Z]{2,}(\/.*)?$/
   return Urlformat.test(prourl)
  }
+
+
+/*Toast notification appears*/
+const showToast = () => {
+  const notification = document.getElementById('toast-container')
+  notification.style.visibility = "visible"
+    setTimeout(() => {
+        notification.style.visibility = "hidden";
+    }, 3000);
+}
