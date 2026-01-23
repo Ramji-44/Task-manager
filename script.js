@@ -7,6 +7,8 @@ menuBtn.addEventListener("click", () => {
 });
 
 
+const activeTaskContainer = document.querySelector(".active-task");
+
 // custom dropdown 
 let drop = document.querySelectorAll(".dropdown");
 
@@ -73,6 +75,7 @@ form.addEventListener("submit", (e) => {
   e.preventDefault();
 
 if(validateInputs()){
+    addTask()      // tasks adding  function
     showToast()   // successful - Notification
     form.reset()  // resets after validates
 }
@@ -123,9 +126,9 @@ function validateInputs() {
   }
 
 // date
-  if (date.value === "") {
-    showError(date, "Due date is required");
-    valid = false;
+    if (date.value === "") {
+    showError(date, "Due date is required")
+    valid = false
   }
   else{
     clearError(date)
@@ -136,7 +139,7 @@ function validateInputs() {
     showError(time, "Due time is required");
     valid = false;
   }
-  else{
+    else{
     clearError(time)
   }
 
@@ -150,9 +153,17 @@ function validateInputs() {
   }
 
 // hour
-  if (hoursInput.value === "" || hoursInput.value <= 0) {
-    showError(hoursInput, "Enter valid hours");
+  if (hoursInput.value === "" ) {
+    showError(hoursInput, "Enter hours");
     valid = false;
+  }
+  else if(hoursInput.value <= 0){
+    showError(hoursInput,"Enter hours 0 or above")
+    valid = false
+  }
+  else if(hoursInput.value >100){
+    showError(hoursInput,"Maximum hours reached(100 hrs max)")
+    valid = false
   }
   else{
     clearError(hoursInput)
@@ -181,13 +192,13 @@ function validateInputs() {
   }
 
 // progress
-  if (progress.value == 0) {
-    showError(progress, "Progress must be greater than 0");
-    valid = false;
-  }
-  else{
-    clearError(progress)
-  }
+  // if (progress.value == 0) {
+  //   showError(progress, "Progress must be greater than 0");
+  //   valid = false;
+  // }
+  // else{
+  //   clearError(progress)
+  // }
 
   // (checkbox) Task type validation
   let taskChecked = false;
@@ -236,9 +247,6 @@ function showError(input, message) {
 
   small.innerText = message;  // displays error msg
   errorBox.style.visibility = "visible";   // beacuse by default, in css i gave hidden
-
-  parent.classList.add('error')
-  parent.classList.remove('success')
 }
 
 // clear error messages
@@ -250,9 +258,6 @@ function clearError(input){
 
   small.innerText = ""    // empties
   errorBox.style.visibility = "hidden"   // hides error 
-
-  parent.classList.add('success')
-  parent.classList.remove('error')
 }
 
 // hides error msg when input focused and typing...
@@ -278,7 +283,7 @@ allInputs.forEach((input) => {
 
 // Assignee Name 
 function AssigneeNameChar(name){
-  const acceptwords = /^[a-zA-Z0-9.]+$/
+  const acceptwords = /^[a-zA-Z0-9\s]+$/
   return acceptwords.test(name)
 }
 function AssigneeNameNum(numberspresent){
@@ -292,15 +297,6 @@ function EmailValidation(mail){
   return emailregex.test(mail)
 }
 
-hoursInput.addEventListener("input", function () {
-  // only numbers allowed
-  this.value = this.value.replace(/[^1-9]/g, "");
-
-  //  0 to 24 only accepts
-  if (this.value > 24) {
-    this.value = 24;
-  }
-});
 
 // range input
 progress.addEventListener("input", () => {
@@ -309,6 +305,14 @@ progress.addEventListener("input", () => {
 // reset progress value
 form.addEventListener("reset", () => {
   percent.textContent = "0%";
+
+priority.innerHTML = `Select an option<span><img src="arrow down.png" alt="arrow down"></span>`
+
+  // remove error Messages when reset
+  const AllerrorBox = form.querySelectorAll(".error-box")
+  AllerrorBox.forEach((msg) => {
+    msg.style.visibility = "hidden"
+  })
 });
 
 // project url
@@ -326,3 +330,75 @@ const showToast = () => {
         notification.style.visibility = "hidden";
     }, 3000);
 }
+
+function addTask(){
+
+  const title = taskName.value
+  const description = textArea.value
+  const dueDate = date.value
+  const assignee = assigneeName.value
+
+// select tag - priority
+
+const priorityContent = priority.textContent.trim()
+let priorityClass = "low"
+let priorityText = "LOW"
+if(priorityContent.includes("High")){
+  priorityClass = "high"
+  priorityText = "HIGH"
+}
+else if(priorityContent.includes("Medium")){
+  priorityClass = "medium"
+  priorityText = "MEDUIM"
+}
+
+// status type 
+let statusClass = ""
+let statusText = ""
+if(document.getElementById("pending").checked){
+  statusClass = "pending"
+  statusText = "Pending"
+}
+else if(document.getElementById("inprogress").checked){
+  statusClass = "inpro"
+  statusText = "In Progress"
+}
+else if(document.getElementById("completed").checked){
+  statusClass = "completed"
+  statusText = "Completed"
+}
+
+// 
+
+// create task cards
+const newTasks = document.createElement("div")
+newTasks.className = `content ${priorityClass}`
+
+newTasks.innerHTML = `<div>
+       <h3>${title}<div class="edit-delete"><button class="edit" aria-label="Edit-task"> <i class="fa-solid fa-pen-to-square"></i></button>
+          <button class="delete" aria-label="Delete task"><i class="fa-solid fa-trash"></i></button></div>
+        </h3>
+        <p class="text">${description}</p>
+
+        <p class="date"><span class="calender-icon"><img src="calender-img.png" alt="calender-image"></span>Due:  ${dueDate}</p>
+        <p class="name"><span class="user-icon"><img src="person-img.jpg" alt="user-image"></span> ${assignee}</p>
+
+        <hr>
+        <div class="priority-status">
+          <span class="priority ${priorityClass}"><span class="priority-dot"></span> ${priorityText}</span>
+          <span class="status ${statusClass}"><span class="status-dot"></span> ${statusText}</span>
+        </div>
+      </div>
+`
+activeTaskContainer.appendChild(newTasks)
+}
+
+/* Task contents  Delete button */
+document.addEventListener("click",(e) => {
+  if(e.target.closest(".delete")){
+    const contentCard = e.target.closest(".content")
+    if(contentCard){
+      contentCard.remove()
+    }
+  }
+})

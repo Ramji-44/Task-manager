@@ -5,6 +5,7 @@
   --highlight: rgba(81, 81, 247, 0.87);
   --bordercolor: rgb(221, 221, 221);
   --medium: rgb(255, 178, 34);
+  --low: rgb(47,161,47);
   --boxshadow: rgba(0, 0, 0, 0.2);
 }
 * {
@@ -298,12 +299,6 @@ input[type="text"],input[type="email"],input[type="url"],input[type="range"] {
 .fa-circle-exclamation {   /*warning icon */
   color: #ff0000;
 }
-.new-task .error.input{
-  border: 1px solid red;
-}
-.new-task .success.input{
-  border: 1px solid greenyellow;
-}
 .selectAnOption span img{
   width: 15px;
   height: 13px;
@@ -384,7 +379,7 @@ input[type="text"],input[type="email"],input[type="url"],input[type="range"] {
   display: flex;
   align-items: center;
   justify-content: space-around;
-  margin: 2em 1.2em;
+  margin: 1.5em 1.2em;
   gap: 1em;
 }
 .task-buttons .create-button {
@@ -412,6 +407,51 @@ input[type="text"],input[type="email"],input[type="url"],input[type="range"] {
 .borderbox input:focus,
 .field input:focus{
   border-color: var(--highlight);
+}
+
+/* Toast notification  styling */
+
+#toast-container{
+  width: 400px;
+  color: #0e7a1f;
+  font-weight: bold;
+  padding: 0.5em 1em;
+  position: fixed;
+  top: 80px;
+  left: 50%;
+  z-index: 9999;
+  border-radius: 10px;
+  text-align: center;
+  transform: translateX(-50%);
+  background-color: #f0f7f3;
+  border: 1px solid #93DA97;
+  box-shadow: 3px 4px 5px var(--boxshadow);
+  gap: 15px; 
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  visibility: hidden;
+}
+.tick{
+  height: 28px;
+  width: 28px;
+  background-color: #20d63c;
+  border-radius: 50%;
+  position: relative;
+  flex-shrink: 0;
+}
+/* border to  Tick mark style*/
+.tick::after{
+  content: '';
+  position: absolute;
+  left: 10px;
+  top: 3px;
+  width: 6px;
+  height: 12px;
+  border: solid white;
+  border-width: 0 3.5px 3.5px 0;
+  transform: rotate(45deg);
 }
 
 /* container 2 - active tasks contents*/
@@ -465,16 +505,35 @@ input[type="text"],input[type="email"],input[type="url"],input[type="range"] {
   padding: 1.5em;
   border-radius: 10px;
   transition: 0.2s ease-in-out;
-  cursor: pointer;
 }
-/* hover effects */
-.content:hover {
-  transform: translateY(-5px);
-}
+/* Task title and button */
 .content h3 {
   font-size: 1.2em;
   margin-bottom: 1.5em;
+  display: flex;
+  justify-content: space-between;
+  align-items: start;
 }
+/*edit and delete icons buttons*/
+.content h3 .edit-delete{
+  display: flex;
+  flex-direction: row;
+  gap: 0.5em;
+}
+.content h3 button {
+  border: none;
+  background: none;
+  color:#7a7c7a;
+  font-size: 18px;
+  cursor: pointer;
+  display: none;
+}
+/* .content h3 .edit:hover{
+  color: blue;
+}
+.content h3 .delete:hover{
+  color: #ff0000;
+} */
 /* calender and user icons */
 .calender-icon img {
   width: 15px;
@@ -486,20 +545,21 @@ input[type="text"],input[type="email"],input[type="url"],input[type="range"] {
   vertical-align: middle;
   margin-right: 5px;
 }
-/* 1st content box */
-.content1 .text {
+.content .text {
   color: var(--gray);
   margin-bottom: 1.5em;
   line-height: 1.5;
 }
-.content1 .date {
+.content .date {
   margin-bottom: 0.5em;
   color: var(--gray);
 }
-.content1 .name {
+.content .name {
   margin-bottom: 1em;
   color: var(--gray);
 }
+
+/* task  content box */
 .priority-status {
   display: flex;
   justify-content: space-between;
@@ -507,105 +567,57 @@ input[type="text"],input[type="email"],input[type="url"],input[type="range"] {
   margin-top: 1em;
 }
 /* Dot - Small circle for representing the importance of the task. */
-.priority-status .dot1 {
+.priority-dot{
   width: 10px;
   height: 10px;
   border-radius: 50%;
-  background-color: red;
+  display: inline-block;
 }
-.priority-status .high {
-  margin: 0;
-  border: 1px solid rgb(250, 232, 232);
-  background-color: rgb(250, 232, 232);
+/* status indicator*/
+.status-dot{
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  display: inline-block;
+}
+
+/* high */
+.priority.high {
+  color: red;
   border-radius: 15px;
   font-weight: bold;
-  color: red;
   padding: 0.4em 1.1em;
   display: flex;
   align-items: center;
   gap: 0.3em;
+  background-color: rgb(250, 232, 232);
 }
-/* Dot- Small circle for representing the importance of the task */
-.priority-status .dot2 {
-  width: 10px;
-  height: 10px;
-  border-radius: 50%;
-  background-color: var(--highlight);
-}
-.priority-status .inpro {
-  border: 1px solid var(--white);
-  background-color: var(--white);
-  display: flex;
-  align-items: center;
-  gap: 0.3em;
-  margin: 0;
-  white-space: nowrap;
-}
-
-/*  2nd content */
-.content2 .text {
-  color: var(--gray);
-  margin-bottom: 1.5em;
-  line-height: 1.5;
-}
-.content2 .date {
-  margin-bottom: 0.5em;
-  color: var(--gray);
-}
-.content2 .name {
-  margin-bottom: 1em;
-  color: var(--gray);
-}
-.priority-status .dot3 {
-  width: 10px;
-  height: 10px;
-  border-radius: 50%;
+.priority.high .priority-dot {
   background-color: red;
 }
-.priority-status .pending {
-  border: 1px solid var(--white);
-  background-color: var(--white);
+
+/* IN progress dot */
+.status.inpro{
   display: flex;
   align-items: center;
   gap: 0.3em;
 }
-.priority-status .dot4 {
-  width: 10px;
-  height: 10px;
-  border-radius: 50%;
-  background-color: var(--medium);
+.status.inpro .status-dot{
+  background-color: var(--highlight);
 }
-/*  3nd content */
-.content3 .text {
-  color: var(--gray);
-  margin-bottom: 1.5em;
-  line-height: 1.5;
-}
-.content3 .date {
-  margin-bottom: 0.5em;
-  color: var(--gray);
-}
-.content3 .name {
-  margin-bottom: 1em;
-  color: var(--gray);
-}
-.priority-status {
+
+/* pending dot */
+.status.pending{
   display: flex;
-  justify-content: space-between;
   align-items: center;
-  margin-top: 1em;
-  gap: 2em;
+  gap: 0.3em;
 }
-.priority-status .dot5 {
-  width: 10px;
-  height: 10px;
-  border-radius: 50%;
+.status.pending .status-dot{
   background-color: var(--medium);
 }
 
-.priority-status .medium {
-  border: 1px solid rgb(250, 232, 232);
-  background-color: rgb(255, 239, 239);
+/*  medium  */
+.priority.medium{
   border-radius: 15px;
   font-weight: bold;
   color: var(--medium);
@@ -613,111 +625,35 @@ input[type="text"],input[type="email"],input[type="url"],input[type="range"] {
   display: flex;
   align-items: center;
   gap: 0.3em;
+  background-color: rgb(255, 239, 239);
 }
-.priority-status .dot6 {
-  width: 10px;
-  height: 10px;
-  border-radius: 50%;
-  background-color: var(--highlight);
+.priority.medium .priority-dot{
+  background-color: var(--medium);
 }
 
-/* content task 4 */
-.content4 .text {
-  color: var(--gray);
-  margin-bottom: 1.5em;
-  line-height: 1.5;
-}
-.content4 .date {
-  margin-bottom: 0.5em;
-  color: var(--gray);
-}
-.content4 .name {
-  margin-bottom: 1em;
-  color: var(--gray);
-}
-.priority-status .dot7 {
-  width: 10px;
-  height: 10px;
-  border-radius: 50%;
-  background-color: var(--medium);
-}
-.priority-status .dot8 {
-  width: 10px;
-  height: 10px;
-  border-radius: 50%;
-  background-color: var(--medium);
-}
-/* content task 5 */
-.content5 .text {
-  color: var(--gray);
-  margin-bottom: 1.5em;
-  line-height: 1.5;
-}
-.content5 .date {
-  margin-bottom: 0.5em;
-  color: var(--gray);
-}
-.content5 .name {
-  margin-bottom: 1em;
-  color: var(--gray);
-}
-.priority-status .low {
-  border: 1px solid rgb(223, 245, 228);
-  background-color: rgb(223, 245, 228);
+/* Low  */
+.priority.low{
   border-radius: 15px;
   font-weight: bold;
-  color: rgb(47, 161, 47);
+  color: var(--low);
   padding: 0.4em 1.1em;
   display: flex;
   align-items: center;
   gap: 0.3em;
+  background-color: rgb(223, 245, 228);
 }
-.priority-status .dot9 {
-  width: 10px;
-  height: 10px;
-  border-radius: 50%;
-  background-color: rgb(9, 151, 52);
-}
-.priority-status .dot10 {
-  width: 10px;
-  height: 10px;
-  border-radius: 50%;
-  background-color: var(--medium);
+.priority.low .priority-dot{
+  background-color: var(--low);
 }
 
-/* content task 6 */
-.content6 .text {
-  color: var(--gray);
-  margin-bottom: 1.5em;
-  line-height: 1.5;
-}
-.content6 .date {
-  margin-bottom: 0.5em;
-  color: var(--gray);
-}
-.content6 .name {
-  margin-bottom: 1em;
-  color: var(--gray);
-}
-
-.priority-status .dot11 {
-  width: 10px;
-  height: 10px;
-  border-radius: 50%;
-  background-color: red;
-}
-.priority-status .completed {
-  border: 1px solid var(--white);
-  background-color: var(--white);
+/* completed dot */
+.stat.completed {
   display: flex;
   align-items: center;
   gap: 0.3em;
 }
-.priority-status .dot12 {
-  width: 10px;
-  height: 10px;
-  border-radius: 50%;
-  background-color: rgb(47, 161, 47);
+.status.completed .status-dot{
+  background-color: var(--low);
 }
 
 /* Footer styling */
@@ -1120,47 +1056,3 @@ footer hr {
   }
 }
 
-/* Toast notification  styling */
-
-#toast-container{
-  width: 400px;
-  color: #0e7a1f;
-  font-weight: bold;
-  padding: 0.5em 1em;
-  position: fixed;
-  top: 80px;
-  left: 50%;
-  z-index: 9999;
-  border-radius: 10px;
-  text-align: center;
-  transform: translateX(-50%);
-  background-color: #f0f7f3;
-  border: 1px solid #93DA97;
-  box-shadow: 3px 4px 5px var(--boxshadow);
-  gap: 15px; 
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: center;
-  visibility: hidden;
-}
-.tick{
-  height: 28px;
-  width: 28px;
-  background-color: #20d63c;
-  border-radius: 50%;
-  position: relative;
-  flex-shrink: 0;
-}
-/* border to  Tick mark style*/
-.tick::after{
-  content: '';
-  position: absolute;
-  left: 10px;
-  top: 3px;
-  width: 6px;
-  height: 12px;
-  border: solid white;
-  border-width: 0 3.5px 3.5px 0;
-  transform: rotate(45deg);
-}

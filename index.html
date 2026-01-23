@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Task Manager</title>
     <link rel="stylesheet" href="style.css" type="text/css"/>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
   </head>
   
   <body>
@@ -68,7 +68,7 @@
 
           <!---label floating styling --->
             <div class="field">
-              <input type="date" id="dob" name="dateofbirth" />
+              <input type="date" id="dob" name="dateofbirth" min="2026-01-01" />
               <label for="dob">Due Date*</label>
               <span class="error-box">
               <i class="fa-solid fa-circle-exclamation"></i>
@@ -197,7 +197,9 @@
   <div class="active-task">
 <!--  content tasks 1 -->
       <div class="content content1 high">
-        <h3>Design Homepage Mockup</h3>
+        <h3>Design Homepage Mockup <div class="edit-delete"><button class="edit" aria-label="Edit-task"> <i class="fa-solid fa-pen-to-square"></i></button>
+          <button class="delete" aria-label="Delete task"><i class="fa-solid fa-trash"></i></button></div>
+        </h3>
         <p class="text">Create wireframes and high-fidelity mockups for the new homepage redesign project with modern UI elements.</p>
         
         <p class="date"><span class="calender-icon"><img src="calender-img.png" alt="calender-image"></span> Due: Oct 20, 2025</p>
@@ -205,14 +207,16 @@
         
         <hr>
         <div class="priority-status">
-          <span class="high"><span class="dot1"></span> HIGH</span>
-          <span class="inpro"><span class="dot2"></span>In Progress</span>
+          <span class="priority high"><span class="priority-dot"></span>HIGH</span>
+          <span class="status inpro"><span class="status-dot"></span>In Progress</span>
         </div>
       </div>
       
 <!-- content tasks 2 -->
        <div class="content content2 high">
-        <h3>Fix Login Authentication Bug</h3>
+        <h3>Fix Login Authentication Bug <div class="edit-delete"><button class="edit" aria-label="Edit-task"> <i class="fa-solid fa-pen-to-square"></i></button>
+          <button class="delete" aria-label="Delete task"><i class="fa-solid fa-trash"></i></button></div>
+        </h3>
         <p class="text">Resolve the issue where users are logged out unexpectedly after 5 minutes of inactivity.</p>
        
         <p class="date"><span class="calender-icon"><img src="calender-img.png" alt="calender-image"></span> Due: Oct 15, 2025</p>
@@ -220,14 +224,16 @@
         
         <hr>
         <div class="priority-status">
-          <span class="high"><span class="dot3"></span>HIGH</span>
-          <span class="pending"><span class="dot4"></span>Pending</span>
+          <span class=" priority high"><span class="priority-dot"></span>HIGH</span>
+          <span class="status pending"><span class="status-dot"></span>Pending</span>
         </div>
       </div>
       
 <!-- content tasks 3 -->
        <div class="content content3 medium">
-        <h3>Update Documentation</h3>
+        <h3>Update Documentation <div class="edit-delete"><button class="edit" aria-label="Edit-task"> <i class="fa-solid fa-pen-to-square"></i></button>
+          <button class="delete" aria-label="Delete task"><i class="fa-solid fa-trash"></i></button></div>
+        </h3>
         <p class="text">Review and update the API documentation with the latest endpoint changes and examples.</p>
         
         <p class="date"><span class="calender-icon"><img src="calender-img.png" alt="calender-image"></span> Due: Oct 25, 2025</p>
@@ -235,14 +241,16 @@
         
         <hr>
         <div class="priority-status">
-          <span class="medium"><span class="dot5"></span>MEDIUM</span>
-          <span class="inpro"><span class="dot6"></span>In Progress</span>
+          <span class=" priority medium"><span class="priority-dot"></span>MEDIUM</span>
+          <span class="status inpro"><span class="status-dot"></span>In Progress</span>
         </div>
       </div>
                 
   <!-- content tasks 4 -->
         <div class="content content4 medium">
-          <h3>Database Performance Optimization</h3>
+          <h3>Database Performance Optimization <div class="edit-delete"><button class="edit" aria-label="Edit-task"> <i class="fa-solid fa-pen-to-square"></i></button>
+          <button class="delete" aria-label="Delete task"><i class="fa-solid fa-trash"></i></button></div>
+        </h3>
           <p class="text">Analyze and optimize slow-running queries to improve overall database performance by 30%.</p>
           
           <p class="date"><span class="calender-icon"><img src="calender-img.png" alt="calender-image"></span> Due: Oct 30, 2025</p>
@@ -250,13 +258,15 @@
           
           <hr>
           <div class="priority-status">
-            <span class="medium"><span class="dot7"></span>MEDIUM</span>
-            <span class="pending"><span class="dot8"></span>Pending</span>
+            <span class=" priority medium"><span class="priority-dot"></span>MEDIUM</span>
+            <span class="status pending"><span class="status-dot"></span>Pending</span>
           </div>
         </div>
   <!-- content task 5 -->
      <div class="content content5 low">
-      <h3>Implement Dark Mode</h3>
+      <h3>Implement Dark Mode <div class="edit-delete"><button class="edit" aria-label="Edit-task"> <i class="fa-solid fa-pen-to-square"></i></button>
+          <button class="delete" aria-label="Delete task"><i class="fa-solid fa-trash"></i></button></div>
+        </h3>
       <p class="text">Add dark mode theme support across the application with user preference persistance.</p>
       
       <p class="date"><span class="calender-icon"><img src="calender-img.png" alt="calender-image"></span> Due: Nov 05, 2025</p>
@@ -264,14 +274,16 @@
       
       <hr>
       <div class="priority-status">
-        <span class="low"><span class="dot9"></span>LOW</span>
-        <span class="pending"><span class="dot10"></span>Pending</span>
+        <span class="priority low"><span class="priority-dot"></span>LOW</span>
+        <span class="status pending"><span class="status-dot"></span>Pending</span>
       </div>
     </div>
                 
   <!-- content task 6 -->
    <div class="content content6 high">
-    <h3>User Testing Session</h3>
+    <h3>User Testing Session <div class="edit-delete"><button class="edit" aria-label="Edit-task"> <i class="fa-solid fa-pen-to-square"></i></button>
+          <button class="delete" aria-label="Delete task"><i class="fa-solid fa-trash"></i></button></div>
+        </h3>
     <p class="text">Conduct user tesing sessions with 10 participants to gather feedback on the new interface.</p>
     
     <p class="date"><span class="calender-icon"><img src="calender-img.png" alt="calender-image"></span> Due: Oct 28, 2025</p>
@@ -280,8 +292,8 @@
     <hr>
     
     <div class="priority-status">
-      <span class="high"><span class="dot11"></span>HIGH</span>
-      <span class="completed"><span class="dot12"></span>completed</span>
+      <span class="priority high"><span class="priority-dot"></span>HIGH</span>
+      <span class="status completed"><span class="status-dot"></span> completed</span>
     </div>
   </div>
 
