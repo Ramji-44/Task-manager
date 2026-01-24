@@ -8,6 +8,8 @@ menuBtn.addEventListener("click", () => {
 
 
 const activeTaskContainer = document.querySelector(".active-task");
+let tasksArr = []    // new tasks Array
+
 
 // custom dropdown 
 let drop = document.querySelectorAll(".dropdown");
@@ -59,7 +61,7 @@ const assigneeName = document.getElementById("assigneename");
 const email = document.getElementById("email");
 const date = document.getElementById("dob");
 const time = document.getElementById("time");
-const priority = document.querySelector(".selectAnOption");
+const prioritySelect = document.querySelector(".selectAnOption");
 const hoursInput = document.getElementById("hours");
 const url = document.getElementById("project-url");
 const textArea = document.getElementById("descrip");
@@ -83,13 +85,13 @@ if(validateInputs()){
 
 // validation function 
 function validateInputs() {
-  let valid = true;  
 
   // validation conditions
 // taskName 
   if (taskName.value.trim() === "") {
     showError(taskName, "Task Name is required");
-    valid = false;
+    goToError(taskName)
+    return false;
   }
   else{
     clearError(taskName)
@@ -98,15 +100,18 @@ function validateInputs() {
 // Assigneee name
   if (assigneeName.value.trim() === "") {
     showError(assigneeName, "Assignee Name is required");
-    valid = false;
+    goToError(assigneeName)
+    return false;
   }
   else if(!AssigneeNameChar(assigneeName.value.trim())){
     showError(assigneeName,"Name does not contain special characters")
-    valid = false
+    goToError(assigneeName)
+    return false
   }
   else if(!AssigneeNameNum(assigneeName.value.trim())){
     showError(assigneeName,"Name does not include numbers")
-    valid = false
+    goToError(assigneeName)
+    return false
   }
   else{
     clearError(assigneeName)
@@ -115,11 +120,13 @@ function validateInputs() {
 // email
   if (email.value.trim() === "") {
     showError(email, "Email is required");
-    valid = false;
+    goToError(email)
+    return false;
   }
   else if(!EmailValidation(email.value.trim())){
     showError(email,"Enter valid Email")
-    valid = false
+    goToError(email)
+    return false
   }
   else{
     clearError(email)
@@ -128,7 +135,8 @@ function validateInputs() {
 // date
     if (date.value === "") {
     showError(date, "Due date is required")
-    valid = false
+    goToError(date)
+    return false
   }
   else{
     clearError(date)
@@ -137,33 +145,38 @@ function validateInputs() {
 // time
   if (time.value === "") {
     showError(time, "Due time is required");
-    valid = false;
+    goToError(time)
+    return false;
   }
     else{
     clearError(time)
   }
 
 // select - priority
-  if (priority.textContent.includes("Select an option")) {
-    showError(priority, "Select priority level");
-    valid = false;
+  if (prioritySelect.textContent.includes("Select an option")) {
+    showError(prioritySelect, "Select priority level");
+    goToError(prioritySelect)
+    return false;
   }
   else{
-    clearError(priority)
+    clearError(prioritySelect)
   }
 
 // hour
   if (hoursInput.value === "" ) {
     showError(hoursInput, "Enter hours");
-    valid = false;
+    goToError(hoursInput)
+    return false;
   }
   else if(hoursInput.value <= 0){
     showError(hoursInput,"Enter hours 0 or above")
-    valid = false
+    goToError(hoursInput)
+    return false
   }
   else if(hoursInput.value >100){
     showError(hoursInput,"Maximum hours reached(100 hrs max)")
-    valid = false
+    goToError(hoursInput)
+    return false
   }
   else{
     clearError(hoursInput)
@@ -172,11 +185,13 @@ function validateInputs() {
 // url 
   if (url.value.trim() === "") {
     showError(url, "Project URL is required");
-    valid = false;
+    goToError(url)
+    return false;
   }
   else if(!projecturl(url.value.trim())){
     showError(url,"Enter valid url")
-    valid = false
+    goToError(url)
+    return false
   }
   else{
     clearError(url)
@@ -185,7 +200,8 @@ function validateInputs() {
 // text area
   if (textArea.value.trim() === "") {
     showError(textArea, "Task description is required");
-    valid = false;
+    goToError(textArea)
+    return false;
   }
   else{
     clearError(textArea)
@@ -194,7 +210,8 @@ function validateInputs() {
 // progress
   // if (progress.value == 0) {
   //   showError(progress, "Progress must be greater than 0");
-  //   valid = false;
+  //   goToError(progress)
+  //   return false;
   // }
   // else{
   //   clearError(progress)
@@ -210,7 +227,8 @@ function validateInputs() {
 
   if (!taskChecked) {
     showError(taskCheckbox[0], "select at least one task type");
-    valid = false;
+    goToError(taskChecked)
+    return false;
   }
   else{
     clearError(taskCheckbox[0])
@@ -226,14 +244,15 @@ function validateInputs() {
 
   if (!statusChecked) {
     showError(statusRadio[0], "Select task status");
-    valid = false;
+    goToError(statusChecked)
+    return false;
   }
   else{
     clearError(statusRadio[0])
   }
 
 // returns valid with  true or false
-  return valid
+  return true
 // console.log(valid) 
 }
 
@@ -306,7 +325,7 @@ progress.addEventListener("input", () => {
 form.addEventListener("reset", () => {
   percent.textContent = "0%";
 
-priority.innerHTML = `Select an option<span><img src="arrow down.png" alt="arrow down"></span>`
+prioritySelect.innerHTML = `Select an option<span><img src="arrow down.png" alt="arrow down"></span>`
 
   // remove error Messages when reset
   const AllerrorBox = form.querySelectorAll(".error-box")
@@ -331,57 +350,90 @@ const showToast = () => {
     }, 3000);
 }
 
+// Radio Input - status 
+function selectedStatus(){
+  let selectedValue = ""
+  for(let radio of statusRadio) {
+    if(radio.checked) {
+      return radio.value   
+    }
+  }
+  return ""   // if no radio is selected, returns empty string.
+}
+
 function addTask(){
 
-  const title = taskName.value
-  const description = textArea.value
-  const dueDate = date.value
-  const assignee = assigneeName.value
+// date - day-month-year to month day,year 
+  const oldDate = date.value
+  const modernDate = new Date(oldDate).toLocaleDateString('en-US',{
+    month: 'short',    // jan,feb...
+    day: 'numeric',    // number ...
+    year: 'numeric'   //  number ...
+  })
+
+// keeps the tasks if that are previouly added  
+   tasksArr = JSON.parse(localStorage.getItem("tasks")) || [];   // if not found tasks return empty [] 
+
+  //  task object for local storage
+   const task = {
+   id: Date.now(),   // for unique ID for each Task
+   title : taskName.value,
+   description : textArea.value.trim(),
+   dueDate : modernDate,
+   assignee : assigneeName.value,
+   priority: prioritySelect.textContent.trim(),
+   status: selectedStatus()
+  }
+
+  tasksArr.push(task)   // tasksArr is initially 0 
+  localStorage.setItem("tasks",JSON.stringify(tasksArr))
+
+  displayTask(task)
+}
+
+function displayTask(task){
 
 // select tag - priority
+const priorityopt = task.priority
 
-const priorityContent = priority.textContent.trim()
 let priorityClass = "low"
 let priorityText = "LOW"
-if(priorityContent.includes("High")){
+
+if(priorityopt.includes("High")){
   priorityClass = "high"
   priorityText = "HIGH"
 }
-else if(priorityContent.includes("Medium")){
+else if(priorityopt.includes("Medium")){
   priorityClass = "medium"
-  priorityText = "MEDUIM"
+  priorityText = "MEDIUM"
 }
 
-// status type 
-let statusClass = ""
-let statusText = ""
-if(document.getElementById("pending").checked){
-  statusClass = "pending"
-  statusText = "Pending"
-}
-else if(document.getElementById("inprogress").checked){
+// radio input
+let statusClass = "pending"
+let statusText = task.status
+
+if(task.status == "In Progress"){
   statusClass = "inpro"
-  statusText = "In Progress"
 }
-else if(document.getElementById("completed").checked){
+else if(task.status === "Completed"){
   statusClass = "completed"
-  statusText = "Completed"
 }
 
-// 
 
 // create task cards
 const newTasks = document.createElement("div")
 newTasks.className = `content ${priorityClass}`
 
+newTasks.dataset.id = task.id  // task crads to local storage id connect 
+
 newTasks.innerHTML = `<div>
-       <h3>${title}<div class="edit-delete"><button class="edit" aria-label="Edit-task"> <i class="fa-solid fa-pen-to-square"></i></button>
+       <h3>${task.title}<div class="edit-delete"><button class="edit" aria-label="Edit-task"> <i class="fa-solid fa-pen-to-square"></i></button>
           <button class="delete" aria-label="Delete task"><i class="fa-solid fa-trash"></i></button></div>
         </h3>
-        <p class="text">${description}</p>
+        <p class="text">${task.description}</p>
 
-        <p class="date"><span class="calender-icon"><img src="calender-img.png" alt="calender-image"></span>Due:  ${dueDate}</p>
-        <p class="name"><span class="user-icon"><img src="person-img.jpg" alt="user-image"></span> ${assignee}</p>
+        <p class="date"><span class="calender-icon"><img src="calender-img.png" alt="calender-image"></span>Due:  ${task.dueDate}</p>
+        <p class="name"><span class="user-icon"><img src="person-img.jpg" alt="user-image"></span> ${task.assignee}</p>
 
         <hr>
         <div class="priority-status">
@@ -390,15 +442,46 @@ newTasks.innerHTML = `<div>
         </div>
       </div>
 `
-activeTaskContainer.appendChild(newTasks)
+
+// delete task card
+  const deleteIcon = newTasks.querySelector(".delete")
+  deleteIcon.addEventListener("click", () => {
+    newTasks.remove()
+
+    // delete from localStorage 
+    let storedTasks = JSON.parse(localStorage.getItem("tasks")) || [];   // gets task from the local storage
+
+    let updatedTasks = [];
+
+    for (let i = 0; i < storedTasks.length; i++) {
+      if (storedTasks[i].id !== task.id) {
+        updatedTasks.push(storedTasks[i]);
+      }
+    }
+
+    localStorage.setItem("tasks", JSON.stringify(updatedTasks));
+
+  })
+  // new tasks adds on first 
+activeTaskContainer.prepend(newTasks)
 }
 
-/* Task contents  Delete button */
-document.addEventListener("click",(e) => {
-  if(e.target.closest(".delete")){
-    const contentCard = e.target.closest(".content")
-    if(contentCard){
-      contentCard.remove()
-    }
-  }
-})
+// while refresh the page
+window.onload = () => {
+let storedTasks = localStorage.getItem("tasks")
+
+if(storedTasks !== null){
+
+  tasksArr.forEach((task) => {
+    displayTask(task)
+  })
+}
+}
+// focus on the input
+function goToError(input) {
+  input.scrollIntoView({
+    behavior: "smooth",
+    block: "center"
+  })
+  input.focus()
+}
