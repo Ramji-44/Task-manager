@@ -453,23 +453,32 @@ newTasks.innerHTML = `<div>
       </div>
 `
 
+  // new tasks adds on first 
+activeTaskContainer.prepend(newTasks)
+
+}
+
 // delete task card
-  const deleteBtn = newTasks.querySelector(".delete")
-  deleteBtn.addEventListener("click", () => {
-    newTasks.remove()
+document.addEventListener("click",(e) => {
+
+  const deleteBtn = e.target.closest(".delete")
+  if(!deleteBtn) return
+
+  const taskCards = deleteBtn.closest(".content")
+  if(!taskCards) return
+
+  const taskId = Number(taskCards.dataset.id)
+    taskCards.remove()
 
     // delete from localStorage 
     let storedTasks = JSON.parse(localStorage.getItem("tasks")) || [];   // gets task from the local storage
 
-    let updatedTasks = storedTasks.filter(i => i.id !== task.id)
+    storedTasks = storedTasks.filter(i => i.id !== taskId)
 
-    localStorage.setItem("tasks", JSON.stringify(updatedTasks));
+    localStorage.setItem("tasks", JSON.stringify(storedTasks));
 
     deleteToast()    // calling the delete Toast
   })
-  // new tasks adds on first 
-activeTaskContainer.prepend(newTasks)
-}
 
 // while refresh the page
 window.onload = () => {
