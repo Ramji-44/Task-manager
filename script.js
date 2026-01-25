@@ -321,6 +321,7 @@ function EmailValidation(mail){
 progress.addEventListener("input", () => {
   percent.textContent = `${progress.value}%`;
 });
+
 // reset progress value
 form.addEventListener("reset", () => {
   percent.textContent = "0%";
@@ -342,17 +343,26 @@ prioritySelect.innerHTML = `Select an option<span><img src="arrow down.png" alt=
 
 
 /*Toast notification appears*/
+// success Toast
 const showToast = () => {
-  const notification = document.getElementById('toast-container')
-  notification.style.visibility = "visible"
+  const successNotification = document.querySelector('.success-toast')
+  successNotification.style.visibility = "visible"
     setTimeout(() => {
-        notification.style.visibility = "hidden";
+        successNotification.style.visibility = "hidden";
     }, 3000);
+}
+
+// delete Toast
+const deleteToast = () => {
+  const deleteNotification = document.querySelector('.delete-toast')
+  deleteNotification.style.visibility = "visible"
+  setTimeout(() => {
+    deleteNotification.style.visibility = "hidden"
+  },3000)
 }
 
 // Radio Input - status 
 function selectedStatus(){
-  let selectedValue = ""
   for(let radio of statusRadio) {
     if(radio.checked) {
       return radio.value   
@@ -444,23 +454,18 @@ newTasks.innerHTML = `<div>
 `
 
 // delete task card
-  const deleteIcon = newTasks.querySelector(".delete")
-  deleteIcon.addEventListener("click", () => {
+  const deleteBtn = newTasks.querySelector(".delete")
+  deleteBtn.addEventListener("click", () => {
     newTasks.remove()
 
     // delete from localStorage 
     let storedTasks = JSON.parse(localStorage.getItem("tasks")) || [];   // gets task from the local storage
 
-    let updatedTasks = [];
-
-    for (let i = 0; i < storedTasks.length; i++) {
-      if (storedTasks[i].id !== task.id) {
-        updatedTasks.push(storedTasks[i]);
-      }
-    }
+    let updatedTasks = storedTasks.filter(i => i.id !== task.id)
 
     localStorage.setItem("tasks", JSON.stringify(updatedTasks));
 
+    deleteToast()    // calling the delete Toast
   })
   // new tasks adds on first 
 activeTaskContainer.prepend(newTasks)
@@ -468,15 +473,15 @@ activeTaskContainer.prepend(newTasks)
 
 // while refresh the page
 window.onload = () => {
-let storedTasks = localStorage.getItem("tasks")
 
-if(storedTasks !== null){
+// get Tasks from local storage
+  tasksArr = JSON.parse(localStorage.getItem("tasks")) || [];
 
-  tasksArr.forEach((task) => {
+  tasksArr.forEach((task) => {  //   task from taskArr sends to displayTask
     displayTask(task)
   })
 }
-}
+
 // focus on the input
 function goToError(input) {
   input.scrollIntoView({
