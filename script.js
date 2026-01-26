@@ -29,7 +29,7 @@ drop.forEach(function (select) {
     }
   });
 
-  // hide dropdown and pick selected item to display
+  // hides dropdown and selects selected item for display
   optionItems.forEach((opt) => {
     opt.addEventListener("click", () => {
 
@@ -371,6 +371,18 @@ function selectedStatus(){
   return ""   // if no radio is selected, returns empty string.
 }
 
+function TaskTypes(){
+  const taskCheckbox = document.querySelectorAll('.task-type input[type="checkbox"]')
+  let types = []
+
+  taskCheckbox.forEach((box) => {
+    if(box.checked) {
+      types.push(box.nextElementSibling.textContent)
+    }
+  }) 
+  return types   // returns in array
+}
+
 function addTask(){
 
 // date - day-month-year to month day,year 
@@ -387,11 +399,17 @@ function addTask(){
   //  task object for local storage
    const task = {
    id: Date.now(),   // for unique ID for each Task
-   title : taskName.value,
-   description : textArea.value.trim(),
-   dueDate : modernDate,
-   assignee : assigneeName.value,
+   title : taskName.value.trim(),
+   assignee: assigneeName.value.trim(),
+   email: email.value.trim(),
+   dueDate: modernDate,
+   dueTime: time.value,
    priority: prioritySelect.textContent.trim(),
+   hours: hoursInput.value,
+   projectUrl: url.value.trim(),
+   description : textArea.value.trim(),
+   progress: progress.value,
+   TaskTypes: TaskTypes(),
    status: selectedStatus()
   }
 
@@ -404,7 +422,7 @@ function addTask(){
 function displayTask(task){
 
 // select tag - priority
-const priorityopt = task.priority
+const priorityopt = task.priority || ""
 
 let priorityClass = "low"
 let priorityText = "LOW"

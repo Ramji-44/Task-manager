@@ -643,7 +643,7 @@ input[type="text"],input[type="email"],input[type="url"],input[type="range"] {
 }
 
 /* completed dot */
-.stat.completed {
+.status.completed {
   display: flex;
   align-items: center;
   gap: 0.3em;
