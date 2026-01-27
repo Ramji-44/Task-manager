@@ -517,3 +517,66 @@ function goToError(input) {
   })
   input.focus()
 }
+
+// object values fills in popup 
+function valuesOfLocal(task){
+  document.querySelector(".td-title").textContent = task.title
+  document.querySelector(".td-assignee").textContent = task.assignee
+  document.querySelector(".td-email").textContent = task.email
+  document.querySelector(".td-date").textContent = task.dueDate
+  document.querySelector(".td-time").textContent = task.dueTime
+  document.querySelector(".td-hours").textContent = task.hours
+  document.querySelector(".td-url").textContent = task.projectUrl
+  document.querySelector(".td-priority").textContent = task.priority
+  document.querySelector(".td-progress").textContent = task.progress + "%"
+  document.querySelector(".td-tasktype").textContent = task.TaskTypes.join(", ")
+  document.querySelector(".td-status").textContent = task.status
+  document.querySelector(".td-description").textContent = task.description
+
+}
+
+const Overlay = document.querySelector(".overlay")
+const taskDetails = document.querySelector(".task-details")
+const closeIconx = document.querySelector(".fa-xmark") 
+
+// opens full details popup
+document.addEventListener("click", (e) => {
+  // clicks priority area 
+  const priorityArea = e.target.closest(".priority-status")
+  if(!priorityArea){
+    return
+  }
+// finds parent
+  const taskCard = priorityArea.closest(".content")
+  if(!taskCard){
+    return
+  }
+// getting task ID
+  const taskId = Number(taskCard.dataset.id)
+
+  const tasks = JSON.parse(localStorage.getItem("tasks"))  || []
+  const clickedTask = tasks.find(t => t.id === taskId)
+
+  if(!clickedTask){
+    return
+  }
+
+  valuesOfLocal(clickedTask)    // pop up filling
+
+// shows popup
+  Overlay.style.display = "block"
+  taskDetails.style.visibility = "visible"
+  taskDetails.style.opacity  = "1"
+})
+
+// close popup xicon
+closeIconx.addEventListener("click", () => {
+  taskDetails.style.visibility = "hidden"
+  Overlay.style.display = "none"
+})
+
+// close popup clicking outside
+Overlay.addEventListener("click", () => {
+  taskDetails.style.visibility = "hidden"
+  Overlay.style.display = "none"
+})

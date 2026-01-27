@@ -173,15 +173,34 @@
   </form>
 </section>
 
+<!-- task added message -->
 <div class="success-toast">
   <span id="tick"><i class="fa-solid fa-circle-check"></i></span>
   <span>Task Added Successfully</span>
 </div>
-
+<!-- Delete message  -->
 <div class="delete-toast">
   <span id="Xdelete"><i class="fa-solid fa-circle-xmark"></i></span>
   <span>Task Deleted Successfully</span>
 </div>
+
+<!-- task details of new task cards -->
+<div class="overlay"></div>
+  <div class="task-details"> <button><i class="fa-solid fa-xmark"></i></button>
+    <h2 class="td-title"></h2>
+    <p><i class="fa-solid fa-circle-user"></i> Assignee Name: <span class="td-assignee"></span></p>
+    <p><i class="fa-solid fa-envelope"></i> Email: <span class="td-email"></span></p>
+    <p><i class="fa-solid fa-calendar-days"></i> Due Date: <span class="td-date"></span></p>
+    <p><i class="fa-solid fa-clock"></i> Due Time: <span class="td-time"></span></p>
+    <p><i class="fa-solid fa-stopwatch"></i> Estiated Hours: <span class="td-hours"></span></p>
+    <p><i class="fa-solid fa-link"></i> Project Url: <span class="td-url"></span></p>
+    <p>Priority: <span class="td-priority"></span></p>
+    <p>Progress:</strong> <span class="td-progress"></span></p>
+    <p>Task Type: </strong><span class="td-tasktype"></span></p>
+    <p>Status: </strong><span class="td-status"></span></p>
+    <hr>
+    <p>Description: <span class="td-description"></span></p>
+  </div>
 
 
 <!-- active tasks - nav bar -->
