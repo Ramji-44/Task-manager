@@ -117,7 +117,7 @@
     </div>
 
     <div class="borderbox">
-    <textarea name="taskdescription"  cols="30" rows="5" placeholder="Task Description*" id="descrip"></textarea>
+    <textarea name="taskdescription"  cols="30" rows="3" placeholder="Task Description*" id="descrip"></textarea>
     <span class="error-box">
           <i class="fa-solid fa-circle-exclamation"></i>
           <small class="error"></small>
@@ -184,23 +184,181 @@
   <span>Task Deleted Successfully</span>
 </div>
 
+<!--  upadte task messgae -->
+  <div class="update-toast">
+  <span id="tick"><i class="fa-solid fa-circle-check"></i></span>
+  <span>Task Updated Successfully</span>
+</div>
+
+
 <!-- task details of new task cards -->
 <div class="overlay"></div>
   <div class="task-details"> <button><i class="fa-solid fa-xmark"></i></button>
     <h2 class="td-title"></h2>
-    <p><i class="fa-solid fa-circle-user"></i> Assignee Name: <span class="td-assignee"></span></p>
-    <p><i class="fa-solid fa-envelope"></i> Email: <span class="td-email"></span></p>
-    <p><i class="fa-solid fa-calendar-days"></i> Due Date: <span class="td-date"></span></p>
-    <p><i class="fa-solid fa-clock"></i> Due Time: <span class="td-time"></span></p>
-    <p><i class="fa-solid fa-stopwatch"></i> Estiated Hours: <span class="td-hours"></span></p>
-    <p><i class="fa-solid fa-link"></i> Project Url: <span class="td-url"></span></p>
-    <p>Priority: <span class="td-priority"></span></p>
-    <p>Progress:</strong> <span class="td-progress"></span></p>
-    <p>Task Type: </strong><span class="td-tasktype"></span></p>
-    <p>Status: </strong><span class="td-status"></span></p>
+    <p><i class="fa-solid fa-circle-user"></i> <strong>Assignee Name:</strong> <span class="td-assignee"></span></p>
+    <p><i class="fa-solid fa-envelope"></i> <strong>Email:</strong> <span class="td-email"></span></p>
+    <p><i class="fa-solid fa-calendar-days"></i> <strong>Due Date:</strong> <span class="td-date"></span></p>
+    <p><i class="fa-solid fa-clock"></i> <strong>Due Time: </strong><span class="td-time"></span></p>
+    <p><i class="fa-solid fa-stopwatch"></i> <strong>Estiated Hours:</strong> <span class="td-hours"></span></p>
+    <p><i class="fa-solid fa-link"></i> <strong>Project Url:</strong> <span class="td-url"></span></p>
+    <p><strong>Priority:</strong> <span class="td-priority"></span></p>
+    <p><strong>Progress:</strong> <span class="td-progress"></span></p>
+    <p><strong>Task Type: </strong><span class="td-tasktype"></span></p>
+    <p><strong>Status: </strong><span class="td-status"></span></p>
     <hr>
-    <p>Description: <span class="td-description"></span></p>
+    <p><strong>Description: </strong><span class="td-description"></span></p>
   </div>
+
+
+  <!-- edit popup -->
+<div class="edit-overlay"></div>
+<div class="edit-popup">
+
+  <form id="editTaskForm">
+    <span class="edit-task"><h4>&#128221 Edit Task</h4> <button class="edit-close" type="button"><i class= "fa-solid fa-xmark"></i></button></span>
+
+    <div class="borderbox">
+  <input type="text" name="taskname" placeholder="Task Name *" id="edit-taskname" />
+  <span class="error-box">
+    <i class="fa-solid fa-circle-exclamation"></i>
+    <small class="error"></small>
+  </span>
+</div>
+
+<div class="borderbox">
+  <input type="text" name="personname" placeholder="Assignee Name *" id="edit-assigneename">
+  <span class="error-box">
+    <i class="fa-solid fa-circle-exclamation"></i>
+    <small class="error"></small>
+  </span>
+</div>
+
+<div class="borderbox">
+  <input type="email" name="email" placeholder="Assignee Email *" id="edit-email"/>
+  <span class="error-box">
+    <i class="fa-solid fa-circle-exclamation"></i>
+    <small class="error"></small>
+  </span>
+</div>
+
+<div class="field">
+  <input type="date" id="edit-dob" name="dateofbirth" min="2026-01-01"/>
+  <label for="edit-dob">Due Date*</label>
+  <span class="error-box">
+    <i class="fa-solid fa-circle-exclamation"></i>
+    <small class="error"></small>
+  </span>
+</div>
+
+<div class="field">
+  <input type="time" id="edit-time" name="Duetime"/>
+  <label for="edit-time">Due Time*</label>
+  <span class="error-box">
+    <i class="fa-solid fa-circle-exclamation"></i>
+    <small class="error"></small>
+  </span>
+</div>
+
+
+<div class="field dropdown">
+  <label>Priority Level*</label>
+
+  <div class="selectAnOption edit-priority">Select an option <span><img src="arrow down.png"></span>
+  </div>
+
+  <div class="dropdown-options">
+    <div class="option">Low Priority</div>
+    <div class="option">Medium Priority</div>
+    <div class="option">High Priority</div>
+  </div>
+
+  <span class="error-box">
+    <i class="fa-solid fa-circle-exclamation"></i>
+    <small class="error"></small>
+  </span>
+</div>
+
+<div class="field hour">
+  <input type="number" name="EstimatedHours" id="edit-hours" min="0" />
+  <label for="edit-hours">Estimated Hours*</label>
+  <span class="error-box">
+    <i class="fa-solid fa-circle-exclamation"></i>
+    <small class="error"></small>
+  </span>
+</div>
+
+<div class="borderbox">
+  <input type="url" name="ProjectUrl" placeholder="Project URL*" id="edit-project-url" />
+  <span class="error-box">
+    <i class="fa-solid fa-circle-exclamation"></i>
+    <small class="error"></small>
+  </span>
+</div>
+
+<div class="borderbox">
+  <textarea cols="30" rows="5" placeholder="Task Description*" id="edit-descrip"></textarea>
+  <span class="error-box">
+    <i class="fa-solid fa-circle-exclamation"></i>
+    <small class="error"></small>
+  </span>
+</div>
+
+<div class="borderbox rangeinput">
+  <label class="taskprogress-label">Task Progress*</label>
+  <input type="range" id="edit-progress" min="0" max="100" value="0">
+  <span class="progress-value edit-progress-value">0%</span>
+  <span class="error-box">
+    <i class="fa-solid fa-circle-exclamation"></i>
+    <small class="error"></small>
+  </span>
+</div>
+
+<div class="task-type borderbox">
+  <label id="taskhead">Task Type*</label><br>
+
+  <input type="checkbox" id="edit-bug">
+  <label for="edit-bug" class="task-label">Bug Fix</label>
+
+  <input type="checkbox" id="edit-feature">
+  <label for="edit-feature" class="task-label">Feature</label><br>
+
+  <input type="checkbox" id="edit-enhance">
+  <label for="edit-enhance" class="task-label">Enhancement</label>
+
+  <span class="error-box">
+    <i class="fa-solid fa-circle-exclamation"></i>
+    <small class="error"></small>
+  </span>
+</div>
+
+
+<div class="status-type borderbox">
+  <label id="statushead">Status*</label><br>
+
+  <input type="radio" name="edit-status" id="edit-pending" value="Pending">
+  <label for="edit-pending" class="status-label">Pending</label>
+
+  <input type="radio" name="edit-status" id="edit-inprogress" value="In Progress">
+  <label for="edit-inprogress" class="status-label">In Progress</label><br>
+
+  <input type="radio" name="edit-status" id="edit-completed" value="Completed">
+  <label for="edit-completed" class="status-label">Completed</label>
+
+  <span class="error-box">
+    <i class="fa-solid fa-circle-exclamation"></i>
+    <small class="error"></small>
+  </span>
+</div>
+
+
+      <!-- task buttons - create and reset -->
+    <div class="task-buttons">
+      <button type="submit" class="update-button">&#10003 Update Task</button>
+      <button type="reset" class="cancel-button">&#10006 <br>Cancel</button>
+    </div>
+</div>
+  </form>
+
 
 
 <!-- active tasks - nav bar -->
@@ -317,7 +475,7 @@
     
     <div class="priority-status">
       <span class="priority high"><span class="priority-dot"></span>HIGH</span>
-      <span class="status completed"><span class="status-dot"></span> completed</span>
+      <span class="status completed"><span class="status-dot"></span> Completed</span>
     </div>
   </div>
 
@@ -377,3 +535,4 @@
 </html>
 
 <!--  tick code- &#10003 and  x code -&#10006 -->
+  
