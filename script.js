@@ -4,6 +4,7 @@ const navLinks = document.querySelector(".nav-links");
 
 menuBtn.addEventListener("click", () => {
   navLinks.classList.toggle("show");
+  menuBtn.classList.toggle("active")
 });
 
 
@@ -22,11 +23,12 @@ drop.forEach(function (select) {
 
   // toggle if open -> close, close -> open
   selectAnopt.addEventListener("click", () => {
-    if (optionContainer.style.display === "block") {  // open 
-      optionContainer.style.display = "none";  // close
-    } else {
-      optionContainer.style.display = "block";  // open
-    }
+    optionContainer.classList.toggle("open-custom")
+    // if (optionContainer.style.display === "block") {  // open 
+    //   optionContainer.style.display = "none";  // close
+    // } else {
+    //   optionContainer.style.display = "block";  // open
+    // }
   });
 
   // hides dropdown and selects selected item for display
@@ -36,7 +38,7 @@ drop.forEach(function (select) {
       let arrow = selectAnopt.querySelector("span").outerHTML  // arrow icon
   
       selectAnopt.innerHTML = opt.textContent +  arrow 
-      optionContainer.style.display = "none";
+      optionContainer.classList.remove("open-custom")   // none
 
       clearError(selectAnopt)  // error-box call(form validation)
     });
@@ -45,7 +47,7 @@ drop.forEach(function (select) {
   // close
   window.addEventListener("click", (e) => {
     if (!select.contains(e.target)) {
-      optionContainer.style.display = "none";
+      optionContainer.classList.remove("open-custom")      // none
     }
   });
 });
@@ -73,12 +75,17 @@ const taskCheckbox = document.querySelectorAll(
   '.task-type input[type="checkbox"]');
 const statusRadio = document.querySelectorAll('input[name="status"]');
 
+/* date validation */
+const selectedDate = date.value
+const today = new Date().toISOString().split("T")[0]
+/*date global variables*/
+
 form.addEventListener("submit", (e) => {
   e.preventDefault();
 
 if(validateInputs()){
     addTask()      // tasks adding  function
-    showToast()   // successful - Notification
+    successToast()   // successful - Notification
     form.reset()  // resets after validates
 }
 });
@@ -138,7 +145,17 @@ function validateInputs() {
     goToError(date)
     return false
   }
-  else{
+    else if(selectedDate < today){
+      showError(date,"Past dates are not allowed")
+      goToError(date)
+      return false
+    }
+    else if(selectedDate > "2026-12-31"){
+      showError(date,"Due date must be within 2026")
+      goToError(date)
+      return false
+    }
+    else{
     clearError(date)
   }
 
@@ -227,7 +244,7 @@ function validateInputs() {
 
   if (!taskChecked) {
     showError(taskCheckbox[0], "select at least one task type");
-    goToError(taskChecked)
+    goToError(taskChecked[0])
     return false;
   }
   else{
@@ -244,7 +261,7 @@ function validateInputs() {
 
   if (!statusChecked) {
     showError(statusRadio[0], "Select task status");
-    goToError(statusChecked)
+    goToError(statusChecked[0])
     return false;
   }
   else{
@@ -269,6 +286,7 @@ function validateEditInputs(){
   const editTextArea = document.getElementById("edit-descrip")
   const editTaskCheckbox = document.querySelectorAll('#editTaskForm input[type="checkbox"]')
   const editStatusRadio = document.querySelectorAll('input[name="edit-status"]')
+
 
   // taskName
   if (editTaskName.value.trim() === "") {
@@ -314,6 +332,9 @@ function validateEditInputs(){
   else{
     clearError(editEmail)
   }
+  /* Date validation*/
+const EselectedDate = editDate.value
+const Etoday = new Date().toISOString().split("T")[0]
 
   // date
   if (editDate.value === "") {
@@ -321,6 +342,16 @@ function validateEditInputs(){
     goToError(editDate)
     return false
   }
+  else if(EselectedDate < Etoday){
+      showError(editDate,"Past dates are not allowed")
+      goToError(editDate)
+      return false
+    }
+  else if(EselectedDate > "2026-12-31"){
+      showError(editDate,"Due date must be within 2026")
+      goToError(editDate)
+      return false
+    }
   else{
     clearError(editDate)
   }
@@ -331,6 +362,7 @@ function validateEditInputs(){
     goToError(editTime)
     return false;
   }
+
   else{
     clearError(editTime)
   }
@@ -442,8 +474,6 @@ function validateEditInputs(){
   return true
 }
 
-
-
 // error message function
 
 function showError(input, message) {
@@ -453,7 +483,7 @@ function showError(input, message) {
   const small = parent.querySelector(".error");
 
   small.innerText = message;  // displays error msg
-  errorBox.style.visibility = "visible";   // beacuse by default, in css i gave hidden
+  errorBox.classList.add("show")   // beacuse by default, in css i gave hidden
 }
 
 // clear error messages
@@ -464,7 +494,7 @@ function clearError(input){
   const small = parent.querySelector('.error')
 
   small.innerText = ""    // empties
-  errorBox.style.visibility = "hidden"   // hides error 
+  errorBox.classList.remove("show")   // hides error 
 }
 
 // hides error msg when input focused and typing...
@@ -472,7 +502,7 @@ const allInputs = document.querySelectorAll("input,textarea");
 
 allInputs.forEach((input) => {
   input.addEventListener('input', () => {
-    const parent = input.closest("div")
+    const parent = input.closest(".borderbox, .field")   // gets  the correct parent, instead of div
 
 
     if(!parent) // stop code if closest div not found
@@ -481,7 +511,7 @@ allInputs.forEach((input) => {
       const errorBox = parent.querySelector(".error-box")
       const small = parent.querySelector('.error')
       if(errorBox){
-        errorBox.style.visibility = "hidden"  // hides box
+        errorBox.classList.remove("show")  // hides box
       }
       if(small)
         small.innerText = ""  // clears input field
@@ -532,29 +562,29 @@ prioritySelect.innerHTML = `Select an option<span><img src="arrow down.png" alt=
 
 /*Toast notification appears*/
 // success Toast
-const showToast = () => {
+const successToast = () => {
   const successNotification = document.querySelector('.success-toast')
-  successNotification.style.visibility = "visible"
+  successNotification.classList.add("showToast")   // visibile
     setTimeout(() => {
-        successNotification.style.visibility = "hidden";
+        successNotification.classList.remove("showToast");  // hidden
     }, 3000);
 }
 
 // delete Toast
 const deleteToast = () => {
   const deleteNotification = document.querySelector('.delete-toast')
-  deleteNotification.style.visibility = "visible"
+  deleteNotification.classList.add("showToast")   // visible
   setTimeout(() => {
-    deleteNotification.style.visibility = "hidden"
+    deleteNotification.classList.remove("showToast")   // hidden
   },3000)
 }
 
 // update Toast
 const updateToast = () => {
   const updateNotification = document.querySelector('.update-toast')
-  updateNotification.style.visibility = "visible"
+  updateNotification.classList.add("showToast")    // visible
   setTimeout(() => {
-    updateNotification.style.visibility = "hidden"
+    updateNotification.classList.remove("showToast")    // hidden
   },3000)
 }
 
@@ -569,22 +599,23 @@ function selectedStatus(){
 }
 
 function TaskTypes(){
-  const taskCheckbox = document.querySelectorAll('.task-type input[type="checkbox"]')
+  // const taskCheckbox = document.querySelectorAll('.task-type input[type="checkbox"]')
   let types = []
 
   taskCheckbox.forEach((box) => {
     if(box.checked) {
-      types.push(box.nextElementSibling.textContent)
+      types.push(box.value)   // refers its value, and push in the empty array [] types
     }
   }) 
   return types   // returns in array
 }
 
+/* Add task function for display and store */
 function addTask(){
 
 // date - day-month-year to month day,year 
-  const oldDate = date.value
-  const modernDate = new Date(oldDate).toLocaleDateString('en-US',{
+  const oldDate = date.value  // date.value returns str like "0000-00-00"
+  const modernDate = new Date(oldDate).toLocaleDateString('en-US',{   // it converts to ex: Feb 30, 2026
     month: 'short',    // jan,feb...
     day: 'numeric',    // number ...
     year: 'numeric'   //  number ...
@@ -611,12 +642,14 @@ function addTask(){
   }
 
   tasksArr.push(task)   // tasksArr is initially 0 
-  localStorage.setItem("tasks",JSON.stringify(tasksArr))
+// local storage
+  localStorage.setItem("tasks",JSON.stringify(tasksArr)) 
 
-  displayTask(task)
+  displayTask(task) 
   taskCounts()
 }
 
+/* display task function */
 function displayTask(task){
 
 // select tag - priority
@@ -638,16 +671,14 @@ else if(priorityopt.includes("Medium")){
 let statusClass = "pending"
 let statusText = task.status
 
-if(task.status == "In Progress"){
+if(task.status.includes("In Progress")){
   statusClass = "inpro"
 }
-else if(task.status === "Completed"){
+else if(task.status.includes("Completed")){
   statusClass = "completed"
 }
-
-
 // create task cards
-const newTasks = document.createElement("div")
+const newTasks = document.createElement("div")    // creating a empty contanier
 newTasks.className = `content ${priorityClass}`
 
 newTasks.dataset.id = task.id  // task crads to local storage id connect 
@@ -671,7 +702,6 @@ newTasks.innerHTML = `<div>
 
   // new tasks adds on first 
 activeTaskContainer.prepend(newTasks)
-
 }
 
 // delete task card
@@ -683,14 +713,14 @@ document.addEventListener("click",(e) => {
   const taskCards = deleteBtn.closest(".content")
   if(!taskCards) return
 
-  const taskId = Number(taskCards.dataset.id)
+  const taskId = Number(taskCards.dataset.id) // changes str to number 
     taskCards.remove()
 
     // delete from localStorage 
     let storedTasks = JSON.parse(localStorage.getItem("tasks")) || [];   // gets task from the local storage
 
-    storedTasks = storedTasks.filter(i => i.id !== taskId)
-
+    storedTasks = storedTasks.filter(i  => i.id !== taskId)  // 
+// save tasks back to local storage
     localStorage.setItem("tasks", JSON.stringify(storedTasks));
 
     deleteToast()    // calling the delete Toast
@@ -701,7 +731,7 @@ document.addEventListener("click",(e) => {
 window.onload = () => {
 
 // get Tasks from local storage
-  tasksArr = JSON.parse(localStorage.getItem("tasks")) || [];
+  tasksArr = JSON.parse(localStorage.getItem("tasks")) || []; 
 
   tasksArr.forEach((task) => {  //   task from taskArr sends to displayTask
     displayTask(task)
@@ -728,20 +758,48 @@ function goToError(input) {
 
 // object values fills in popup 
 function valuesOfLocal(task){
+
+// used here for the dot-small circle will be present in the task view
+  // select tag - priority
+const priorityopt = task.priority || ""
+
+let priorityClass = "low"
+let priorityText = "LOW"
+
+if(priorityopt.includes("High")){
+  priorityClass = "high"
+  priorityText = "HIGH"
+}
+else if(priorityopt.includes("Medium")){
+  priorityClass = "medium"
+  priorityText = "MEDIUM"
+}
+
+// radio input
+let statusClass = "pending"
+let statusText = task.status
+
+if(task.status.includes("In Progress")){
+  statusClass = "inpro"
+}
+else if(task.status.includes("Completed")){
+  statusClass = "completed"
+}
+
   document.querySelector(".td-title").textContent = task.title
   document.querySelector(".td-assignee").textContent = task.assignee
   document.querySelector(".td-email").textContent = task.email
   document.querySelector(".td-date").textContent = task.dueDate
   document.querySelector(".td-time").textContent = task.dueTime
   document.querySelector(".td-hours").textContent = task.hours
-  document.querySelector(".td-url").textContent = task.projectUrl
-  document.querySelector(".td-priority").textContent = task.priority
+  document.querySelector(".td-url").href = task.projectUrl
+  document.querySelector(".td-priority").innerHTML = `<span class="priority ${priorityClass}"><span class="priority-dot"></span> ${priorityText}</span>`
   document.querySelector(".td-progress").textContent = task.progress + "%"
   document.querySelector(".td-tasktype").textContent = task.TaskTypes.join(", ")
-  document.querySelector(".td-status").textContent = task.status
+  document.querySelector(".td-status").innerHTML = `<span class="status ${statusClass}"><span class="status-dot"></span> ${statusText}</span>`
   document.querySelector(".td-description").textContent = task.description
 
-}
+}   // valuesOfLocal info
 
 const Overlay = document.querySelector(".overlay")
 const taskDetails = document.querySelector(".task-details")
@@ -749,52 +807,44 @@ const closeIconx = document.querySelector(".fa-xmark")
 
 // opens full details popup
 document.addEventListener("click", (e) => {
-  // clicks priority area 
-  const priorityArea = e.target.closest(".priority-status")
-  if(!priorityArea){
-    return
-  }
-// finds parent
-  const taskCard = priorityArea.closest(".content")
+
+  const taskCard = e.target.closest(".content")
   if(!taskCard){
     return
   }
+  if(e.target.closest(".edit",".delete")) return
 // getting task ID
   const taskId = Number(taskCard.dataset.id)
 
-  const tasks = JSON.parse(localStorage.getItem("tasks"))  || []
-  const clickedTask = tasks.find(t => t.id === taskId)
+  const tasks = JSON.parse(localStorage.getItem("tasks"))  || []  // str to arr
+  const clickedTask = tasks.find(t => t.id === taskId)  // retruns the task object
 
   if(!clickedTask){
     return
   }
 
-  valuesOfLocal(clickedTask)    // pop up filling
+  valuesOfLocal(clickedTask)    //function calls for filling the popup
 
 // shows popup
-  Overlay.style.display = "block"
-  taskDetails.style.visibility = "visible"
-  taskDetails.style.opacity  = "1"
+  Overlay.classList.add("openTD")
+  taskDetails.classList.add("openTD")
 })
 
 // close popup xicon
 closeIconx.addEventListener("click", () => {
-  taskDetails.style.visibility = "hidden"
-  Overlay.style.display = "none"
+  taskDetails.classList.remove("openTD")
+  Overlay.classList.remove("openTD")
 })
 
 // close popup clicking outside
 Overlay.addEventListener("click", () => {
-  taskDetails.style.visibility = "hidden"
-  Overlay.style.display = "none"
+  taskDetails.classList.remove("openTD")
+  Overlay.classList.remove("openTD")
 })
+
 
 /*Edit Task*/
 // get data from local storage ->fill in form ->validate -> update in UI and local storage
-
-// Edit function  /*Edit Task*/
-
-/*Edit Task*/
   
 const editOverlay = document.querySelector(".edit-overlay")
 const editPopup = document.querySelector(".edit-popup")
@@ -821,7 +871,7 @@ document.addEventListener("click", (e) => {
   // Clear all previous error messages when opening edit popup
   const editErrorBoxes = editForm.querySelectorAll(".error-box")
   editErrorBoxes.forEach((box) => {
-    box.style.visibility = "hidden"
+    box.classList.remove("show")
   })
   const editErrors = editForm.querySelectorAll(".error")
   editErrors.forEach((error) => {
@@ -867,20 +917,27 @@ document.addEventListener("click", (e) => {
   }
 
   // show popup
-  editOverlay.style.display = "block"
-  editPopup.style.display = "block"
+  editOverlay.classList.add("open-edit")
+  editPopup.classList.add("open-edit")
 })
 
 // Close popup
 editCloseBtn.addEventListener("click", () => {
-  editPopup.style.display = "none"
-  editOverlay.style.display = "none"
+  editOverlay.classList.remove("open-edit")
+  editPopup.classList.remove("open-edit")
 })
 
 // cancel button 
 editOverlay.addEventListener("click", () => {
-  editPopup.style.display = "none"
-  editOverlay.style.display = "none"
+  editOverlay.classList.remove("open-edit")
+  editPopup.classList.remove("open-edit")
+})
+
+// cancel button -> close popup
+const editCancelBtn = document.querySelector(".cancel-button")
+editCancelBtn.addEventListener("click", () => {
+  editPopup.classList.remove("open-edit")
+  editOverlay.classList.remove("open-edit")
 })
 
 // progress bar
@@ -890,7 +947,6 @@ const editProgressValue = document.querySelector(".edit-progress-value")
 editProgress.addEventListener("input", () => {
   editProgressValue.textContent = `${editProgress.value}%`
 })
-
 
 // Submit edit form with validation
 editForm.addEventListener("submit", (e) => {
@@ -942,20 +998,11 @@ editForm.addEventListener("submit", (e) => {
   card.remove();
 
   taskCounts()  // 
-  editPopup.style.display = "none"
-  editOverlay.style.display = "none"
+  editPopup.classList.remove("open-edit")
+  editOverlay.classList.remove("open-edit")
   
   updateToast()  // Show success notification after edit
 })
-
-const editCancelBtn = document.querySelector(".cancel-button")
-
-editCancelBtn.addEventListener("click", () => {
-  editPopup.style.display = "none"
-  editOverlay.style.display = "none"
-})
-
-
 
 // Update task counts for all filters
 
@@ -980,14 +1027,14 @@ function filterTasks(priority) {
 
     // if "All"  show everything
     if (priority === "all") {
-      task.style.display = "block"
+      task.classList.remove("hidden")
     } 
     else {
       // show only matching priority
       if (task.classList.contains(priority)) {
-        task.style.display = "block"
+        task.classList.remove("hidden")
       } else {
-        task.style.display = "none"
+        task.classList.add("hidden")
       }
     }
   })

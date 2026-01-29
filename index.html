@@ -138,11 +138,11 @@
     <div class="task-status">
     <div class="task-type borderbox">
       <label for="" id="taskhead">Task Type*</label><br>
-      <input type="checkbox" name="Bugfix" id="bug">
+      <input type="checkbox" name="Bugfix" id="bug" value="Bugfix">
       <label for="bug" class="task-label">Bug Fix</label>
-      <input type="checkbox" name="feature" id="feature">
+      <input type="checkbox" name="feature" id="feature" value="Feature">
       <label for="feature" class="task-label">Feature</label> <br>
-      <input type="checkbox" name="enhancement" id="enhance">
+      <input type="checkbox" name="enhancement" id="enhance" value="Enhancement">
       <label for="enhance" class="task-label">Enhancement</label>
 
       <span class="error-box">
@@ -193,14 +193,16 @@
 
 <!-- task details of new task cards -->
 <div class="overlay"></div>
-  <div class="task-details"> <button><i class="fa-solid fa-xmark"></i></button>
+  <div class="task-details">
+    <button><i class="fa-solid fa-xmark"></i></button>
     <h2 class="td-title"></h2>
+
     <p><i class="fa-solid fa-circle-user"></i> <strong>Assignee Name:</strong> <span class="td-assignee"></span></p>
     <p><i class="fa-solid fa-envelope"></i> <strong>Email:</strong> <span class="td-email"></span></p>
     <p><i class="fa-solid fa-calendar-days"></i> <strong>Due Date:</strong> <span class="td-date"></span></p>
     <p><i class="fa-solid fa-clock"></i> <strong>Due Time: </strong><span class="td-time"></span></p>
-    <p><i class="fa-solid fa-stopwatch"></i> <strong>Estiated Hours:</strong> <span class="td-hours"></span></p>
-    <p><i class="fa-solid fa-link"></i> <strong>Project Url:</strong> <span class="td-url"></span></p>
+    <p><i class="fa-solid fa-stopwatch"></i> <strong>Estimated Hours:</strong> <span class="td-hours"></span></p>
+    <p><i class="fa-solid fa-link"></i> <strong>Project Url:</strong> <a class="td-url">Get Project Link</a></p>
     <p><strong>Priority:</strong> <span class="td-priority"></span></p>
     <p><strong>Progress:</strong> <span class="td-progress"></span></p>
     <p><strong>Task Type: </strong><span class="td-tasktype"></span></p>
@@ -217,24 +219,27 @@
   <form id="editTaskForm">
     <span class="edit-task"><h4>&#128221 Edit Task</h4> <button class="edit-close" type="button"><i class= "fa-solid fa-xmark"></i></button></span>
 
-    <div class="borderbox">
-  <input type="text" name="taskname" placeholder="Task Name *" id="edit-taskname" />
+    <div class="borderbox field">
+  <label for="edit-taskname">Task name*</label>
+  <input type="text" name="taskname" id="edit-taskname" />
   <span class="error-box">
     <i class="fa-solid fa-circle-exclamation"></i>
     <small class="error"></small>
   </span>
 </div>
 
-<div class="borderbox">
-  <input type="text" name="personname" placeholder="Assignee Name *" id="edit-assigneename">
+<div class="borderbox field">
+  <label for="edit-assigneename">Assignee Name*</label>
+  <input type="text" name="personname"  id="edit-assigneename">
   <span class="error-box">
     <i class="fa-solid fa-circle-exclamation"></i>
     <small class="error"></small>
   </span>
 </div>
 
-<div class="borderbox">
-  <input type="email" name="email" placeholder="Assignee Email *" id="edit-email"/>
+<div class="borderbox field">
+  <label for="edit-email">Assignee Email*</label>
+  <input type="email" name="email" id="edit-email"/>
   <span class="error-box">
     <i class="fa-solid fa-circle-exclamation"></i>
     <small class="error"></small>
@@ -242,7 +247,7 @@
 </div>
 
 <div class="field">
-  <input type="date" id="edit-dob" name="dateofbirth" min="2026-01-01"/>
+  <input type="date" id="edit-dob" name="dateofbirth"/>
   <label for="edit-dob">Due Date*</label>
   <span class="error-box">
     <i class="fa-solid fa-circle-exclamation"></i>
@@ -279,6 +284,7 @@
 </div>
 
 <div class="field hour">
+  <label for="edit-hours">Estimated Hours</label>
   <input type="number" name="EstimatedHours" id="edit-hours" min="0" />
   <label for="edit-hours">Estimated Hours*</label>
   <span class="error-box">
@@ -287,16 +293,18 @@
   </span>
 </div>
 
-<div class="borderbox">
-  <input type="url" name="ProjectUrl" placeholder="Project URL*" id="edit-project-url" />
+<div class="borderbox field">
+  <label for="edit-project-url">Project URL*</label>
+  <input type="url" name="ProjectUrl"  id="edit-project-url" />
   <span class="error-box">
     <i class="fa-solid fa-circle-exclamation"></i>
     <small class="error"></small>
   </span>
 </div>
 
-<div class="borderbox">
-  <textarea cols="30" rows="5" placeholder="Task Description*" id="edit-descrip"></textarea>
+<div class="borderbox field">
+  <label for="edit-descrip">Task Description*</label>
+  <textarea cols="30" rows="5" id="edit-descrip"></textarea>
   <span class="error-box">
     <i class="fa-solid fa-circle-exclamation"></i>
     <small class="error"></small>

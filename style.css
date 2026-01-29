@@ -433,6 +433,11 @@ input[type="text"],input[type="email"],input[type="url"],input[type="range"] {
   justify-content: center;
   visibility: hidden;
 }
+.success-toast.showToast,
+.delete-toast.showToast,
+.update-toast.showToast{
+  visibility: visible;
+}
 /* success Notification */
 .success-toast{
   color: rgb(6, 158, 6);
@@ -471,15 +476,21 @@ input[type="text"],input[type="email"],input[type="url"],input[type="range"] {
   position: fixed;
   background-color: var(--white);
   transition: 0.2s ease;
-  visibility: hidden;
   z-index: 1000;
-  padding-bottom: 1em;
+  padding: 0 1em 1em 1em;
+  width: 90%;
+  max-width: 650px;
+  min-width: 320px;
+
 }
 .task-details p{
-  color: black;
-  padding: 0.4em 1em;
+  margin: 0;
+  padding: 0.5em 0;
+  display: flex;
+  align-items: center;
+  font-size: 0.95rem;
+  color: #0c0b0bbb;
 }
-
 .task-details button{
   display: flex;
   justify-content: flex-end;
@@ -489,11 +500,12 @@ input[type="text"],input[type="email"],input[type="url"],input[type="range"] {
   outline: none;
   font-size: 20px;
   text-align: center;
-  padding: 0.4em 0.2em;
+  padding: 0.5em;
+  margin: 0;
 }
 .task-details button .fa-xmark{
-  margin-right: 1em;  
-  padding: 0 0.3em;
+  padding: 0.2em 0.4em;
+  transition: 0.2s ease;
 }
 .task-details button .fa-xmark:hover{
   background-color: black;
@@ -506,6 +518,23 @@ input[type="text"],input[type="email"],input[type="url"],input[type="range"] {
   text-align: center;
   font-size: 1.2em;
   padding: 0 1em;
+  margin: 0;
+  width: 100%;
+}
+.task-details p i{
+  width: 20px;
+}
+.task-details p strong{
+  min-width: 140px;
+}
+.task-details .td-url{
+  text-decoration: none;
+  color: var(--highlight);
+}
+.task-details .td-url:active, .td-url:hover{
+  text-decoration: underline;
+  color: var(--highlight);
+  transition: 0.2s ease;
 }
 .task-details .fa-circle-user{
   color:#0841fd;
@@ -526,9 +555,18 @@ input[type="text"],input[type="email"],input[type="url"],input[type="range"] {
   color: #648de4;
 }
 .task-details .td-description{
-  line-height: 1.5;
+  white-space: pre-wrap;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+  max-width: 100%;
+  min-width: 0;
 }
-
+.task-details-content{
+  display: grid;
+  grid-template-columns: repeat(2,1fr);
+  gap: 1.5em;
+  padding: 1em;
+}
 .overlay{
   position: fixed;
   inset: 0;
@@ -538,20 +576,30 @@ input[type="text"],input[type="email"],input[type="url"],input[type="range"] {
   display: flex;
   justify-content: center;
   align-items: center;
-  display: none;
   z-index: 1000;
 }
-.task-details .td-assignee,.td-email,.td-date,.td-time,.td-hours,.td-url,.td-priority,.td-progress,.td-tasktype,.td-status,.td-description{
-  border-bottom: 1px solid #85f393;
+
+.task-details,
+.overlay{
+  visibility: hidden;
+  opacity: 0;
+}
+.task-details.openTD, .overlay.openTD{
+  visibility: visible;
+  opacity: 1;
 }
 /* edit task styling */
 /*  edit popup box */
-
+.edit-overlay,.edit-popup{
+  display: none;
+}
+.edit-overlay.open-edit,.edit-popup.open-edit{
+  display: block;
+}
 .edit-overlay {
   position: fixed;
   inset: 0;
   background: rgba(0,0,0,.4);
-  display: none;
 }
 .edit-popup {
   position: fixed;
@@ -559,7 +607,6 @@ input[type="text"],input[type="email"],input[type="url"],input[type="range"] {
   left: 50%;
   transform: translate(-50%, -50%);
   background: #fff;
-  display: none;
   width: 600px; 
   max-height: 90vh;
   overflow-y: auto;
@@ -574,7 +621,7 @@ input[type="text"],input[type="email"],input[type="url"],input[type="range"] {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 0 1em;
+  padding: 1em 1em 0.5em 1em;
  }
  .edit-task button{
   padding: 0.2em 0.4em;
@@ -700,10 +747,11 @@ input[type="text"],input[type="email"],input[type="url"],input[type="range"] {
   accent-color: var(--highlight);
 }
 .task-type .task-label {
-  padding: 0 2em;
+  padding: 0 0 0 2em;
   vertical-align: middle;
   cursor: pointer;
 }
+
 /* status input */
 .status-type {
   margin-top: 0.8em;
@@ -721,7 +769,7 @@ input[type="text"],input[type="email"],input[type="url"],input[type="range"] {
   accent-color: var(--highlight);
 }
 .status-type .status-label {
-  padding: 0 2em;
+  padding: 0 0 0 2em;
   vertical-align: middle;
   cursor: pointer;
 }
@@ -780,7 +828,21 @@ input[type="text"],input[type="email"],input[type="url"],input[type="range"] {
   font-weight: 600;
   cursor: pointer;
 }
+/*  custom dropdown for js toggle */
+.dropdown-options{
+  display: none;
+}
+ .open-custom{    
+  display: block;
+}
+/* erroe box and text handle using JS */
+.error-box {
+  visibility: hidden;
+}
 
+.error-box.show {
+  visibility: visible;
+}
 
 /* container 2 - active tasks contents*/
 .container2 {
@@ -829,6 +891,7 @@ input[type="text"],input[type="email"],input[type="url"],input[type="range"] {
   box-sizing: border-box;
   height: 1150px;
   overflow-y: auto;
+  scrollbar-width:thin;
 }
 .active-task .content {
   border: 1px solid var(--bordercolor);
@@ -836,6 +899,14 @@ input[type="text"],input[type="email"],input[type="url"],input[type="range"] {
   padding: 1.5em;
   border-radius: 10px;
   transition: 0.2s ease-in-out;
+}
+/* for js add,remove */
+.active-task .content {
+  display: block;
+}
+/* hides task */
+.active-task .content.hidden {
+  display: none;
 }
 /* Task title and button */
 .content h3 {
@@ -854,7 +925,7 @@ input[type="text"],input[type="email"],input[type="url"],input[type="range"] {
 .content h3 button {
   border: none;
   background: none;
-  color:#7a7c7a;
+  color:#8f8e8d;
   font-size: 18px;
   cursor: pointer;
 }
@@ -900,7 +971,7 @@ input[type="text"],input[type="email"],input[type="url"],input[type="range"] {
   align-items: center;
   margin-top: 1em;
 }
-.priority-status:hover{
+.content:hover{
   cursor: pointer;
 }
 /* Dot - Small circle for representing the importance of the task. */
@@ -1073,6 +1144,18 @@ footer hr {
     text-align: center;
     padding: 1em 0;
   }
+  .menu.active .menu-line:nth-child(1) {
+    transform: translateY(8px) rotate(45deg); 
+}
+
+  .menu.active .menu-line:nth-child(2) {
+    opacity: 0 /* Middle line hide */
+}
+
+  .menu.active .menu-line:nth-child(3) {
+    transform: translateY(-4px) rotate(-45deg); 
+}
+
   .nav-links.show {
     /* for Javascript className .show*/
     display: flex;
@@ -1235,6 +1318,11 @@ footer hr {
   .edit-popup .task-type label[for="edit-feature"]{
     padding: 0 0 0 2em;
   }
+  .success-toast,
+  .update-toast,
+  .delete-toast{
+    width: 340px;
+  }
 }
 /* Smaller mobile screen widths below 350px */
 @media (max-width: 350px) {
@@ -1288,6 +1376,11 @@ footer hr {
   #editTaskForm label[for="edit-pending"],
    #editTaskForm label[for="edit-inprogress"]{
     padding: 0 0 0 2em;
+  }
+  .success-toast,
+  .update-toast,
+  .delete-toast{
+    width: 300px;
   }
 }
 /*  Tablet views for 601px to 1024px */
