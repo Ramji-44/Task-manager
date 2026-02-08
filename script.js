@@ -10,7 +10,7 @@ menuBtn.addEventListener("click", () => {
 
 const activeTaskContainer = document.querySelector(".active-task");
 let tasksArr = []    // new tasks Array
-
+const Overlay = document.querySelector(".overlay")  // dark bg overlay
 
 // custom dropdown 
 let drop = document.querySelectorAll(".dropdown");
@@ -21,40 +21,76 @@ drop.forEach(function (select) {
   let optionItems = optionContainer.querySelectorAll(".option");
 
 
-  // toggle if open -> close, close -> open
   selectAnopt.addEventListener("click", () => {
     optionContainer.classList.toggle("open-custom")
-    // if (optionContainer.style.display === "block") {  // open 
-    //   optionContainer.style.display = "none";  // close
-    // } else {
-    //   optionContainer.style.display = "block";  // open
-    // }
   });
 
-  // hides dropdown and selects selected item for display
   optionItems.forEach((opt) => {
     opt.addEventListener("click", () => {
 
       let arrow = selectAnopt.querySelector("span").outerHTML  // arrow icon
   
-      selectAnopt.innerHTML = opt.textContent +  arrow 
+      selectAnopt.innerHTML = opt.textContent +  arrow
+      selectAnopt.dataset.value = opt.dataset.value
       optionContainer.classList.remove("open-custom")   // none
 
       clearError(selectAnopt)  // error-box call(form validation)
-    });
-  });
+    })
+  })
+})
 
-  // close
-  window.addEventListener("click", (e) => {
-    if (!select.contains(e.target)) {
-      optionContainer.classList.remove("open-custom")      // none
+
+// Update task counts for all filters
+function taskCounts(){
+  const allTasks = document.querySelectorAll('.active-task .content')      // all
+  const highTasks = document.querySelectorAll('.active-task .content.high')   // high
+  const mediumTasks = document.querySelectorAll('.active-task .content.medium')   // medium
+  const lowTasks = document.querySelectorAll('.active-task .content.low')   // low
+
+  // length count in page
+  document.getElementById('all-count').textContent = allTasks.length
+  document.getElementById('high-count').textContent = highTasks.length
+  document.getElementById('medium-count').textContent = mediumTasks.length
+  document.getElementById('low-count').textContent = lowTasks.length
+}
+
+function filterTasks(priority) {
+
+  const tasks = document.querySelectorAll('.active-task .content')
+
+  tasks.forEach(task => {
+
+    // if "All"  show everything
+    if (priority === "all") {
+      task.classList.remove("hidden")
+    } 
+    else {
+      // show only matching priority
+      if (task.classList.contains(priority)) {
+        task.classList.remove("hidden")
+      } else {
+        task.classList.add("hidden")
+      }
     }
-  });
-});
+  })
+}
+
+const filterLabels = document.querySelectorAll('.nav-buttons label')
+
+filterLabels.forEach(label => {
+  label.addEventListener('click', () => {
+
+    // remove active from all 
+    filterLabels.forEach(l => l.classList.remove('active'))  // remove active color from all buttons
+
+    label.classList.add('active')   // adding active for clicked label
+    const filterType = label.getAttribute('data-filter')  // get filter type
+    filterTasks(filterType)   // show tasks
+  })
+})
 
 
 /* Form Validation */
-
 const form = document.getElementById("taskform");
 
 // input fields
@@ -75,10 +111,6 @@ const taskCheckbox = document.querySelectorAll(
   '.task-type input[type="checkbox"]');
 const statusRadio = document.querySelectorAll('input[name="status"]');
 
-/* date validation */
-const selectedDate = date.value
-const today = new Date().toISOString().split("T")[0]
-/*date global variables*/
 
 form.addEventListener("submit", (e) => {
   e.preventDefault();
@@ -96,9 +128,19 @@ function validateInputs() {
   // validation conditions
 // taskName 
   if (taskName.value.trim() === "") {
-    showError(taskName, "Task Name is required");
+    showError(taskName, "Task Name is required.");
     goToError(taskName)
     return false;
+  }
+  else if(TaskNameExist(taskName.value.trim())){
+    showError(taskName,"Task Name already exists.")
+    goToError(taskName)
+    return false
+  }
+  else if(!taskName3letter(taskName.value.trim())){
+    showError(taskName,"Task Name must contain a minimum of 3 characters.")
+    goToError(taskName)
+    return false
   }
   else{
     clearError(taskName)
@@ -106,32 +148,32 @@ function validateInputs() {
 
 // Assigneee name
   if (assigneeName.value.trim() === "") {
-    showError(assigneeName, "Assignee Name is required");
+    showError(assigneeName, "Assignee Name is required.");
     goToError(assigneeName)
     return false;
   }
   else if(!AssigneeNameChar(assigneeName.value.trim())){
-    showError(assigneeName,"Name does not contain special characters")
+    showError(assigneeName,"Numbers and  special characters are not allowed.")
     goToError(assigneeName)
     return false
   }
-  else if(!AssigneeNameNum(assigneeName.value.trim())){
-    showError(assigneeName,"Name does not include numbers")
+  else if(!Assignee3letter(assigneeName.value.trim())){
+    showError(assigneeName,"Assignee Name must contain a minimum of 3 letters.")
     goToError(assigneeName)
     return false
-  }
+}
   else{
     clearError(assigneeName)
   }
 
 // email
   if (email.value.trim() === "") {
-    showError(email, "Email is required");
+    showError(email, "Email is required.");
     goToError(email)
     return false;
   }
   else if(!EmailValidation(email.value.trim())){
-    showError(email,"Enter valid Email")
+    showError(email,"Enter valid Email.")
     goToError(email)
     return false
   }
@@ -140,22 +182,20 @@ function validateInputs() {
   }
 
 // date
-    if (date.value === "") {
-    showError(date, "Due date is required")
+const selectedDate = date.value
+const today = new Date().toISOString().split("T")[0]
+
+  if (date.value === "") {
+    showError(date, "Due date is required.")
     goToError(date)
     return false
   }
-    else if(selectedDate < today){
-      showError(date,"Past dates are not allowed")
-      goToError(date)
-      return false
-    }
-    else if(selectedDate > "2026-12-31"){
-      showError(date,"Due date must be within 2026")
-      goToError(date)
-      return false
-    }
-    else{
+  else if(selectedDate < today){
+  showError(date,"Past dates are not allowed")
+  goToError(date)
+    return false
+  }
+  else{
     clearError(date)
   }
 
@@ -190,11 +230,6 @@ function validateInputs() {
     goToError(hoursInput)
     return false
   }
-  else if(hoursInput.value >100){
-    showError(hoursInput,"Maximum hours reached(100 hrs max)")
-    goToError(hoursInput)
-    return false
-  }
   else{
     clearError(hoursInput)
   }
@@ -224,16 +259,6 @@ function validateInputs() {
     clearError(textArea)
   }
 
-// progress
-  // if (progress.value == 0) {
-  //   showError(progress, "Progress must be greater than 0");
-  //   goToError(progress)
-  //   return false;
-  // }
-  // else{
-  //   clearError(progress)
-  // }
-
   // (checkbox) Task type validation
   let taskChecked = false;
   taskCheckbox.forEach((clickBox) => {
@@ -244,7 +269,7 @@ function validateInputs() {
 
   if (!taskChecked) {
     showError(taskCheckbox[0], "select at least one task type");
-    goToError(taskChecked[0])
+    goToError(taskCheckbox[0])
     return false;
   }
   else{
@@ -261,16 +286,14 @@ function validateInputs() {
 
   if (!statusChecked) {
     showError(statusRadio[0], "Select task status");
-    goToError(statusChecked[0])
+    goToError(statusRadio[0])
     return false;
   }
   else{
     clearError(statusRadio[0])
   }
 
-// returns valid with  true or false
   return true
-// console.log(valid) 
 }
 
 /* edit form validation function */
@@ -280,19 +303,23 @@ function validateEditInputs(){
   const editEmail = document.getElementById("edit-email")
   const editDate = document.getElementById("edit-dob")
   const editTime = document.getElementById("edit-time")
-  const editPrioritySelect = document.querySelector(".edit-priority")
+  const editPriority = document.querySelector(".edit-priority")
   const editHoursInput = document.getElementById("edit-hours")
   const editUrl = document.getElementById("edit-project-url")
   const editTextArea = document.getElementById("edit-descrip")
   const editTaskCheckbox = document.querySelectorAll('#editTaskForm input[type="checkbox"]')
   const editStatusRadio = document.querySelectorAll('input[name="edit-status"]')
 
-
   // taskName
   if (editTaskName.value.trim() === "") {
-    showError(editTaskName, "Task Name is required")
+    showError(editTaskName, "Task Name is required.")
     goToError(editTaskName)
     return false;
+  }
+  else if(!taskName3letter(editTaskName.value.trim())){
+    showError(editTaskName,"Task Name must contain a minimum of 3 characters.")
+    goToError(editTaskName)
+    return false
   }
   else{
     clearError(editTaskName)
@@ -305,12 +332,12 @@ function validateEditInputs(){
     return false;
   }
   else if(!AssigneeNameChar(editAssigneeName.value.trim())){
-    showError(editAssigneeName,"Name does not contain special characters")
+    showError(editAssigneeName,"Numbers and  special characters are not allowed")
     goToError(editAssigneeName)
     return false
   }
-  else if(!AssigneeNameNum(editAssigneeName.value.trim())){
-    showError(editAssigneeName,"Name does not include numbers")
+  else if(!Assignee3letter(editAssigneeName.value.trim())){
+    showError(editAssigneeName,"Assignee Name must contain a minimum of 3 letters.")
     goToError(editAssigneeName)
     return false
   }
@@ -347,11 +374,6 @@ const Etoday = new Date().toISOString().split("T")[0]
       goToError(editDate)
       return false
     }
-  else if(EselectedDate > "2026-12-31"){
-      showError(editDate,"Due date must be within 2026")
-      goToError(editDate)
-      return false
-    }
   else{
     clearError(editDate)
   }
@@ -362,22 +384,9 @@ const Etoday = new Date().toISOString().split("T")[0]
     goToError(editTime)
     return false;
   }
-
   else{
     clearError(editTime)
   }
-
-  // select - priority
-  const priorityText = editPrioritySelect.textContent.trim()
-
-  if (priorityText === "" ) {
-    showError(editPrioritySelect, "Select priority level")
-    goToError(editPrioritySelect)
-    return false
-}
-  else {
-    clearError(editPrioritySelect)
-}
 
   // hour
   if (editHoursInput.value === "" ) {
@@ -387,11 +396,6 @@ const Etoday = new Date().toISOString().split("T")[0]
   }
   else if(editHoursInput.value <= 0){
     showError(editHoursInput,"Enter hours 0 or above")
-    goToError(editHoursInput)
-    return false
-  }
-  else if(editHoursInput.value > 100){
-    showError(editHoursInput,"Maximum hours reached(100 hrs max)")
     goToError(editHoursInput)
     return false
   }
@@ -470,7 +474,6 @@ const Etoday = new Date().toISOString().split("T")[0]
   else{
     clearError(editStatusRadio[0])
   }
-
   return true
 }
 
@@ -504,10 +507,6 @@ allInputs.forEach((input) => {
   input.addEventListener('input', () => {
     const parent = input.closest(".borderbox, .field")   // gets  the correct parent, instead of div
 
-
-    if(!parent) // stop code if closest div not found
-      return
-
       const errorBox = parent.querySelector(".error-box")
       const small = parent.querySelector('.error')
       if(errorBox){
@@ -518,14 +517,38 @@ allInputs.forEach((input) => {
   })
 })
 
+// focus on the input
+function goToError(input) {
+  input.scrollIntoView({
+    behavior: "smooth",
+    block: "center"
+  })
+  input.focus()
+}
+
+// Task Name min 3 letter
+let taskName3letter = (name) => {
+  return name.length >= 3
+}
+// Task Name repeating not allowed function 
+function TaskNameExist(taskNameValue){ 
+  const tasks = JSON.parse(localStorage.getItem("tasks")) || [] 
+  for(let i = 0; i< tasks.length; i++){ 
+    if(tasks[i].title.toLowerCase() === taskNameValue.toLowerCase()){
+       return true 
+    }
+  }
+    return false
+}
 // Assignee Name 
 function AssigneeNameChar(name){
-  const acceptwords = /^[a-zA-Z0-9\s]+$/
+  const acceptwords = /^[a-zA-Z\s]+$/
   return acceptwords.test(name)
 }
-function AssigneeNameNum(numberspresent){
-  const notaccept = /^[^0-9]+$/;
-  return notaccept.test(numberspresent)
+
+// Assignee Name min 3 letter 
+function Assignee3letter(name){
+ return name.length >= 3
 }
 
 // Email validation RegEx
@@ -534,31 +557,449 @@ function EmailValidation(mail){
   return emailregex.test(mail)
 }
 
+// project url RegEx
+ function projecturl(prourl){
+  const Urlformat = /^(https?:\/\/|www\.)?[a-zA-Z0-9-]+(\.[a-zA-Z0-9]+)+([\/?#].*)?$/
+  return Urlformat.test(prourl)
+ }
 
 // range input
 progress.addEventListener("input", () => {
   percent.textContent = `${progress.value}%`;
 });
 
-// reset progress value
+// reset -> progress=0, dropdown, clear Error msg
 form.addEventListener("reset", () => {
   percent.textContent = "0%";
 
 prioritySelect.innerHTML = `Select an option<span><img src="arrow down.png" alt="arrow down"></span>`
+prioritySelect.dataset.value = "" 
 
   // remove error Messages when reset
   const AllerrorBox = form.querySelectorAll(".error-box")
   AllerrorBox.forEach((msg) => {
-    msg.style.visibility = "hidden"
+    msg.classList.remove("show")
   })
 });
 
-// project url
- function projecturl(prourl){
-  const Urlformat = /^https:\/\/(www\.)?[a-zA-Z0-9-]+\.[a-zA-Z]{2,}(\/.*)?$/
-  return Urlformat.test(prourl)
- }
+// Radio Input - status 
+function selectedStatus(){
+  for(let radio of statusRadio) {
+    if(radio.checked) {
+      return radio.value   // .value from HTMl
+    }
+  }
+  return ""
+}
 
+function TaskTypes(){
+  let types = []   // empty array
+  taskCheckbox.forEach((box) => {
+    if(box.checked) {
+      types.push(box.value)   // refers its value, and push in the empty array [] types
+    }    // box.value - value is from the HTML
+  }) 
+  return types   // returns in array
+}
+
+/* Add task function for display and store */
+function addTask(){
+
+// date - day-month-year to month day,year 
+  const oldDate = date.value  // date.value returns str like "0000-00-00"
+  const modernDate = new Date(oldDate).toLocaleDateString('en-US',{   // it converts to ex: Feb 29, 2026
+    month: 'short',    // jan,feb...
+    day: 'numeric',    // number ...
+    year: 'numeric'   //  number ...
+  })
+
+// keeps the tasks if that are previouly added  
+   tasksArr = JSON.parse(localStorage.getItem("tasks")) || [];   // if not found tasks return empty [] 
+
+  //  task object for local storage
+   const task = {
+   id: Date.now(),   // for unique ID for each Task
+   title : taskName.value.trim(),
+   assignee: assigneeName.value.trim(),
+   email: email.value.trim(),
+   dueDate: modernDate,
+   dueTime: time.value,
+   priority: prioritySelect.dataset.value,
+   hours: hoursInput.value,
+   projectUrl: url.value.trim(),
+   description : textArea.value.trim(),
+   progress: progress.value,
+   taskTypes: TaskTypes(),
+   status: selectedStatus()
+  }
+
+  tasksArr.push(task)   // tasksArr is initially 0 
+// local storage
+  localStorage.setItem("tasks",JSON.stringify(tasksArr)) 
+
+  displayTask(task) 
+  taskCounts()
+  showInterface()
+}
+/* priority */
+function priorityOptions(task){
+  const priority = task.priority || "low"
+  if(priority === "high"){
+    return ["high", "HIGH"]
+  }
+  if(priority === "medium"){
+    return ["medium", "MEDIUM"]
+  }
+  return ["low", "LOW"]
+}
+/* status selects */
+function statusTypes(task){
+  if(task.status.includes("In Progress")){
+    return ["inpro", task.status]
+  }
+  if(task.status.includes("Completed")){
+    return ["completed", task.status]
+  }
+  return ["pending", task.status]
+}
+
+/* display task function */
+function displayTask(task){
+
+  const [priorityClass, priorityText] = priorityOptions(task)
+  const [statusClass, statusText] = statusTypes(task)
+
+// create task cards
+const newTasks = document.createElement("div")    // creating a empty contanier
+newTasks.className = `content ${priorityClass}`
+
+newTasks.dataset.id = task.id  // task crads to local storage id connect 
+
+newTasks.innerHTML = `<div>
+       <h3 class="task-title">${task.title}<div class="edit-delete"><button class="edit" aria-label="Edit-task"> <i class="fa-solid fa-pen-to-square"></i></button>
+          <button class="delete" aria-label="Delete task"><i class="fa-solid fa-trash"></i></button></div>
+        </h3>
+        <p class="text">${task.description}</p>
+
+        <p class="date"><span class="calender-icon"><img src="calender-img.png" alt="calender-image"></span>Due:  ${task.dueDate}</p>
+        <p class="name"><span class="user-icon"><img src="person-img.jpg" alt="user-image"></span> ${task.assignee}</p>
+
+        <hr>
+        <div class="priority-status">
+          <span class="priority ${priorityClass}"><span class="priority-dot"></span> ${priorityText}</span>
+          <span class="status ${statusClass}"><span class="status-dot"></span> ${statusText}</span>
+        </div>
+      </div>
+`
+  // new tasks adds on first 
+activeTaskContainer.prepend(newTasks)
+}
+
+function updateTask(task) {
+  const card = document.querySelector(`.content[data-id="${task.id}"]`)
+  if (!card) return
+
+  card.querySelector(".task-title").textContent = task.title
+  card.querySelector(".text").textContent = task.description
+  card.querySelector(".date").textContent = `Due: ${task.dueDate}`
+  card.querySelector(".name").textContent = task.assignee
+
+    // priority
+  const priorityShow = card.querySelector(".priority")
+  const [pClass, pText] = priorityOptions(task)
+  card.classList.remove("high", "medium", "low")
+  card.classList.add(pClass)
+
+  priorityShow.innerHTML = `<span class="priority-dot"></span> ${pText}`
+  priorityShow.className = `priority ${pClass}`
+
+  // status
+  const statusShow = card.querySelector(".status")
+  statusShow.textContent = task.status
+
+  if (task.status === "In Progress") {
+    statusShow.className = "status inpro"
+  } 
+  else if (task.status === "Completed") {
+    statusShow.className = "status completed"
+  } 
+  else {
+    statusShow.className = "status pending"
+  }
+}
+
+// object values fills in popup 
+function taskView(task){
+
+// used here for the dot-small circle will be present in the task view
+ const [priorityClass, priorityText] = priorityOptions(task)
+ const [statusClass, statusText] = statusTypes(task)
+
+  document.querySelector(".td-title").textContent = task.title
+  document.querySelector(".td-assignee").textContent = task.assignee
+  document.querySelector(".td-email").textContent = task.email
+  document.querySelector(".td-date").textContent = task.dueDate
+  document.querySelector(".td-time").textContent = task.dueTime
+  document.querySelector(".td-hours").textContent = task.hours
+  document.querySelector(".td-url").href = task.projectUrl
+  document.querySelector(".td-priority").innerHTML = `<span class="priority ${priorityClass}"><span class="priority-dot"></span> ${priorityText}</span>`
+  document.querySelector(".td-progress-range").value = task.progress
+  document.querySelector(".td-progress-value").textContent = `${task.progress}%`
+  document.querySelector(".td-tasktype").textContent = task.taskTypes.join(", ")
+  document.querySelector(".td-status").innerHTML = `<span class="status ${statusClass}"><span class="status-dot"></span> ${statusText}</span>`
+  document.querySelector(".td-description").textContent = task.description
+} 
+
+const taskDetails = document.querySelector(".task-details")
+const closeIconx = document.querySelector(".closeTD") 
+
+// opens full details popup
+document.addEventListener("click", (e) => {
+
+  const taskCard = e.target.closest(".content")
+  if(!taskCard){
+    return
+  }
+  if(e.target.closest(".edit") || e.target.closest(".delete")) return
+// getting task ID
+  const taskId = Number(taskCard.dataset.id)
+
+  const tasks = JSON.parse(localStorage.getItem("tasks"))  || []  // str to arr
+  const clickedTask = tasks.find(t => t.id === taskId)  // retruns the task object
+
+  if(!clickedTask){
+    return
+  }
+  taskView(clickedTask)    //function calls for filling the popup
+
+// shows popup
+  Overlay.classList.add("openTD")
+  taskDetails.classList.add("openTD")
+})
+
+// close popup xicon
+closeIconx.addEventListener("click", () => {
+  taskDetails.classList.remove("openTD")
+  Overlay.classList.remove("openTD")
+})
+
+/*Edit Task*/
+// get data from local storage ->fill in form ->validate -> update in UI and local storage
+
+const editOverlay = document.querySelector(".edit-overlay")
+const editPopup = document.querySelector(".edit-popup")
+const editCloseBtn = document.querySelector(".edit-close")
+const editCancelBtn = document.querySelector(".cancel-button")
+const editForm = document.getElementById("editTaskForm")
+// inputs
+const editTaskName = document.getElementById("edit-taskname");
+const editAssignee = document.getElementById("edit-assigneename");
+const editEmail = document.getElementById("edit-email");
+const editDate = document.getElementById("edit-dob");
+const editTime = document.getElementById("edit-time");
+const editHours = document.getElementById("edit-hours");
+const editUrl = document.getElementById("edit-project-url");
+const editDescription = document.getElementById("edit-descrip");
+const editPriority = document.querySelector(".edit-priority");
+// progress bar
+const editProgress = document.getElementById("edit-progress")
+const editProgressValue = document.querySelector(".edit-progress-value")
+
+// checkbox & radio
+const editCheckboxes = document.querySelectorAll('#editTaskForm input[type="checkbox"]');
+const editRadios = document.querySelectorAll('input[name="edit-status"]');
+
+let editTaskId = null
+
+// Open edit popup when edit button clicked
+document.addEventListener("click", (e) => {
+  const editBtn = e.target.closest(".edit")    // content inside edit icon
+  if (!editBtn) return
+
+  const taskCard = editBtn.closest(".content")   // finds task card that have the edit icon
+  editTaskId = Number(taskCard.dataset.id)
+
+  // get task from localStorage
+  const tasks = JSON.parse(localStorage.getItem("tasks")) || []
+  const editTask = tasks.find(t => t.id === editTaskId)
+  if (!editTask) return
+  filleditForm(editTask)
+  openEditPopup()
+})
+
+  // fill the edit form
+  function filleditForm(task){
+    editTaskName.value = task.title;
+    editAssignee.value = task.assignee;
+    editEmail.value = task.email;
+
+  // convert date 
+  const dateObj = new Date(task.dueDate)
+  const year = dateObj.getFullYear()   // ex:2026
+  const month = String(dateObj.getMonth() + 1).padStart(2, '0')
+  const day = String(dateObj.getDate()).padStart(2, '0')
+  document.getElementById("edit-dob").value = `${year}-${month}-${day}`
+
+  editTime.value = task.dueTime;
+  editHours.value = task.hours;
+  editUrl.value = task.projectUrl;
+  editDescription.value = task.description;
+  editProgress.value = task.progress;
+  editProgressValue.textContent = `${task.progress}%`;
+
+  //  priority
+  const arrow = editPriority.querySelector("span").outerHTML
+  editPriority.innerHTML = task.priority + arrow
+  editPriority.dataset.value = task.priority
+
+
+  //  checkboxes
+  editCheckboxes.forEach(checks => {
+    checks.checked = task.taskTypes.includes(checks.value)
+  })
+
+  //  radio
+  editRadios.forEach(radios => {
+    radios.checked = radios.value === task.status
+  })
+
+}
+
+function openEditPopup(){
+  editOverlay.classList.add("open-edit")
+  editPopup.classList.add("open-edit")
+}
+// Close button  popup
+
+function closeEditPopup(){
+  editOverlay.classList.remove("open-edit")
+  editPopup.classList.remove("open-edit")
+  editTaskId = null
+}
+editCloseBtn.addEventListener("click", closeEditPopup)
+editCancelBtn.addEventListener("click",closeEditPopup)
+
+
+// progress bar
+editProgress.addEventListener("input", () => {
+  editProgressValue.textContent = `${editProgress.value}%`
+})
+
+// Submit edit form with validation
+editForm.addEventListener("submit", (e) => {
+  e.preventDefault()
+
+  // Call validation function - stops submit if validation fails
+  if(!validateEditInputs()) {
+    return
+  }
+
+  let tasks = JSON.parse(localStorage.getItem("tasks")) || []
+  const index = tasks.findIndex(t => t.id === editTaskId)
+  if (index === -1) return
+
+  // checkboxes
+  const types = [];
+  editCheckboxes.forEach(box => {
+  if (box.checked) {
+    types.push(box.value)
+  }
+});
+
+  // date
+  const dateVal = document.getElementById("edit-dob").value
+  const formattedDate = new Date(dateVal).toLocaleDateString("en-US", {
+    month: "short",
+    day: "numeric",
+    year: "numeric"
+  })
+
+  tasks[index] = {
+    ...tasks[index],
+    title: editTaskName.value.trim(),
+    assignee: editAssignee.value.trim(),
+    email: editEmail.value.trim(),
+    dueDate: formattedDate,
+    dueTime: editTime.value,
+    priority: editPriority.dataset.value,
+    hours: editHours.value,
+    projectUrl: editUrl.value.trim(),
+    description: editDescription.value.trim(),
+    progress: editProgress.value,
+    taskTypes: types,
+    status: document.querySelector('input[name="edit-status"]:checked').value
+  }
+
+  localStorage.setItem("tasks", JSON.stringify(tasks))
+
+// looks for the data-id=""
+  const card = document.querySelector(`[data-id="${editTaskId}"]`) 
+  localStorage.setItem("tasks", JSON.stringify(tasks));  
+
+  updateTask(tasks[index])
+  taskCounts()
+  editPopup.classList.remove("open-edit")
+  editOverlay.classList.remove("open-edit")  
+  updateToast()  // Show success notification after edit
+})
+
+
+/* Delete task */
+const deletePopup = document.querySelector(".delete-confirmation")
+const NameofTask = document.getElementById("task-name")
+
+const confirmBtn = document.getElementById("delete-btn")
+const cancelDBtn = document.getElementById("cancel-btn")
+
+let currentId = null
+
+/* open delete popup box */
+activeTaskContainer.addEventListener("click", (e) => {
+  const deleteIcon = e.target.closest(".delete")
+  if(!deleteIcon) return
+
+  const taskCard = deleteIcon.closest(".content")
+  currentId = Number(taskCard.dataset.id)
+
+  const tasks = JSON.parse(localStorage.getItem("tasks")) || []
+  const task = tasks.find(t => t.id === currentId)
+  if(!task) return
+
+  NameofTask.textContent = task.title     // task name in popup
+
+  deletePopup.classList.add("showDeleteConfirm")
+  Overlay.classList.add("openTD")
+})
+
+/* delete task function */
+function deleteTask(id){
+  
+  let storedTasks = JSON.parse(localStorage.getItem("tasks")) || []
+  storedTasks = storedTasks.filter(task => Number(task.id) !== Number(id))   /// remove
+
+  localStorage.setItem("tasks", JSON.stringify(storedTasks));  // uptated tasks
+  const card = document.querySelector(`.content[data-id="${id}"]`)
+  if (card) card.style.display = "none"
+  taskCounts()
+  showInterface()
+}
+
+// delete confirm button - deletes 
+confirmBtn.addEventListener("click", () => {
+  if(!currentId) return
+
+  deleteTask(currentId)  
+  deleteToast()
+
+  deletePopup.classList.remove("showDeleteConfirm")  // popup close
+  Overlay.classList.remove("openTD")
+})
+// cancel button -> close
+cancelDBtn.addEventListener("click", () => {
+  currentId = null
+  deletePopup.classList.remove("showDeleteConfirm")
+  Overlay.classList.remove("openTD")
+})
 
 /*Toast notification appears*/
 // success Toast
@@ -588,470 +1029,54 @@ const updateToast = () => {
   },3000)
 }
 
-// Radio Input - status 
-function selectedStatus(){
-  for(let radio of statusRadio) {
-    if(radio.checked) {
-      return radio.value   
+/* Links Reloading  */
+const LinksReload = document.querySelectorAll('.nav-link, .footer-links')
+LinksReload.forEach(links => {
+  links.addEventListener("click",(e) => {
+    if(links.getAttribute("href") === "#"){   // href=# , stop reload
+    e.preventDefault()
     }
+  })
+  })
+
+/* current year in the footer */
+document.getElementById("copy-year").textContent = new Date().getFullYear()
+
+const emptyTaskBox = document.querySelector(".empty-task");
+const addTaskBtn = document.querySelector(".add-task-btn");
+
+if (addTaskBtn) {
+  addTaskBtn.addEventListener("click", () => {
+    form.scrollIntoView({
+      behavior: "smooth",
+      block: "start"
+    });
+
+    setTimeout(() => {
+      taskName.focus();
+    }, 300);
+  });
+}
+
+function showInterface() {
+  const taskCards = activeTaskContainer.querySelectorAll(".content")
+  if (taskCards.length === 0) {
+    emptyTaskBox.classList.add("interface")
+  } 
+  else {
+    emptyTaskBox.classList.remove("interface")
   }
-  return ""   // if no radio is selected, returns empty string.
 }
 
-function TaskTypes(){
-  // const taskCheckbox = document.querySelectorAll('.task-type input[type="checkbox"]')
-  let types = []
 
-  taskCheckbox.forEach((box) => {
-    if(box.checked) {
-      types.push(box.value)   // refers its value, and push in the empty array [] types
-    }
-  }) 
-  return types   // returns in array
-}
-
-/* Add task function for display and store */
-function addTask(){
-
-// date - day-month-year to month day,year 
-  const oldDate = date.value  // date.value returns str like "0000-00-00"
-  const modernDate = new Date(oldDate).toLocaleDateString('en-US',{   // it converts to ex: Feb 30, 2026
-    month: 'short',    // jan,feb...
-    day: 'numeric',    // number ...
-    year: 'numeric'   //  number ...
-  })
-
-// keeps the tasks if that are previouly added  
-   tasksArr = JSON.parse(localStorage.getItem("tasks")) || [];   // if not found tasks return empty [] 
-
-  //  task object for local storage
-   const task = {
-   id: Date.now(),   // for unique ID for each Task
-   title : taskName.value.trim(),
-   assignee: assigneeName.value.trim(),
-   email: email.value.trim(),
-   dueDate: modernDate,
-   dueTime: time.value,
-   priority: prioritySelect.textContent.trim(),
-   hours: hoursInput.value,
-   projectUrl: url.value.trim(),
-   description : textArea.value.trim(),
-   progress: progress.value,
-   TaskTypes: TaskTypes(),
-   status: selectedStatus()
-  }
-
-  tasksArr.push(task)   // tasksArr is initially 0 
-// local storage
-  localStorage.setItem("tasks",JSON.stringify(tasksArr)) 
-
-  displayTask(task) 
-  taskCounts()
-}
-
-/* display task function */
-function displayTask(task){
-
-// select tag - priority
-const priorityopt = task.priority || ""
-
-let priorityClass = "low"
-let priorityText = "LOW"
-
-if(priorityopt.includes("High")){
-  priorityClass = "high"
-  priorityText = "HIGH"
-}
-else if(priorityopt.includes("Medium")){
-  priorityClass = "medium"
-  priorityText = "MEDIUM"
-}
-
-// radio input
-let statusClass = "pending"
-let statusText = task.status
-
-if(task.status.includes("In Progress")){
-  statusClass = "inpro"
-}
-else if(task.status.includes("Completed")){
-  statusClass = "completed"
-}
-// create task cards
-const newTasks = document.createElement("div")    // creating a empty contanier
-newTasks.className = `content ${priorityClass}`
-
-newTasks.dataset.id = task.id  // task crads to local storage id connect 
-
-newTasks.innerHTML = `<div>
-       <h3>${task.title}<div class="edit-delete"><button class="edit" aria-label="Edit-task"> <i class="fa-solid fa-pen-to-square"></i></button>
-          <button class="delete" aria-label="Delete task"><i class="fa-solid fa-trash"></i></button></div>
-        </h3>
-        <p class="text">${task.description}</p>
-
-        <p class="date"><span class="calender-icon"><img src="calender-img.png" alt="calender-image"></span>Due:  ${task.dueDate}</p>
-        <p class="name"><span class="user-icon"><img src="person-img.jpg" alt="user-image"></span> ${task.assignee}</p>
-
-        <hr>
-        <div class="priority-status">
-          <span class="priority ${priorityClass}"><span class="priority-dot"></span> ${priorityText}</span>
-          <span class="status ${statusClass}"><span class="status-dot"></span> ${statusText}</span>
-        </div>
-      </div>
-`
-
-  // new tasks adds on first 
-activeTaskContainer.prepend(newTasks)
-}
-
-// delete task card
-document.addEventListener("click",(e) => {
-
-  const deleteBtn = e.target.closest(".delete")
-  if(!deleteBtn) return
-
-  const taskCards = deleteBtn.closest(".content")
-  if(!taskCards) return
-
-  const taskId = Number(taskCards.dataset.id) // changes str to number 
-    taskCards.remove()
-
-    // delete from localStorage 
-    let storedTasks = JSON.parse(localStorage.getItem("tasks")) || [];   // gets task from the local storage
-
-    storedTasks = storedTasks.filter(i  => i.id !== taskId)  // 
-// save tasks back to local storage
-    localStorage.setItem("tasks", JSON.stringify(storedTasks));
-
-    deleteToast()    // calling the delete Toast
-    taskCounts()   //  task counts function
-  })
-
-// while refresh the page
-window.onload = () => {
-
-// get Tasks from local storage
-  tasksArr = JSON.parse(localStorage.getItem("tasks")) || []; 
-
-  tasksArr.forEach((task) => {  //   task from taskArr sends to displayTask
-    displayTask(task)
-  })
-  taskCounts()
-  filterTasks("all")
-
+/*refresh page */
+const storedTasks = JSON.parse(localStorage.getItem("tasks")) || []
+storedTasks.forEach(task => displayTask(task))
+taskCounts()
+showInterface()
 // default highlight color for all
 filterLabels.forEach(label => {
   if(label.getAttribute("data-filter") === "all"){
     label.classList.add("active")
   }
 })
-}
-
-// focus on the input
-function goToError(input) {
-  input.scrollIntoView({
-    behavior: "smooth",
-    block: "center"
-  })
-  input.focus()
-}
-
-// object values fills in popup 
-function valuesOfLocal(task){
-
-// used here for the dot-small circle will be present in the task view
-  // select tag - priority
-const priorityopt = task.priority || ""
-
-let priorityClass = "low"
-let priorityText = "LOW"
-
-if(priorityopt.includes("High")){
-  priorityClass = "high"
-  priorityText = "HIGH"
-}
-else if(priorityopt.includes("Medium")){
-  priorityClass = "medium"
-  priorityText = "MEDIUM"
-}
-
-// radio input
-let statusClass = "pending"
-let statusText = task.status
-
-if(task.status.includes("In Progress")){
-  statusClass = "inpro"
-}
-else if(task.status.includes("Completed")){
-  statusClass = "completed"
-}
-
-  document.querySelector(".td-title").textContent = task.title
-  document.querySelector(".td-assignee").textContent = task.assignee
-  document.querySelector(".td-email").textContent = task.email
-  document.querySelector(".td-date").textContent = task.dueDate
-  document.querySelector(".td-time").textContent = task.dueTime
-  document.querySelector(".td-hours").textContent = task.hours
-  document.querySelector(".td-url").href = task.projectUrl
-  document.querySelector(".td-priority").innerHTML = `<span class="priority ${priorityClass}"><span class="priority-dot"></span> ${priorityText}</span>`
-  document.querySelector(".td-progress").textContent = task.progress + "%"
-  document.querySelector(".td-tasktype").textContent = task.TaskTypes.join(", ")
-  document.querySelector(".td-status").innerHTML = `<span class="status ${statusClass}"><span class="status-dot"></span> ${statusText}</span>`
-  document.querySelector(".td-description").textContent = task.description
-
-}   // valuesOfLocal info
-
-const Overlay = document.querySelector(".overlay")
-const taskDetails = document.querySelector(".task-details")
-const closeIconx = document.querySelector(".fa-xmark") 
-
-// opens full details popup
-document.addEventListener("click", (e) => {
-
-  const taskCard = e.target.closest(".content")
-  if(!taskCard){
-    return
-  }
-  if(e.target.closest(".edit",".delete")) return
-// getting task ID
-  const taskId = Number(taskCard.dataset.id)
-
-  const tasks = JSON.parse(localStorage.getItem("tasks"))  || []  // str to arr
-  const clickedTask = tasks.find(t => t.id === taskId)  // retruns the task object
-
-  if(!clickedTask){
-    return
-  }
-
-  valuesOfLocal(clickedTask)    //function calls for filling the popup
-
-// shows popup
-  Overlay.classList.add("openTD")
-  taskDetails.classList.add("openTD")
-})
-
-// close popup xicon
-closeIconx.addEventListener("click", () => {
-  taskDetails.classList.remove("openTD")
-  Overlay.classList.remove("openTD")
-})
-
-// close popup clicking outside
-Overlay.addEventListener("click", () => {
-  taskDetails.classList.remove("openTD")
-  Overlay.classList.remove("openTD")
-})
-
-
-/*Edit Task*/
-// get data from local storage ->fill in form ->validate -> update in UI and local storage
-  
-const editOverlay = document.querySelector(".edit-overlay")
-const editPopup = document.querySelector(".edit-popup")
-const editCloseBtn = document.querySelector(".edit-close")
-const editForm = document.getElementById("editTaskForm")
-
-let editTaskId = null
-
-// Open edit popup when edit button clicked
-document.addEventListener("click", (e) => {
-  const editBtn = e.target.closest(".edit")
-  if (!editBtn) return
-
-  const taskCard = editBtn.closest(".content")
-  editTaskId = Number(taskCard.dataset.id)
-
-
-  // get task from localStorage
-  const tasks = JSON.parse(localStorage.getItem("tasks")) || []
-  const editTask = tasks.find(t => t.id === editTaskId)
-
-  if (!editTask) return
-
-  // Clear all previous error messages when opening edit popup
-  const editErrorBoxes = editForm.querySelectorAll(".error-box")
-  editErrorBoxes.forEach((box) => {
-    box.classList.remove("show")
-  })
-  const editErrors = editForm.querySelectorAll(".error")
-  editErrors.forEach((error) => {
-    error.innerText = ""
-  })
-
-  // fill the edit form
-  document.getElementById("edit-taskname").value = editTask.title
-  document.getElementById("edit-assigneename").value = editTask.assignee
-  document.getElementById("edit-email").value = editTask.email
-
-  // convert date 
-  const dateObj = new Date(editTask.dueDate)
-  const year = dateObj.getFullYear()
-  const month = String(dateObj.getMonth() + 1).padStart(2, '0')
-  const day = String(dateObj.getDate()).padStart(2, '0')
-  document.getElementById("edit-dob").value = `${year}-${month}-${day}`
-
-  document.getElementById("edit-time").value = editTask.dueTime
-  document.getElementById("edit-hours").value = editTask.hours
-  document.getElementById("edit-project-url").value = editTask.projectUrl
-  document.getElementById("edit-descrip").value = editTask.description
-  document.getElementById("edit-progress").value = editTask.progress
-  document.querySelector(".edit-progress-value").textContent = editTask.progress + "%"
-
-  //  priority
-  const editPrioritySelect = document.querySelector(".edit-priority")
-  const arrow = editPrioritySelect.querySelector("span").outerHTML
-  editPrioritySelect.innerHTML = editTask.priority + arrow
-
-  //  checkboxes
-  document.getElementById("edit-bug").checked = editTask.TaskTypes.includes("Bug Fix")
-  document.getElementById("edit-feature").checked = editTask.TaskTypes.includes("Feature")
-  document.getElementById("edit-enhance").checked = editTask.TaskTypes.includes("Enhancement")
-
-  //  radio
-  if (editTask.status === "Pending") {
-    document.getElementById("edit-pending").checked = true
-  } else if (editTask.status === "In Progress") {
-    document.getElementById("edit-inprogress").checked = true
-  } else if (editTask.status === "Completed") {
-    document.getElementById("edit-completed").checked = true
-  }
-
-  // show popup
-  editOverlay.classList.add("open-edit")
-  editPopup.classList.add("open-edit")
-})
-
-// Close popup
-editCloseBtn.addEventListener("click", () => {
-  editOverlay.classList.remove("open-edit")
-  editPopup.classList.remove("open-edit")
-})
-
-// cancel button 
-editOverlay.addEventListener("click", () => {
-  editOverlay.classList.remove("open-edit")
-  editPopup.classList.remove("open-edit")
-})
-
-// cancel button -> close popup
-const editCancelBtn = document.querySelector(".cancel-button")
-editCancelBtn.addEventListener("click", () => {
-  editPopup.classList.remove("open-edit")
-  editOverlay.classList.remove("open-edit")
-})
-
-// progress bar
-const editProgress = document.getElementById("edit-progress")
-const editProgressValue = document.querySelector(".edit-progress-value")
-
-editProgress.addEventListener("input", () => {
-  editProgressValue.textContent = `${editProgress.value}%`
-})
-
-// Submit edit form with validation
-editForm.addEventListener("submit", (e) => {
-  e.preventDefault()
-
-  // Call validation function - stops submission if validation fails
-  if(!validateEditInputs()) {
-    return
-  }
-
-  let tasks = JSON.parse(localStorage.getItem("tasks")) || []
-  const index = tasks.findIndex(t => t.id === editTaskId)
-  if (index === -1) return
-
-  // checkboxes
-  const types = [];
-  if (document.getElementById("edit-bug").checked) types.push("Bug Fix")
-  if (document.getElementById("edit-feature").checked) types.push("Feature")
-  if (document.getElementById("edit-enhance").checked) types.push("Enhancement")
-
-  // date
-  const dateVal = document.getElementById("edit-dob").value
-  const formattedDate = new Date(dateVal).toLocaleDateString("en-US", {
-    month: "short",
-    day: "numeric",
-    year: "numeric"
-  })
-
-  tasks[index] = {
-    ...tasks[index],
-    title: document.getElementById("edit-taskname").value.trim(),
-    assignee: document.getElementById("edit-assigneename").value.trim(),
-    email: document.getElementById("edit-email").value.trim(),
-    dueDate: formattedDate,
-    dueTime: document.getElementById("edit-time").value,
-    priority: document.querySelector(".edit-priority").textContent.trim(),
-    hours: document.getElementById("edit-hours").value,
-    projectUrl: document.getElementById("edit-project-url").value.trim(),
-    description: document.getElementById("edit-descrip").value.trim(),
-    progress: document.getElementById("edit-progress").value,
-    TaskTypes: types,
-    status: document.querySelector('input[name="edit-status"]:checked').value
-  }
-
-  localStorage.setItem("tasks", JSON.stringify(tasks))
-
-  const card = document.querySelector(`[data-id="${editTaskId}"]`)
-  displayTask(tasks[index])
-  card.remove();
-
-  taskCounts()  // 
-  editPopup.classList.remove("open-edit")
-  editOverlay.classList.remove("open-edit")
-  
-  updateToast()  // Show success notification after edit
-})
-
-// Update task counts for all filters
-
-const taskCounts = () =>{
-  const allTasks = document.querySelectorAll('.active-task .content')      // all
-  const highTasks = document.querySelectorAll('.active-task .content.high')   // high
-  const mediumTasks = document.querySelectorAll('.active-task .content.medium')   // medium
-  const lowTasks = document.querySelectorAll('.active-task .content.low')   // low
-
-  // length count in page
-  document.getElementById('all-count').textContent = allTasks.length
-  document.getElementById('high-count').textContent = highTasks.length
-  document.getElementById('medium-count').textContent = mediumTasks.length
-  document.getElementById('low-count').textContent = lowTasks.length
-}
-
-function filterTasks(priority) {
-
-  const tasks = document.querySelectorAll('.active-task .content')
-
-  tasks.forEach(task => {
-
-    // if "All"  show everything
-    if (priority === "all") {
-      task.classList.remove("hidden")
-    } 
-    else {
-      // show only matching priority
-      if (task.classList.contains(priority)) {
-        task.classList.remove("hidden")
-      } else {
-        task.classList.add("hidden")
-      }
-    }
-  })
-}
-
-const filterLabels = document.querySelectorAll('.nav-buttons label')
-
-filterLabels.forEach(label => {
-  label.addEventListener('click', () => {
-
-    // remove active from all 
-    filterLabels.forEach(l => l.classList.remove('active'))
-
-    label.classList.add('active')   // adding active for clicked label
-    const filterType = label.getAttribute('data-filter')  // get filter type
-    filterTasks(filterType)   // show tasks
-  })
-})
-
-
