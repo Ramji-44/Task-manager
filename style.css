@@ -387,7 +387,7 @@ input[type="text"],input[type="email"],input[type="url"],input[type="range"] {
 .task-buttons .create-button {
   text-align: center;
   padding: 1.6em 0;
-  width: 40%;
+  width: 45%;
   color: var(--white);
   white-space: nowrap;
   border-radius: 8px;
@@ -548,6 +548,9 @@ input[type="text"],input[type="email"],input[type="url"],input[type="range"] {
   z-index: 1000;
   max-width: 650px;
   min-width: 300px;
+
+  max-height: 80vh;
+  overflow-y: auto;
   padding: 1em;
 
   border-radius: 10px;
@@ -556,12 +559,13 @@ input[type="text"],input[type="email"],input[type="url"],input[type="range"] {
   border: 1px solid var(--bordercolor);
   box-shadow: 3px 3px 5px var(--boxshadow);
 }
-
+.task-details::-webkit-scrollbar{
+  width: 5px;
+}
 .task-details .heading{
   display: flex;
   justify-content: space-between;
   align-items: center;
-
   grid-area: header;
 }
 
@@ -600,7 +604,7 @@ input[type="text"],input[type="email"],input[type="url"],input[type="range"] {
   padding-right: 0.5em;
 }
 .task-info1 #strong-email{
-  padding-right: 5.3em;
+  padding-right: 5em;
 }
 .task-info1 #strong-date{
   padding-right: 3.6em;
@@ -622,7 +626,20 @@ input[type="text"],input[type="email"],input[type="url"],input[type="range"] {
   width: 140px;
   color: #494949;
 }
-
+.task-info1 .email-break{
+  display: flex;
+  align-items: flex-start;
+  gap:0.5em;
+}
+.task-info1 .label{
+  min-width: 90px;
+  flex-shrink: 0;
+}
+.task-info1 .td-email{
+  flex: 1;
+  word-break: break-all;
+  overflow-wrap: anywhere;
+}
 .priorityAndstatus{
   grid-area: filter;
   display: flex;
@@ -719,11 +736,13 @@ input[type="text"],input[type="email"],input[type="url"],input[type="range"] {
   position: fixed;
   inset: 0;
   background: rgba(0,0,0,.4);
+  z-index: 2000;
 }
 .edit-popup {
   position: fixed;
   top: 50%;
   left: 50%;
+  z-index: 2100;
   transform: translate(-50%, -50%);
   background: #fff;
   width: 600px; 
@@ -1008,6 +1027,9 @@ input[type="text"],input[type="email"],input[type="url"],input[type="range"] {
   color: var(--white);
   border-color: var(--highlight);
 }
+.hidden{
+  display: none !important;
+}
 /* create task interface for new users  */
 .empty-task {
   display: none;
@@ -1015,7 +1037,6 @@ input[type="text"],input[type="email"],input[type="url"],input[type="range"] {
   align-items: center;
   justify-content: center;
   padding: 60px 20px;
-  text-align: center;
   color: #555;
 }
 .empty-task.interface{
@@ -1058,7 +1079,6 @@ input[type="text"],input[type="email"],input[type="url"],input[type="range"] {
 }
 
 /* Active Tasks contents using masonry layout */
-
 .active-task {
   column-width: 300px;
   column-gap: 1.5em;
@@ -1075,19 +1095,39 @@ input[type="text"],input[type="email"],input[type="url"],input[type="range"] {
   border-radius: 10px;
   transition: 0.2s ease-in-out;
 }
-/* Active Tasks contents using Grid layout */
+.active-task .content .text{
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  display: box;
+  line-clamp: 3;
+  box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  position: relative;
+  z-index: 1;
+}
 /* Task title and button */
 .content h3 {
   font-size: 1.2em;
   margin-bottom: 1.5em;
-  display: flex;
-  justify-content: space-between;
-  align-items: start;
+  display: block;
+  position: relative;
+  padding-right: 60px;
+  word-break: break-word;
+}
+.content h3 .title-text{
+  display: block;
+  max-width: 100%;
+  display: inline-block;
+  word-break: break-word;
 }
 /*edit and delete icons buttons*/
 .content h3 .edit-delete{
+  position: absolute;
+  top: 0;
+  right: 0;
   display: flex;
-  flex-direction: row;
   gap: 0.5em;
 }
 .content h3 button {
@@ -1430,11 +1470,11 @@ footer hr {
     margin-bottom: 1em;
   } */
   .task-details{
-    top: 55%;
+    top: 50%;
     width: 90vw;
     max-width: 360px;
     max-height: 80vh;
-    overflow-y: auto;
+    overflow-y: scroll;
 
     display: grid;
     grid-template-columns: 1fr;
@@ -1449,7 +1489,9 @@ footer hr {
   .task-info1{
     width: 100%;
   }
-
+  .empty-task h3{
+    font-size: 1em;
+  }
   /* Footer Section */
   .footer-container {
     display: flex;
@@ -1497,6 +1539,12 @@ footer hr {
   .update-toast,
   .delete-toast{
     width: 340px;
+  }
+  .task-details{
+    padding: 1em 0.5em;
+  }
+  .delete-confirmation{
+    width: 345px;
   }
 }
 /* Smaller mobile screen widths below 350px */
@@ -1554,6 +1602,12 @@ footer hr {
   }
   .task-buttons .create-button{
     width: 60%;
+  }
+  .task-buttons .reset-button{
+    width: 30%;
+  }
+  .delete-confirmation{
+    width: 290px;
   }
 }
 /*  Tablet views for 601px to 1024px */
@@ -1638,12 +1692,12 @@ footer hr {
     gap: 1.5em;
   }
   .task-buttons .create-button {
-    width: 30%;
+    width: 40%;
     padding: 1.2em 1.3em;
     font-size: 1.05em;
   }
   .task-buttons .reset-button {
-    width: 20%;
+    width: 25%;
     padding: 0.7em 1.2em;
     font-size: 1em;
   }
