@@ -7,7 +7,6 @@ menuBtn.addEventListener("click", () => {
   menuBtn.classList.toggle("active")
 });
 
-
 const activeTaskContainer = document.querySelector(".active-task");
 let tasksArr = []    // new tasks Array
 const Overlay = document.querySelector(".overlay")  // dark bg overlay
@@ -19,7 +18,6 @@ drop.forEach(function (select) {
   let selectAnopt = select.querySelector(".selectAnOption");
   let optionContainer = select.querySelector(".dropdown-options");
   let optionItems = optionContainer.querySelectorAll(".option");
-
 
   selectAnopt.addEventListener("click", () => {
     optionContainer.classList.toggle("open-custom")
@@ -34,12 +32,15 @@ drop.forEach(function (select) {
       selectAnopt.dataset.value = opt.dataset.value
       optionContainer.classList.remove("open-custom")   // none
 
+      if(select.closest("form")){
       clearError(selectAnopt)  // error-box call(form validation)
+      }
     })
   })
 })
 
 let currentFilterPriority = "all"
+let currentFilterStatus = "all"
 // Update task counts for all filters
 function taskCounts(){
   const allTasks = document.querySelectorAll('.active-task .content')      // all
@@ -54,39 +55,37 @@ function taskCounts(){
   document.getElementById('low-count').textContent = lowTasks.length
 }
 
-function filterTasks(priority) {
+function filterTasks(priority, status = currentFilterStatus) {
 
   const tasks = document.querySelectorAll('.active-task .content')
 
   tasks.forEach(task => {
 
-    // if "All"  show everything
-    if (priority === "all") {
+    const samePriority = priority === "all" || task.classList.contains(priority)
+    const sameStatus = status === "all" || task.classList.contains(status)
+
+    if(samePriority && sameStatus){
       task.classList.remove("hidden")
-    } 
-    else {
-      // show only matching priority
-      if (task.classList.contains(priority)) {
-        task.classList.remove("hidden")
-      } else {
-        task.classList.add("hidden")
-      }
+    }
+    else{
+      task.classList.add("hidden")
     }
   })
 }
 
-const filterLabels = document.querySelectorAll('.nav-buttons label')
+const filterButtons = document.querySelectorAll('.nav-buttons button')
 
-filterLabels.forEach(label => {
-  label.addEventListener('click', () => {
+filterButtons.forEach(currentBtn => {
+currentBtn.addEventListener('click', () => {
 
     // remove active from all 
-    filterLabels.forEach(l => l.classList.remove('active'))  // remove active color from all buttons
+    filterButtons.forEach(btn => btn.classList.remove('active'))  // remove active color from all buttons
 
-    label.classList.add('active')   // adding active for clicked label
-    const filterType = label.getAttribute('data-filter')  // get filter type
+    currentBtn.classList.add('active')   // adding active for clicked label
+    const filterType = currentBtn.getAttribute('data-filter')  // get filter type
     currentFilterPriority = filterType
-    filterTasks(currentFilterPriority)   // show tasks
+
+    filterTasks(currentFilterPriority, currentFilterStatus)   // show tasks
   })
 })
 
@@ -646,7 +645,7 @@ function displayTask(task){
 
 // create task cards
 const newTasks = document.createElement("div")    // creating a empty contanier
-newTasks.className = `content ${priorityClass}`
+newTasks.className = `content ${priorityClass} ${statusClass}`
 
 newTasks.dataset.id = task.id  // task crads to local storage id connect 
 
@@ -996,9 +995,38 @@ document.addEventListener("DOMContentLoaded", () => {
 showTasks()
 
 // default highlight color for all
-filterLabels.forEach(label => {
+filterButtons.forEach(label => {
   if(label.getAttribute("data-filter") === "all"){
     label.classList.add("active")
   }
 })
+statusDropdown()
 })
+
+/* display filter tasks  */
+function statusFilter(value){
+  if (value === "default") {
+    currentFilterStatus = "all"  // show all tasks
+  }
+  else if (value === "inprogress") {
+    currentFilterStatus = "inpro"
+  }
+  else{
+    currentFilterStatus = value   // value as class name
+  }
+  currentFilterPriority = "all"   
+
+  filterTasks(currentFilterPriority, currentFilterStatus)
+}
+/* filter by task status  */
+function statusDropdown(){
+  const statusDropdown = document.querySelector(".status-dropdown")
+  const options = statusDropdown.querySelectorAll(".option")
+
+  options.forEach(function(option) {
+    option.addEventListener("click", () => {
+      let value = option.dataset.value
+      statusFilter(value)
+    })
+  })
+}

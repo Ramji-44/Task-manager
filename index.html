@@ -60,7 +60,7 @@
             </div>
             
             <div class="borderbox">
-            <input type ="email" name="email" placeholder="Assignee Email *" id="email"/>
+            <input type ="email" name="email" placeholder="Assignee Email *" id="email" autocomplete="email" />
             <span class="error-box">
               <i class="fa-solid fa-circle-exclamation"></i>
              <small class="error"></small>
@@ -87,7 +87,7 @@
     </div>
 
     <div class="field dropdown">
-      <label for="priority">Priority Level*</label>
+      <span class="label">Priority Level*</span>
       <div class="selectAnOption">Select an option <span><img src="arrow down.png" alt="arrow down"></span> </div>
         <div class="dropdown-options">
           <div class="option" data-value="low">Low priority </div>
@@ -101,7 +101,7 @@
     </div>
 
     <div class="field hour">
-      <input type="number" name="EstimatedHours" id="hours" min="0" />
+      <input type="number" name="EstimatedHours" id="hours" min="0"/>
       <label for="hours">Estimated Hours*</label>
       <span class="error-box">
               <i class="fa-solid fa-circle-exclamation"></i>
@@ -137,7 +137,7 @@
       
     <div class="task-status">
     <div class="task-type borderbox">
-      <label >Task Type*</label><br>
+      <span class="label">Task Type*</span><br>
       <input type="checkbox" name="Bugfix" id="bug" value="Bugfix">
       <label for="bug" class="task-label">Bug Fix</label>
       <input type="checkbox" name="feature" id="feature" value="Feature">
@@ -152,7 +152,7 @@
     </div>
     
     <div class="status-type borderbox">
-      <label >Status*</label><br>
+      <span class="label">Status*</span><br>
       <input type="radio" name="status" id="pending" value="Pending">
       <label for="pending" class="status-label">Pending</label>
       <input type="radio" name="status" id="inprogress" value="In Progress">
@@ -270,7 +270,7 @@
 
 <div class="borderbox field">
   <label for="edit-email">Assignee Email*</label>
-  <input type="email" name="email" id="edit-email"/>
+  <input type="email" name="email" id="edit-email" autocomplete="email" />
   <span class="error-box">
     <i class="fa-solid fa-circle-exclamation"></i>
     <small class="error"></small>
@@ -296,9 +296,9 @@
 </div>
 
 <div class="field dropdown">
-  <label>Priority Level*</label>
+  <span class="label">Priority Level*</span>
 
-  <div class="selectAnOption edit-priority">Select an option <span><img src="arrow down.png"></span>
+  <div class="selectAnOption edit-priority">Select an option <span><i class="fa-solid fa-angle-down"></i></span>
   </div>
 
   <div class="dropdown-options">
@@ -324,7 +324,7 @@
 
 <div class="borderbox field">
   <label for="edit-project-url">Project URL*</label>
-  <input type="url" name="ProjectUrl"  id="edit-project-url" />
+  <input type="url" name="ProjectUrl"  id="edit-project-url" autocomplete="url" />
   <span class="error-box">
     <i class="fa-solid fa-circle-exclamation"></i>
     <small class="error"></small>
@@ -341,7 +341,7 @@
 </div>
 
 <div class="borderbox rangeinput">
-  <label class="taskprogress-label">Task Progress*</label>
+  <label class="taskprogress-label" for="edit-progress">Task Progress*</label>
   <input type="range" id="edit-progress" min="0" max="100" value="0">
   <span class="progress-value edit-progress-value">0%</span>
   <span class="error-box">
@@ -351,7 +351,7 @@
 </div>
 
 <div class="task-type borderbox">
-  <label >Task Type*</label><br>
+  <span class="label">Task Type*</span><br>
 
   <input type="checkbox" id="edit-bug" value="Bugfix" name="edit-task-type">
   <label for="edit-bug" class="task-label">Bug Fix</label>
@@ -370,7 +370,7 @@
 
 
 <div class="status-type borderbox">
-  <label >Status*</label><br>
+  <span class="label">Status*</span><br>
 
   <input type="radio" name="edit-status" id="edit-pending" value="Pending">
   <label for="edit-pending" class="status-label">Pending</label>
@@ -399,13 +399,22 @@
 <article class="container2">
 
   <nav class="navigationbar">
-  <a><h3>&#9989 Active Tasks</h3></a>
+
+    <div class="dropdown status-dropdown">
+      <div class="selectAnOption" data-value="default"> Filter by Status <span><i class="fa-solid fa-angle-down"></i></span></div>
+        <div class="dropdown-options">
+          <div class="option" data-value="default"><i class="fa-solid fa-arrow-down-short-wide"></i>Filter by Status</div>
+          <div class="option" data-value="pending"><i class="fa-regular fa-clock"></i>Pending</div>
+          <div class="option" data-value="inprogress"><i class="fa-solid fa-spinner"></i>In Progress</div>
+          <div class="option" data-value="completed"><i class="fa-solid fa-circle-check"></i>Completed</div>
+        </div>
+    </div> 
   
   <div class="nav-buttons">
-    <label data-filter="all">All(<span id="all-count">0</span>)</label>
-    <label data-filter="high">High(<span id="high-count">0</span>)</label>
-    <label data-filter="medium">Medium(<span id="medium-count">0</span>)</label>
-    <label data-filter="low">Low(<span id="low-count">0</span>)</label>
+    <button data-filter="all">All(<span id="all-count">0</span>)</button>
+    <button data-filter="high">High(<span id="high-count">0</span>)</button>
+    <button data-filter="medium">Medium(<span id="medium-count">0</span>)</button>
+    <button data-filter="low">Low(<span id="low-count">0</span>)</button>
   </div>
 </nav>
  

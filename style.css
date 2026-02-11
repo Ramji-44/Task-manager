@@ -156,7 +156,7 @@ body {
   outline: none;
   transition: border-color 0.2s ease;
 }
-.new-task label {
+.new-task .label {
   padding-left: 1.2em;
 }
 
@@ -314,23 +314,6 @@ input[type="text"],input[type="email"],input[type="url"],input[type="range"] {
 .selectAnOption{
   display: flex;
   justify-content: space-between;
-}
-.option span img{
-  width: 15px;
-  height: 13px;
-  position: absolute;
-  right: 5px;
-  vertical-align: middle;
-}
-.option span{
-  position: relative;
-}
-.option{
-  display: flex;
-  justify-content: space-between;
-}
-.option img{
-  display: none;
 }
 
 /* custom dropdown  */
@@ -812,7 +795,7 @@ input[type="text"],input[type="email"],input[type="url"],input[type="range"] {
   outline: none;
   transition: border-color 0.2s ease;
 }
-.edit-popup label {
+.edit-popup .label {
   padding-left: 1.2em;
 }
 
@@ -832,7 +815,7 @@ input[type="text"],input[type="email"],input[type="url"],input[type="range"] {
 .field input {
   cursor: pointer;
 }
-.field label {
+.field .label {
   padding: 0 2px;
   position: absolute;
   pointer-events: none;
@@ -1020,13 +1003,15 @@ input[type="text"],input[type="email"],input[type="url"],input[type="range"] {
   align-items: center;
   justify-content: space-between;
   margin-bottom: 1.2em;
+  gap: 1.2em;
 }
 .nav-buttons {
   display: flex;
+  flex-wrap: wrap;
   gap: 0.5em;
 }
 
-.nav-buttons label {
+.nav-buttons button {
   cursor: pointer;
   border: 1px solid var(--bordercolor);
   background: var(--white);
@@ -1035,6 +1020,10 @@ input[type="text"],input[type="email"],input[type="url"],input[type="range"] {
   font-size: 1.05em;
   transition: 0.15s ease;
 }
+  .nav-buttons button:hover{
+    border-color: var(--highlight);
+    box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+  }
 .nav-buttons .active {
   background-color: var(--highlight);
   color: var(--white);
@@ -1043,6 +1032,45 @@ input[type="text"],input[type="email"],input[type="url"],input[type="range"] {
 .hidden{
   display: none !important;
 }
+/* dropdown for active tasks */
+.status-dropdown{
+  width: 200px;
+}
+.status-dropdown .selectAnOption {
+  font-size: 1.3em;
+  padding: 0.5em 0.8em;
+  border-radius: 20px;
+  border: 1px solid var(--bordercolor);
+  background-color: var(--white);
+  transition: all 0.2s ease;
+}
+
+.status-dropdown .selectAnOption:hover {
+  border-color: var(--highlight);
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+}
+/* Dropdown list */
+.status-dropdown .dropdown-options {
+  top: 110%;
+  left: 0;
+  right: 0;
+  font-size: 1.2em;
+  border-radius: 12px;
+  border: 1px solid var(--bordercolor);
+  box-shadow: 0 8px 18px rgba(0,0,0,0.1);
+}
+
+.status-dropdown .option:hover {
+  background-color: var(--highlight);
+  color: var(--white);
+}
+.status-dropdown .option {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  justify-content: flex-start; 
+}
+
 /* create task interface for new users  */
 .empty-task {
   display: none;
@@ -1466,7 +1494,7 @@ footer hr {
     align-items: center;
     gap: 0.5em;
   }
-  .nav-buttons label {
+  .nav-buttons button {
     width: 100%;
     text-align: center;
     padding: 0.4em 0.5em;
@@ -1601,11 +1629,11 @@ footer hr {
     padding: 0 0.5em;
     box-sizing: border-box;
   }
-  .nav-buttons label {
+  .nav-buttons button {
     padding: 0.5em 0;
   }
-  #editTaskForm label[for="edit-pending"],
-   #editTaskForm label[for="edit-inprogress"]{
+  #editTaskForm .label[for="edit-pending"],
+   #editTaskForm .label[for="edit-inprogress"]{
     padding: 0 0 0 2em;
   }
   .success-toast,
@@ -1696,7 +1724,7 @@ footer hr {
   .task-details{
     width: 600px;
   }
-  .nav-buttons label{
+  .nav-buttons button{
     padding: 0.2em 0.5em;
   }
   .task-buttons {
