@@ -108,11 +108,13 @@ const progress = document.getElementById("progress");
 const percent = document.querySelector(".progress-value");
 
 // checkbox & radio
-const taskCheckbox = document.querySelectorAll(
+const taskCheckbox = form.querySelectorAll(
   '.task-type input[type="checkbox"]');
-const statusRadio = document.querySelectorAll('input[name="status"]');
+const statusRadio = form.querySelectorAll('input[name="status"]');
 
 /* Edit Task form  validation */
+const editForm = document.getElementById("editTaskForm")
+
 // inputs
 const editTaskName = document.getElementById("edit-taskname");
 const editAssignee = document.getElementById("edit-assigneename");
@@ -128,8 +130,8 @@ const editProgress = document.getElementById("edit-progress")
 const editProgressValue = document.querySelector(".edit-progress-value")
 
 // checkbox & radio
-const editCheckboxes = document.querySelectorAll('#editTaskForm input[name="edit-task-type"]')
-const editRadios = document.querySelectorAll('input[name="edit-status"]');
+const editCheckboxes = editForm.querySelectorAll('input[name="edit-task-type"]')
+const editRadios = editForm.querySelectorAll('input[name="edit-status"]');
 
 /* create task form */
 form.addEventListener("submit", (e) => {
@@ -742,7 +744,6 @@ const editOverlay = document.querySelector(".edit-overlay")
 const editPopup = document.querySelector(".edit-popup")
 const editCloseBtn = document.querySelector(".edit-close")
 const editCancelBtn = document.querySelector(".cancel-button")
-const editForm = document.getElementById("editTaskForm")
 
 let editTaskId = null
 
@@ -929,32 +930,26 @@ cancelDBtn.addEventListener("click", () => {
 })
 
 /*Toast notification appears*/
-// success Toast
-const successToast = () => {
-  const successNotification = document.querySelector('.success-toast')
-  successNotification.classList.add("showToast")   // visibile
-    setTimeout(() => {
-        successNotification.classList.remove("showToast");  // hidden
-    }, 3000);
-}
 
-// delete Toast
-const deleteToast = () => {
-  const deleteNotification = document.querySelector('.delete-toast')
-  deleteNotification.classList.add("showToast")   // visible
-  setTimeout(() => {
-    deleteNotification.classList.remove("showToast")   // hidden
-  },3000)
-}
+const openToast = (toastSelector) => {
+  const toast = document.querySelector(toastSelector)
 
-// update Toast
-const updateToast = () => {
-  const updateNotification = document.querySelector('.update-toast')
-  updateNotification.classList.add("showToast")    // visible
-  setTimeout(() => {
-    updateNotification.classList.remove("showToast")    // hidden
+  toast.classList.add("showToast")
+
+  const timeOut = setTimeout( () => {
+    toast.classList.remove("showToast")
   },3000)
+// close toast msg
+  const closeToast = toast.querySelector(".close-toast")
+  closeToast.addEventListener("click",() => {
+    clearTimeout(timeOut)   // remove time
+    toast.classList.remove("showToast")  // remove toast
+  })
 }
+/* function, class name is passed as parameter */
+const successToast = () => openToast('.success-toast')
+const deleteToast  = () => openToast('.delete-toast')
+const updateToast  = () => openToast('.update-toast')
 
 /* Links Reloading  */
 const LinksReload = document.querySelectorAll('.nav-link, .footer-links')

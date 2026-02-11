@@ -425,11 +425,12 @@ input[type="text"],input[type="email"],input[type="url"],input[type="range"] {
   transform: translateX(-50%);
   background-color: #f0f7f3;
 
-  display: flex;
-  gap: 15px; 
-  flex-direction: row;
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
   align-items: center;
-  justify-content: center;
+  visibility: hidden;
+}
+ .delete-toast, .update-toast{
   visibility: hidden;
 }
 .success-toast.showToast,
@@ -444,8 +445,20 @@ input[type="text"],input[type="email"],input[type="url"],input[type="range"] {
   background-color: #fff;
   border: 1px solid #93DA97;
 }
-.success-tick{
+#tick{
   font-size: 25px;
+}
+.close-toast{    /* toast close icon */
+  border: none;
+  outline: none;
+  cursor: pointer;
+  padding: 0.2em 0.4em;
+  border-radius: 5px;
+  margin-left: auto;
+}
+.close-toast:hover{
+  color: #fff;
+  background-color: #000;
 }
 /* delete Notification */
 .delete-toast{
