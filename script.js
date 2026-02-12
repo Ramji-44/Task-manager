@@ -1,15 +1,23 @@
 /* Hamburger Menu */
 const menuBtn = document.getElementById("menuBtn");
 const navLinks = document.querySelector(".nav-links");
+const navLinkItems = document.querySelectorAll(".nav-links a")
 
 menuBtn.addEventListener("click", () => {
-  navLinks.classList.toggle("show");
-  menuBtn.classList.toggle("active")
+  navLinks.classList.toggle("show")  // show links
+  menuBtn.classList.toggle("active") // x 
 });
+// when link is clicked, close dropdown
+navLinkItems.forEach(link => {
+  link.addEventListener("click", () => {
+    navLinks.classList.remove("show")   // hide links
+    menuBtn.classList.remove("active")  
+  })
+})
 
 const activeTaskContainer = document.querySelector(".active-task");
-let tasksArr = []    // new tasks Array
 const Overlay = document.querySelector(".overlay")  // dark bg overlay
+let tasksArr = []    // new tasks Array
 
 // custom dropdown 
 let drop = document.querySelectorAll(".dropdown");
@@ -26,9 +34,9 @@ drop.forEach(function (select) {
   optionItems.forEach((opt) => {
     opt.addEventListener("click", () => {
 
-      let arrow = selectAnopt.querySelector("span").outerHTML  // arrow icon
+      let arrow = selectAnopt.querySelector(".arrowdown").outerHTML  // arrow icon
   
-      selectAnopt.innerHTML = opt.textContent +  arrow
+      selectAnopt.innerHTML = opt.innerHTML +  arrow
       selectAnopt.dataset.value = opt.dataset.value
       optionContainer.classList.remove("open-custom")   // none
 
@@ -48,16 +56,29 @@ function taskCounts(){
   const mediumTasks = document.querySelectorAll('.active-task .content.medium')   // medium
   const lowTasks = document.querySelectorAll('.active-task .content.low')   // low
 
-  // length count in page
+  const pendingTasks = document.querySelectorAll('.active-task .content.pending')  // pending
+  const inprogressTasks = document.querySelectorAll('.active-task .content.inpro')
+  const completedTasks = document.querySelectorAll('.active-task .content.completed')
+
+  // length count by priority
   document.getElementById('all-count').textContent = allTasks.length
   document.getElementById('high-count').textContent = highTasks.length
   document.getElementById('medium-count').textContent = mediumTasks.length
   document.getElementById('low-count').textContent = lowTasks.length
+
+  // length count by status
+  document.getElementById("pending-count").textContent = `[${pendingTasks.length}]`  // with []
+  document.getElementById("inprogress-count").textContent = `[${inprogressTasks.length}]`
+  document.getElementById("completed-count").textContent = `[${completedTasks.length}]`
 }
 
+/* filter by priority, status, matching count an icon  */
 function filterTasks(priority, status = currentFilterStatus) {
 
   const tasks = document.querySelectorAll('.active-task .content')
+  const tasknotFound = document.querySelector('.notask-found')
+  const taskFound = document.getElementById('matchingTasks')
+  let matchCount = 0   // matching count
 
   tasks.forEach(task => {
 
@@ -66,13 +87,24 @@ function filterTasks(priority, status = currentFilterStatus) {
 
     if(samePriority && sameStatus){
       task.classList.remove("hidden")
+      matchCount++   // increment when same
     }
     else{
       task.classList.add("hidden")
     }
   })
+   if (matchCount > 0) {
+    taskFound.classList.remove("hidden")
+    tasknotFound.classList.add("hidden")
+  } 
+//  if not found 
+  else {
+    tasknotFound.classList.remove("hidden") 
+  }
+/* matchig  count by status and priority */
+  document.getElementById("match-count").textContent = matchCount
 }
-
+/* filter buttons, highlight colors */
 const filterButtons = document.querySelectorAll('.nav-buttons button')
 
 filterButtons.forEach(currentBtn => {
@@ -88,7 +120,6 @@ currentBtn.addEventListener('click', () => {
     filterTasks(currentFilterPriority, currentFilterStatus)   // show tasks
   })
 })
-
 
 /* Form Validation */
 const form = document.getElementById("taskform");
@@ -951,7 +982,7 @@ const deleteToast  = () => openToast('.delete-toast')
 const updateToast  = () => openToast('.update-toast')
 
 /* Links Reloading  */
-const LinksReload = document.querySelectorAll('.nav-link, .footer-links')
+const LinksReload = document.querySelectorAll(' .footer-links')
 LinksReload.forEach(links => {
   links.addEventListener("click",(e) => {
     if(links.getAttribute("href") === "#"){   // href=# , stop reload
@@ -979,20 +1010,22 @@ if (addTaskBtn) {
     }, 300);
   });
 }
-
+/* empty task interface - tells to create task */
 function showInterface() {
   const tasks = JSON.parse(localStorage.getItem("tasks")) || []
+  const filterResult = document.querySelector(".filter-result")
   if (tasks.length === 0) {
     emptyTaskBox.classList.add("interface")
+    filterResult.classList.add("hidden")
   } 
   else {
     emptyTaskBox.classList.remove("interface")
+    filterResult.classList.remove("hidden")
   }
 }
 
 /*refresh page */
 document.addEventListener("DOMContentLoaded", () => {
-showTasks()
 
 // default highlight color for all
 filterButtons.forEach(label => {
@@ -1001,6 +1034,8 @@ filterButtons.forEach(label => {
   }
 })
 statusDropdown()
+showTasks()
+pageSwitch()  // page navigation
 })
 
 /* display filter tasks  */
@@ -1014,7 +1049,6 @@ function statusFilter(value){
   else{
     currentFilterStatus = value   // value as class name
   }
-  currentFilterPriority = "all"   
 
   filterTasks(currentFilterPriority, currentFilterStatus)
 }
@@ -1030,3 +1064,53 @@ function statusDropdown(){
     })
   })
 }
+
+/* switching between pages */
+const mainContainer = document.querySelector(".container1")
+const titleH1 = document.querySelector(".title h1")
+const formContainer = document.querySelector(".new-task")
+const tasksContainer = document.getElementById("tasksPage")
+const profileSection = document.querySelector(".profile")
+
+function pageSwitch() {
+  const currentHash = location.hash.replace("#", "") || "dashboard"
+
+// display none for form,tasks
+  formContainer.classList.remove("hide")  // form - block
+  tasksContainer.classList.remove("hide") // task - block
+  profileSection.classList.add("hide")
+  mainContainer.classList.remove("expand")
+// remove highlight color 
+  navLinkItems.forEach(link => link.classList.remove("active"))
+
+// Add active class to the current link
+  const highlightLink = document.querySelector(`.nav-links a[href="#${currentHash}"]`)
+  if (highlightLink) {
+    highlightLink.classList.add("active")
+  }
+// links - dashboard, tasks, profile
+  if (currentHash === "tasks") {
+    formContainer.classList.add("hide")
+    mainContainer.classList.add("expand")
+    titleH1.textContent = "Tasks"
+    showTasks()
+  } 
+  else if (currentHash === "profile") {
+    formContainer.classList.add("hide")
+    tasksContainer.classList.add("hide")
+    profileSection.classList.remove("hide")
+    mainContainer.classList.add("expand")
+    titleH1.textContent = "Profile"
+  } 
+  else {
+    titleH1.textContent = "Task Dashboard"
+    showTasks()
+  }
+}
+
+// tracks the hash change to #tasks,#dashboard,#profile 
+window.addEventListener("hashchange", () => { 
+  pageSwitch()  
+})
+
+

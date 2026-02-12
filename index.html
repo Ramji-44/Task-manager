@@ -24,16 +24,16 @@
         </div>
 
         <nav class="nav-links">
-        <a href="#" class="active">Dashboard</a>
-        <a href="#" class="navLink">Tasks</a>
-        <a href="#" class="navLink">Profile</a>
+        <a href="#dashboard">Dashboard</a>
+        <a href="#tasks">Tasks</a>
+        <a href="#profile">Profile</a>
        </nav>
     </header>
 
     <!-- Title card -->
     <div class="title">
       <div class="line"></div>
-      <h1>Task Dashboard</h1>
+      <h1></h1>
     </div>
     
     <!-- Entire body -->
@@ -88,7 +88,7 @@
 
     <div class="field dropdown">
       <span class="label">Priority Level*</span>
-      <div class="selectAnOption">Select an option <span><img src="arrow down.png" alt="arrow down"></span> </div>
+      <div class="selectAnOption">Select an option <span><i class="fa-solid fa-angle-down arrowdown"></i></span> </div>
         <div class="dropdown-options">
           <div class="option" data-value="low">Low priority </div>
           <div class="option" data-value="medium">Medium Priority </div>
@@ -396,17 +396,17 @@
   </form>
 
 <!-- active tasks - nav bar -->
-<article class="container2">
+<article class="container2" id="tasksPage">
 
   <nav class="navigationbar">
 
     <div class="dropdown status-dropdown">
-      <div class="selectAnOption" data-value="default"> Filter by Status <span><i class="fa-solid fa-angle-down"></i></span></div>
+      <div class="selectAnOption" data-value="default"> Filter by Status <span><i class="fa-solid fa-angle-down arrowdown"></i></span></div>
         <div class="dropdown-options">
           <div class="option" data-value="default"><i class="fa-solid fa-arrow-down-short-wide"></i>Filter by Status</div>
-          <div class="option" data-value="pending"><i class="fa-regular fa-clock"></i>Pending</div>
-          <div class="option" data-value="inprogress"><i class="fa-solid fa-spinner"></i>In Progress</div>
-          <div class="option" data-value="completed"><i class="fa-solid fa-circle-check"></i>Completed</div>
+          <div class="option" data-value="pending"><i class="fa-regular fa-clock"></i>Pending <span id="pending-count">0</span></div>
+          <div class="option" data-value="inprogress"><i class="fa-solid fa-spinner"></i>In Progress <span id="inprogress-count">0</span></div>
+          <div class="option" data-value="completed"><i class="fa-solid fa-circle-check"></i>Completed <span id="completed-count">0</span></div>
         </div>
     </div> 
   
@@ -417,15 +417,21 @@
     <button data-filter="low">Low(<span id="low-count">0</span>)</button>
   </div>
 </nav>
- 
+
 <div class="scroll-bar-container">
+ <!--match by both status and priority  -->
+ <div class="filter-result">
+<p id="matchingTasks"><i class="fa-solid fa-square-check"></i> Tasks Found : <span id="match-count">0</span></p>
+
+  <div class="notask-found"><i class="fa-regular fa-face-frown-open"></i><p>No tasks found</p></div>
+  </div>
+
   <!-- empty interface for focus on the input -->
     <div class="empty-task">
   <i class="fa-solid fa-list-check empty-icon"></i>
   <h3>Start by adding your first task</h3>
   <button class="add-task-btn">+ Add Task</button>
     </div>
-
      <div class="active-task">
   <!-- active task content -->
 
@@ -451,6 +457,7 @@
 </article>
 </main>     <!--container1 -->
 
+<section class="profile"></section>
 
 <!-- footer contents -->
  <footer>
@@ -493,7 +500,7 @@
      <hr>
     <!-- copyrights footer -->
     <div class="footer-bottom">
-    <p>© <span id="copy-year"></span> TaskManager. All rights reserved. Built with <span class="heart">❤️</span> for productivity.</p>
+    <p>© <span id="copy-year"></span> TaskManager. All rights reserved. Built with <i class="fa-solid fa-heart"></i> for productivity.</p>
     </div>
   
 </footer>
