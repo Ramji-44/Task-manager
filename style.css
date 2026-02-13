@@ -84,6 +84,11 @@ body {
   border-radius: 6px;
   padding: 0.3em 0.5em;
 }
+/* page Navigation  */
+/* Hides form, tasks*/
+.hide {
+  display: none;
+}
 
 /* Menu - Three lines */
 .menu {
@@ -146,14 +151,15 @@ body {
   padding: 0.5em 1em;
 }
 /* Form inputs and select are styled */
-.new-task input{
+.new-task input,
+#editTaskForm input{
   margin: 1em 1.3em;
   padding: 0.8em;
   border-radius: 6px;
   background-color: var(--white);
-  border: 1px solid var(--bordercolor);
+  border: 2px solid var(--bordercolor);
   outline: none;
-  transition: border-color 0.2s ease;
+  transition: border-color 0.1s ease;
 }
 .new-task .label {
   padding-left: 1.2em;
@@ -194,7 +200,7 @@ body {
   border-radius: 6px;
   padding: 0.5em;
   cursor: text;
-  border: 1px solid var(--bordercolor);
+  border: 2px solid var(--bordercolor);
   color: black;
   resize: none;
 }
@@ -258,9 +264,7 @@ body {
 .status-type {
   margin-top: 0.8em;
 }
-.status-type.borderbox .error-box {
-  margin: 0 1.4em;
-}
+
 .status-type input[type="radio"] {
   margin-left: 1.5em;
   cursor: pointer;
@@ -283,7 +287,6 @@ input[type="text"],input[type="email"],input[type="url"],input[type="range"] {
   width: 100%;
   margin-bottom: 0.6em;
   line-height: 1.5;
-  overflow-y: hidden;
 }
 .borderbox {
   padding-right: 2.2em;
@@ -325,7 +328,10 @@ input[type="text"],input[type="email"],input[type="url"],input[type="range"] {
   border-radius: 6px;
   box-sizing: border-box;
   background-color: var(--white);
-  border: 1px solid var(--boxshadow);
+  border: 2px solid var(--boxshadow);
+}
+.selectAnOption.active-color{
+  border-color: var(--highlight);
 }
 .dropdown-options{
   font-size: 10pt;
@@ -357,7 +363,7 @@ input[type="text"],input[type="email"],input[type="url"],input[type="range"] {
   display: flex;
   align-items: center;
   justify-content: space-around;
-  margin: 1.5em 1.2em;
+  margin-bottom: 1.5em;
   gap: 1em;
 }
 .task-buttons .create-button {
@@ -383,7 +389,12 @@ input[type="text"],input[type="email"],input[type="url"],input[type="range"] {
   cursor: pointer;
 }
 .borderbox input:focus,
-.field input:focus{
+.borderbox textarea:focus,
+.field input:focus,
+.field .selectAnOption:focus,
+#editTaskForm input:focus,
+#ediTaskForm textarea:focus{
+  outline: none;
   border-color: var(--highlight);
 }
 
@@ -536,13 +547,12 @@ input[type="text"],input[type="email"],input[type="url"],input[type="range"] {
   width: 90%;
   z-index: 1000;
   max-width: 650px;
-  min-width: 290px;
 
   max-height: 80vh;
   padding: 1em;
 
   overflow-y: scroll;
-  overflow-x: hidden;
+  /* overflow-x: hidden; */
   border-radius: 10px;
   transition: 0.2s ease;
   background-color: #ECECEC;
@@ -837,7 +847,7 @@ input[type="text"],input[type="email"],input[type="url"],input[type="range"] {
   border-radius: 6px;
   padding: 0.5em;
   cursor: text;
-  border: 1px solid var(--bordercolor);
+  border: 2px solid var(--bordercolor);
   color: black;
   resize: none;
 }
@@ -903,7 +913,7 @@ input[type="text"],input[type="email"],input[type="url"],input[type="range"] {
   margin-top: 0.8em;
 }
 .status-type.borderbox .error-box {
-  margin: 0 1.4em;
+  margin: 0 1.4em 0.3em 0;
 }
 .status-type input[type="radio"] {
   margin-left: 1.5em;
@@ -944,13 +954,7 @@ input[type="text"],input[type="email"],input[type="url"],input[type="range"] {
 }
 
 /* buttons - update task and cancel */
-.task-buttons {
-  display: flex;
-  align-items: center;
-  justify-content: space-around;
-  margin: 1.5em 1.2em;
-  gap: 1em;
-}
+
 .task-buttons .update-button {
   text-align: center;
   padding: 1.6em 0;
@@ -1051,7 +1055,7 @@ input[type="text"],input[type="email"],input[type="url"],input[type="range"] {
 /* mathcing task count tag */
 #matchingTasks{
   color: #0C2B4E;
-  width: 200px;
+  width: 180px;
   font-size: 1.1em;
   border-radius: 30px;
   padding:0.5em 0 0.5em 0.5em;
@@ -1077,6 +1081,9 @@ input[type="text"],input[type="email"],input[type="url"],input[type="range"] {
   border: 1px solid var(--bordercolor);
   background-color: var(--white);
   transition: all 0.2s ease;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5em;
 }
 
 .status-dropdown .selectAnOption:hover {
@@ -1155,6 +1162,7 @@ input[type="text"],input[type="email"],input[type="url"],input[type="range"] {
 #dashboard .scroll-bar-container {
   height: 1000px;
   overflow-y: auto;
+  scrollbar-width: thin;
 }
 
 /* Active Tasks contents using masonry layout */
@@ -1517,7 +1525,7 @@ footer hr {
     flex-direction: row; /* keep them side by side */
     justify-content: space-around;
     align-items: center;
-    margin: 1.5em 1.2em;
+    margin: 0em 1.2em 1em 1.2em;
     gap: 0.8em;
   }
   .task-buttons .create-button,.update-button{
@@ -1683,10 +1691,21 @@ footer hr {
    #editTaskForm .status-label[for="edit-inprogress"]{
     padding: 0 0 0 2em;
   }
+  .task-details{
+    top: 55%;
+  }
 /* lower screens icons reduce for task-details */
   .task-info1 i{
     width: 10px;
     margin-right: 5px;
+  }
+  .task-info1 strong,
+  .task-info1 .td-description, .td-email, .td-url, .td-date, .td-time, .td-hours{
+    font-size: 0.8em;
+  }
+  #matchingTasks{
+    width: 150px;
+    font-size: 0.9em;
   }
   .success-toast,
   .update-toast,
@@ -1773,15 +1792,12 @@ footer hr {
     grid-template-columns: 1fr;
   }
 
-  .task-details{
-    width: 600px;
-  }
   .nav-buttons button{
     padding: 0.2em 0.5em;
   }
   .task-buttons {
     justify-content: space-evenly;
-    margin: 2em 1.2em;
+    margin: 0em 1.2em 1em 1.2em;
     gap: 1.5em;
   }
   .task-buttons .create-button {
@@ -1837,6 +1853,7 @@ footer hr {
   }
   .new-task form {
     width: 100%;
+    padding: 0;
     max-width: 350px;
   }
   .priority-status {
@@ -1844,17 +1861,34 @@ footer hr {
     padding: 0;
   }
   .edit-popup{
-    width: 900px;
+    width: 600px;
   }
+  .nav-buttons {
+    width: 100%;
+    justify-content: space-around;
+    gap: 1em;
+  }
+  .active-task{
+    display: grid;
+    grid-template-columns: repeat(2,1fr);
+  }
+  .container2{
+    height: 1225px;
+  }
+  .task-buttons .create-button{
+    width: 50%;
+  }
+  .task-buttons .reset-button{
+    width: 30%;
+  }
+  .scroll-bar-container {
+  max-height: 1060px;
+  overflow-y: auto;
+}
 }
 
-/* page Navigation  */
-/* Hides form, tasks*/
-.hide {
-  display: none;
-}
-/* When form is hidden → single column */
-/* FULL WIDTH MODE */
+/* PAGE SWITCH NAVIGATION */ 
+/* FULL WIDTH MODE - full width for tasks,profile pages*/
 .container1.expand {
   grid-template-columns: 1fr !important;
 }
@@ -1864,4 +1898,12 @@ footer hr {
   grid-column-end: 3;  
   width: 100%;
 }
-
+/* autofill blue bg remove */
+input:-webkit-autofill,
+input:-webkit-autofill:hover, 
+input:-webkit-autofill:focus, 
+textarea:-webkit-autofill,
+textarea:-webkit-autofill:hover,
+textarea:-webkit-autofill:focus {
+  box-shadow: 0 0 0px 1000px var(--white) inset;
+}

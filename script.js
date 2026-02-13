@@ -29,6 +29,7 @@ drop.forEach(function (select) {
 
   selectAnopt.addEventListener("click", () => {
     optionContainer.classList.toggle("open-custom")
+    selectAnopt.classList.add("active-color")
   });
 
   optionItems.forEach((opt) => {
@@ -40,11 +41,20 @@ drop.forEach(function (select) {
       selectAnopt.dataset.value = opt.dataset.value
       optionContainer.classList.remove("open-custom")   // none
 
+      selectAnopt.classList.remove("active-color")
+
       if(select.closest("form")){
       clearError(selectAnopt)  // error-box call(form validation)
       }
     })
   })
+// dropdown close  if click outside
+  document.addEventListener("click", (e) => {
+    if (!select.contains(e.target)) {
+      optionContainer.classList.remove("open-custom")
+      selectAnopt.classList.remove("active-color")
+    }
+})
 })
 
 let currentFilterPriority = "all"
@@ -104,6 +114,7 @@ function filterTasks(priority, status = currentFilterStatus) {
 /* matchig  count by status and priority */
   document.getElementById("match-count").textContent = matchCount
 }
+
 /* filter buttons, highlight colors */
 const filterButtons = document.querySelectorAll('.nav-buttons button')
 
@@ -240,10 +251,21 @@ const selectedYear = selectedDate.split("-")[0]   // yyyy-mm-dd = year
   if (time.value === "") {
     return throwError(time, "Due time is required");
   }
-    else{
-    clearError(time)
-  }
+  else{
+    const selectedDateTime = new Date(`${date.value}T${time.value}`)
+    const now = new Date()
 
+    selectedDateTime.setSeconds(0, 0) // seconds to zero
+    now.setSeconds(0, 0)
+// waiting period 5 minutes
+    const waitingPeriod = 5 * 60 * 1000   // 5 minutes
+    if(selectedDateTime.getTime() + waitingPeriod < now.getTime()){  
+      return throwError(time, "Past time is not allowed")
+    }
+    else{
+      clearError(time)
+    }
+}
 // select - priority
   if (prioritySelect.textContent.includes("Select an option")) {
     return throwError(prioritySelect, "Select priority level");
@@ -394,15 +416,25 @@ const EselectedYear = EselectedDate.split("-")[0]  // yyyy-mm-dd =  year
     return throwError(editTime, "Due time is required")
   }
   else{
+    const selectedDateTime = new Date(`${editDate.value}T${editTime.value}`)
+    const now = new Date()
+
+    selectedDateTime.setSeconds(0, 0)
+    now.setSeconds(0, 0)
+
+    if(selectedDateTime.getTime() < now.getTime()){
+      return throwError(editTime, "Past time is not allowed")
+    }
+    else{
     clearError(editTime)
   }
-
+}
   // hour
   if (editHours.value === "" ) {
     return throwError(editHours, "Enter hours")
   }
   else if(editHours.value <= 0){
-    return throwError(editHours,"Enter hours 0 or above")
+    return throwError(editHours,"Enter hours above 0")
   }
   else{
     clearError(editHours)
@@ -576,9 +608,12 @@ progress.addEventListener("input", () => {
 form.addEventListener("reset", () => {
   percent.textContent = "0%";
 
-prioritySelect.innerHTML = `Select an option<span><img src="arrow down.png" alt="arrow down"></span>`
-prioritySelect.dataset.value = "" 
-
+  // reset dropdown text
+  const selectAnopt = form.querySelector(".selectAnOption")
+  if (selectAnopt) {
+    selectAnopt.innerHTML = 'Select an option <span><i class="fa-solid fa-angle-down arrowdown"></i></span>'
+    selectAnopt.dataset.value = "" // reset the data-value
+  }
   // remove error Messages when reset
   const AllerrorBox = form.querySelectorAll(".error-box")
   AllerrorBox.forEach((msg) => {
@@ -813,10 +848,18 @@ function fillEditForm(task){
   editProgress.value = task.progress;
   editProgressValue.textContent = `${task.progress}%`;
 
-  //  priority
-  const arrow = editPriority.querySelector("span").outerHTML
-  editPriority.innerHTML = task.priority + arrow
-  editPriority.dataset.value = task.priority
+//  priority
+const priorityLabels = {
+  low: "Low Priority",
+  medium: "Medium Priority",
+  high: "High Priority"
+}
+const arrowHTML = `<span><i class="fa-solid fa-angle-down arrowdown"></i></span>`
+
+const label = priorityLabels[task.priority] || "Low Priority"
+
+editPriority.innerHTML = `${label} ${arrowHTML}`
+editPriority.dataset.value = task.priority
 
   //  checkboxes
    editCheckboxes.forEach(checks => {
@@ -1000,6 +1043,11 @@ const addTaskBtn = document.querySelector(".add-task-btn");
 
 if (addTaskBtn) {
   addTaskBtn.addEventListener("click", () => {
+
+/* in tasks page to dashboard page switch */
+    location.hash = "#dashboard"  
+
+// focus on the taskName input.
     form.scrollIntoView({
       behavior: "smooth",
       block: "start"
@@ -1034,7 +1082,6 @@ filterButtons.forEach(label => {
   }
 })
 statusDropdown()
-showTasks()
 pageSwitch()  // page navigation
 })
 
@@ -1112,5 +1159,3 @@ function pageSwitch() {
 window.addEventListener("hashchange", () => { 
   pageSwitch()  
 })
-
-
