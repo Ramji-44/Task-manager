@@ -59,8 +59,8 @@ drop.forEach(function (select) {
 
 let currentFilterPriority = "all"
 let currentFilterStatus = "all"
-// Update task counts for all filters
-function taskCounts(){
+
+function taskCounts(){    //  Update task counts for  filters
   const allTasks = document.querySelectorAll('.active-task .content')      // all
   const highTasks = document.querySelectorAll('.active-task .content.high')   // high
   const mediumTasks = document.querySelectorAll('.active-task .content.medium')   // medium
@@ -107,11 +107,10 @@ function filterTasks(priority, status = currentFilterStatus) {
     taskFound.classList.remove("hidden")
     tasknotFound.classList.add("hidden")
   } 
-//  if not found 
-  else {
+  else {   // if not found 
     tasknotFound.classList.remove("hidden") 
   }
-/* matchig  count by status and priority */
+/* matching  count by status and priority */
   document.getElementById("match-count").textContent = matchCount
 }
 
@@ -121,7 +120,6 @@ const filterButtons = document.querySelectorAll('.nav-buttons button')
 filterButtons.forEach(currentBtn => {
 currentBtn.addEventListener('click', () => {
 
-    // remove active from all 
     filterButtons.forEach(btn => btn.classList.remove('active'))  // remove active color from all buttons
 
     currentBtn.classList.add('active')   // adding active for clicked label
@@ -134,12 +132,12 @@ currentBtn.addEventListener('click', () => {
 
 /* Form Validation */
 const form = document.getElementById("taskform");
-
 // input fields
 const taskName = document.getElementById("taskname");
 const assigneeName = document.getElementById("assigneename");
 const email = document.getElementById("email");
-const date = document.getElementById("dob");
+const date = document.getElementById("Date");
+date.min = todayDate()   // sets the minimum selectable date
 const time = document.getElementById("time");
 const prioritySelect = document.querySelector(".selectAnOption");
 const hoursInput = document.getElementById("hours");
@@ -147,7 +145,6 @@ const url = document.getElementById("project-url");
 const textArea = document.getElementById("descrip");
 const progress = document.getElementById("progress");
 const percent = document.querySelector(".progress-value");
-
 // checkbox & radio
 const taskCheckbox = form.querySelectorAll(
   '.task-type input[type="checkbox"]');
@@ -155,12 +152,12 @@ const statusRadio = form.querySelectorAll('input[name="status"]');
 
 /* Edit Task form  validation */
 const editForm = document.getElementById("editTaskForm")
-
 // inputs
 const editTaskName = document.getElementById("edit-taskname");
 const editAssignee = document.getElementById("edit-assigneename");
 const editEmail = document.getElementById("edit-email");
-const editDate = document.getElementById("edit-dob");
+const editDate = document.getElementById("edit-Date");
+editDate.min = todayDate()   // sets the minimum selectable date
 const editTime = document.getElementById("edit-time");
 const editHours = document.getElementById("edit-hours");
 const editUrl = document.getElementById("edit-project-url");
@@ -169,7 +166,6 @@ const editPriority = document.querySelector(".edit-priority");
 // progress bar
 const editProgress = document.getElementById("edit-progress")
 const editProgressValue = document.querySelector(".edit-progress-value")
-
 // checkbox & radio
 const editCheckboxes = editForm.querySelectorAll('input[name="edit-task-type"]')
 const editRadios = editForm.querySelectorAll('input[name="edit-status"]');
@@ -179,16 +175,15 @@ form.addEventListener("submit", (e) => {
   e.preventDefault();
 
 if(validateInputs()){
-    addTask()      // tasks adding  function
-    successToast()   // successful - Notification
-    form.reset()  // resets after validates
+    addTask()
+    successToast()
+    form.reset()
 }
 });
 
-// validation function 
+// Inputs validation function 
 function validateInputs() {
-// validation conditions
-// taskName 
+
   if (taskName.value.trim() === "") {
     return throwError(taskName, "Task Name is required.");
   }
@@ -204,7 +199,6 @@ function validateInputs() {
   else{
     clearError(taskName)
   }
-
 // Assigneee name
   if (assigneeName.value.trim() === "") {
     return throwError(assigneeName, "Assignee Name is required.");
@@ -218,7 +212,6 @@ function validateInputs() {
   else{
     clearError(assigneeName)
   }
-
 // email
   if (email.value.trim() === "") {
     return throwError(email, "Email is required.");
@@ -229,51 +222,31 @@ function validateInputs() {
   else{
     clearError(email)
   }
-
 // date
-const selectedDate = date.value
-const today = new Date().toISOString().split("T")[0]
-const selectedYear = selectedDate.split("-")[0]   // yyyy-mm-dd = year
   if (date.value === "") {
     return throwError(date, "Due date is required.")
   }
-  else if(selectedDate < today){
-    return throwError(date,"Past dates are not allowed")
-  }
-  else if(selectedYear.length !==4){
-    return throwError(date,"Please enter a valid 4-digit year")
+  else if (date.value < date.min) {
+  return throwError(date, "Past dates are not allowed.");
   }
   else{
     clearError(date)
   }
-
 // time
   if (time.value === "") {
     return throwError(time, "Due time is required");
   }
-  else{
-    const selectedDateTime = new Date(`${date.value}T${time.value}`)
-    const now = new Date()
-
-    selectedDateTime.setSeconds(0, 0) // seconds to zero
-    now.setSeconds(0, 0)
-// waiting period 5 minutes
-    const waitingPeriod = 5 * 60 * 1000   // 5 minutes
-    if(selectedDateTime.getTime() + waitingPeriod < now.getTime()){  
-      return throwError(time, "Past time is not allowed")
-    }
-    else{
-      clearError(time)
-    }
+//    yyyy-mm-dd     yyyy-mm-dd       HH:MM        HH:MM  
+  if(date.value === todayDate() && time.value < currentTime()) {
+    return throwError(time, "past time is not allowed")
+}
+else {
+  clearError(time)
 }
 // select - priority
   if (prioritySelect.textContent.includes("Select an option")) {
     return throwError(prioritySelect, "Select priority level");
   }
-  else{
-    clearError(prioritySelect)
-  }
-
 // hour
   if (hoursInput.value === "" ) {
     return throwError(hoursInput, "Enter hours");
@@ -284,7 +257,6 @@ const selectedYear = selectedDate.split("-")[0]   // yyyy-mm-dd = year
   else{
     clearError(hoursInput)
   }
-  
 // url 
   if (url.value.trim() === "") {
     return throwError(url, "Project URL is required");
@@ -295,7 +267,6 @@ const selectedYear = selectedDate.split("-")[0]   // yyyy-mm-dd = year
   else{
     clearError(url)
   }
-
 // text area
   if (textArea.value.trim() === "") {
     return throwError(textArea, "Task description is required");
@@ -303,8 +274,7 @@ const selectedYear = selectedDate.split("-")[0]   // yyyy-mm-dd = year
   else{
     clearError(textArea)
   }
-
-  // (checkbox) Task type validation
+// (checkbox) Task type validation
   let taskChecked = false;
   taskCheckbox.forEach((clickBox) => {
     if (clickBox.checked) {
@@ -319,7 +289,7 @@ const selectedYear = selectedDate.split("-")[0]   // yyyy-mm-dd = year
     clearError(taskCheckbox[0])
   }
 
-  // (radio) status validation
+// (radio) status validation
   let statusChecked = false;
   statusRadio.forEach((clickRadio) => {
     if (clickRadio.checked) {
@@ -333,7 +303,7 @@ const selectedYear = selectedDate.split("-")[0]   // yyyy-mm-dd = year
   else{
     clearError(statusRadio[0])
   }
-  /* completed status and 100% progress */ 
+/* completed status and 100% progress */ 
 
   const statusValue = selectedStatus()
   if(statusValue === "Completed" && Number(progress.value) !== 100){
@@ -348,19 +318,19 @@ const selectedYear = selectedDate.split("-")[0]   // yyyy-mm-dd = year
   else{
     clearError(progress)
   }
-
   return true
 }
-
 /* edit form validation function */
 function validateEditInputs(){
-
-  // taskName
+// edit-taskname
   if (editTaskName.value.trim() === "") {
     return throwError(editTaskName, "Task Name is required.")
   }
   else if(!taskNameLength(editTaskName.value.trim())){
     return throwError(editTaskName,"Task Name must contain a minimum of 3 characters.")
+  }
+  else if(TaskNameExist(taskName.value.trim())){
+    return throwError(taskName,"Task Name already exists.")
   }
   else if(editTaskName.value.trim().length > 50){
     return throwError(editTaskName,"Task Name cannot exceed 50 characters")
@@ -368,8 +338,7 @@ function validateEditInputs(){
   else{
     clearError(editTaskName)
   }
-
-  // Assignee name
+// edit-assignee name
   if (editAssignee.value.trim() === "") {
     return throwError(editAssignee, "Assignee Name is required")
   }
@@ -382,8 +351,7 @@ function validateEditInputs(){
   else{
     clearError(editAssignee)
   }
-
-  // email
+// edit-email
   if (editEmail.value.trim() === "") {
     return throwError(editEmail, "Email is required")
   }
@@ -394,42 +362,29 @@ function validateEditInputs(){
     clearError(editEmail)
   }
 /* Date validation*/
-const EselectedDate = editDate.value
-const Etoday = new Date().toISOString().split("T")[0]
-const EselectedYear = EselectedDate.split("-")[0]  // yyyy-mm-dd =  year
-  // date
+
   if (editDate.value === "") {
     return throwError(editDate, "Due date is required")
   }
-  else if(EselectedDate < Etoday){
-    return throwError(editDate,"Past dates are not allowed")
-    }
-  else if(EselectedYear.length !== 4){
-    return throwError(editDate, "Please enter a valid 4-digit year")
+  else if (editDate.value < editDate.min) {
+  return throwError(editDate, "Past dates are not allowed.");
   }
   else{
     clearError(editDate)
   }
 
-  // time
+// time
   if (editTime.value === "") {
     return throwError(editTime, "Due time is required")
   }
-  else{
-    const selectedDateTime = new Date(`${editDate.value}T${editTime.value}`)
-    const now = new Date()
-
-    selectedDateTime.setSeconds(0, 0)
-    now.setSeconds(0, 0)
-
-    if(selectedDateTime.getTime() < now.getTime()){
-      return throwError(editTime, "Past time is not allowed")
-    }
-    else{
-    clearError(editTime)
-  }
+//    yyyy-mm-dd         yyyy-mm-dd       HH:MM            HH:MM
+  if(editDate.value === todayDate() && editTime.value < currentTime()){
+    return throwError(editTime, "past time is not allowed")
 }
-  // hour
+  else{
+    clearError(editTime)
+}
+// hour
   if (editHours.value === "" ) {
     return throwError(editHours, "Enter hours")
   }
@@ -439,8 +394,7 @@ const EselectedYear = EselectedDate.split("-")[0]  // yyyy-mm-dd =  year
   else{
     clearError(editHours)
   }
- 
-  // url
+// url
   if (editUrl.value.trim() === "") {
     return throwError(editUrl, "Project URL is required")
   }
@@ -508,7 +462,6 @@ const EselectedYear = EselectedDate.split("-")[0]  // yyyy-mm-dd =  year
 }
 
 // error message function
-
 function showError(input, message) {
   const parent = input.parentElement
 
@@ -520,7 +473,6 @@ function showError(input, message) {
 }
 
 // clear error messages
-
 function clearError(input){
   const parent = input.parentElement
   const errorBox = parent.querySelector(".error-box");
@@ -535,7 +487,7 @@ const allInputs = document.querySelectorAll("input,textarea");
 
 allInputs.forEach((input) => {
   input.addEventListener('input', () => {
-    const parent = input.closest(".borderbox, .field")   // gets  the correct parent, instead of div
+    const parent = input.closest(".borderbox, .field")   // gets  the correct parent
 
       const errorBox = parent.querySelector(".error-box")
       const small = parent.querySelector('.error')
@@ -547,8 +499,7 @@ allInputs.forEach((input) => {
   })
 })
 
-/* error message appears for validation, both create and edit task*/
-  function throwError(input, message){
+function throwError(input, message){ 
     showError(input, message)
     goToError(input)
     return false
@@ -604,6 +555,14 @@ progress.addEventListener("input", () => {
   percent.textContent = `${progress.value}%`;
 });
 
+function todayDate(){   // gets today Date 
+  return new Date().toISOString().split("T")[0]  // yyyy-mm-dd
+}
+
+function currentTime(){  // gets current time
+    return new Date().toTimeString().slice(0,5)  // HH:MM
+}
+
 // reset -> progress=0, dropdown, clear Error msg
 form.addEventListener("reset", () => {
   percent.textContent = "0%";
@@ -640,6 +599,7 @@ function TaskTypes(){
   }) 
   return types   // returns in array
 }
+
 /* store tasks in local storage */
 function setTasks(tasks) {
   localStorage.setItem("tasks", JSON.stringify(tasks))
@@ -647,25 +607,15 @@ function setTasks(tasks) {
 
 /* Add task function for display and store */
 function addTask(){
+tasksArr = JSON.parse(localStorage.getItem("tasks")) || [];   // get Tasks if tasks not found return empty [] 
 
-// date - day-month-year to month day,year 
-  const oldDate = date.value  // date.value returns str like "0000-00-00"
-  const modernDate = new Date(oldDate).toLocaleDateString('en-US',{   // it converts to ex: Feb 29, 2026
-    month: 'short',    // jan,feb...
-    day: 'numeric',    // number ...
-    year: 'numeric'   //  number ...
-  })
-
-// keeps the tasks if that are previouly added  
-   tasksArr = JSON.parse(localStorage.getItem("tasks")) || [];   // if not found tasks return empty [] 
-
-  //  task object for local storage
+//  task object to store in local storage
    const task = {
    id: Date.now(),   // for unique ID for each Task
    title : taskName.value.trim(),
    assignee: assigneeName.value.trim(),
    email: email.value.trim(),
-   dueDate: modernDate,
+   dueDate: date.value,
    dueTime: time.value,
    priority: prioritySelect.dataset.value,
    hours: hoursInput.value,
@@ -676,11 +626,11 @@ function addTask(){
    status: selectedStatus()
   }
 
-  tasksArr.push(task)   // tasksArr is initially 0 
-
-  setTasks(tasksArr)
+  tasksArr.push(task)  // tasksArr is initially 0 
+  setTasks(tasksArr)  //  set to local storage
   showTasks()
 }
+
 /* priority */
 function priorityOptions(task){
   const priority = task.priority || "low"
@@ -692,6 +642,7 @@ function priorityOptions(task){
   }
   return ["low", "LOW"]
 }
+
 /* status selects */
 function statusTypes(task){
   if(task.status.includes("In Progress")){
@@ -703,7 +654,16 @@ function statusTypes(task){
   return ["pending", task.status]
 }
 
-/* display task function */
+/* formatted date for displayTask() and taskView() */
+function formatDate(task){
+  return new Date(task.dueDate).toLocaleDateString("en-US", {   // ex: yyyy-mm-dd => mon,dd yyyy
+    month: "short",
+    day: "numeric",
+    year: "numeric"
+  })
+}
+
+/* display task cards in UI */
 function displayTask(task){
 
   const [priorityClass, priorityText] = priorityOptions(task)
@@ -713,7 +673,7 @@ function displayTask(task){
 const newTasks = document.createElement("div")    // creating a empty contanier
 newTasks.className = `content ${priorityClass} ${statusClass}`
 
-newTasks.dataset.id = task.id  // task crads to local storage id connect 
+newTasks.dataset.id = task.id  // task cards to local storage id connect 
 
 newTasks.innerHTML = `<div>
        <h3 class="task-title">${task.title}<div class="edit-delete"><button class="edit" aria-label="Edit-task"> <i class="fa-solid fa-pen-to-square"></i></button>
@@ -721,7 +681,7 @@ newTasks.innerHTML = `<div>
         </h3>
         <p class="text">${task.description}</p>
 
-        <p class="date"><span class="calender-icon"><img src="calender-img.png" alt="calender-image"></span>Due:  ${task.dueDate}</p>
+        <p class="date"><span class="calender-icon"><img src="calender-img.png" alt="calender-image"></span>Due: ${formatDate(task)}</p>
         <p class="name"><span class="user-icon"><img src="person-img.jpg" alt="user-image"></span> ${task.assignee}</p>
 
         <hr>
@@ -729,10 +689,8 @@ newTasks.innerHTML = `<div>
           <span class="priority ${priorityClass}"><span class="priority-dot"></span> ${priorityText}</span>
           <span class="status ${statusClass}"><span class="status-dot"></span> ${statusText}</span>
         </div>
-      </div>
-`
-  // new tasks adds on first 
-activeTaskContainer.prepend(newTasks)
+      </div> `
+activeTaskContainer.prepend(newTasks)   // new tasks adds on first 
 }
 
 function showTasks(){
@@ -750,14 +708,13 @@ function showTasks(){
 // object values fills in popup 
 function taskView(task){
 
-// used here for the dot-small circle will be present in the task view
- const [priorityClass, priorityText] = priorityOptions(task)
+ const [priorityClass, priorityText] = priorityOptions(task)  // 
  const [statusClass, statusText] = statusTypes(task)
 
   document.querySelector(".td-title").textContent = task.title
   document.querySelector(".td-assignee").textContent = task.assignee
   document.querySelector(".td-email").textContent = task.email
-  document.querySelector(".td-date").textContent = task.dueDate
+  document.querySelector(".td-date").textContent = formatDate(task)
   document.querySelector(".td-time").textContent = task.dueTime
   document.querySelector(".td-hours").textContent = task.hours
   document.querySelector(".td-url").href = task.projectUrl
@@ -833,14 +790,7 @@ function fillEditForm(task){
   editTaskName.value = task.title;
   editAssignee.value = task.assignee;
   editEmail.value = task.email;
-
-  // convert date 
-  const dateObj = new Date(task.dueDate)
-  const year = dateObj.getFullYear()   // ex:2026
-  const month = String(dateObj.getMonth() + 1).padStart(2, '0')
-  const day = String(dateObj.getDate()).padStart(2, '0')
-  document.getElementById("edit-dob").value = `${year}-${month}-${day}`
-
+  editDate.value = task.dueDate
   editTime.value = task.dueTime;
   editHours.value = task.hours;
   editUrl.value = task.projectUrl;
@@ -867,7 +817,6 @@ editPriority.dataset.value = task.priority
     if(task.taskTypes && task.taskTypes.includes(checks.value)){
     checks.checked = true
   }
-
   })
   //  radio
   editRadios.forEach(radios => {
@@ -915,20 +864,12 @@ editForm.addEventListener("submit", (e) => {
   }
 });
 
-  // date
-  const dateVal = document.getElementById("edit-dob").value
-  const formattedDate = new Date(dateVal).toLocaleDateString("en-US", {
-    month: "short",
-    day: "numeric",
-    year: "numeric"
-  })
-
   tasks[index] = {
     ...tasks[index],
     title: editTaskName.value.trim(),
     assignee: editAssignee.value.trim(),
     email: editEmail.value.trim(),
-    dueDate: formattedDate,
+    dueDate: editDate.value,
     dueTime: editTime.value,
     priority: editPriority.dataset.value,
     hours: editHours.value,
@@ -946,7 +887,6 @@ editForm.addEventListener("submit", (e) => {
   editOverlay.classList.remove("open-edit")  
   updateToast()  // Show success notification after edit
 })
-
 
 /* Delete task */
 const deletePopup = document.querySelector(".delete-confirmation")
@@ -979,7 +919,7 @@ activeTaskContainer.addEventListener("click", (e) => {
 function deleteTask(id){
   
   let storedTasks = JSON.parse(localStorage.getItem("tasks")) || []
-  storedTasks = storedTasks.filter(task => Number(task.id) !== Number(id))   /// remove
+  storedTasks = storedTasks.filter(task => Number(task.id) !== Number(id))   // remove
 
   setTasks(storedTasks)
   showTasks()
@@ -1072,7 +1012,6 @@ function showInterface() {
   }
 }
 
-/*refresh page */
 document.addEventListener("DOMContentLoaded", () => {
 
 // default highlight color for all
