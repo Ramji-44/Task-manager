@@ -214,29 +214,14 @@ body {
   padding: 0;
   margin: 0 0 0 0.5em;
 }
-.new-task input[type="range"] {
+.new-task input[type="range"],
+.rangeinput #edit-progress {
   width: 100%;
   margin: 0 0.6em;
   padding: 0.3em 0;
-  accent-color: rgb(81, 81, 247);
   cursor: pointer;
   border: 0px;
-}
-.borderbox.rangeinput .progress-value {
-  color: var(--highlight);
-  font-weight: bolder;
-  display: flex;
-  justify-content: center;
-  margin-bottom: 0.2em;
-}
-.borderbox.rangeinput {
-  margin: 0 0.6em;
-  margin-top: 0.8em;
-  padding: 0;
-  padding-right: 1em;
-}
-.borderbox.rangeinput .error-box {
-  margin: 0 0.7em;
+  accent-color: rgb(81, 81, 247);
 }
 
 /* Task Type input */
@@ -246,7 +231,8 @@ body {
 .task-type.borderbox .error-box {
   margin: 0 1.4em;
 }
-.task-type input[type="checkbox"] {
+.task-type input[type="checkbox"],
+.status-type input[type="radio"] {
   cursor: pointer;
   width: 20px;
   height: 20px;
@@ -255,27 +241,21 @@ body {
   vertical-align: middle;
   accent-color: var(--highlight);
 }
-.task-type .task-label {
-  padding: 0 2em;
+.new-task .task-type .task-label {
+  padding: 0 0 0 2em;
   vertical-align: middle;
   cursor: pointer;
 }
+
 /* status input */
 .status-type {
   margin-top: 0.8em;
 }
-
-.status-type input[type="radio"] {
-  margin-left: 1.5em;
-  cursor: pointer;
-  width: 20px;
-  height: 20px;
-  margin-right: -2.3em;
-  vertical-align: middle;
-  accent-color: var(--highlight);
+.status-type.borderbox .error-box {
+  margin: 0 1.4em 1em 1.4em;
 }
-.status-type .status-label {
-  padding: 0 2em;
+.new-task .status-type .status-label {
+  padding: 0 0 0 2em;
   vertical-align: middle;
   cursor: pointer;
 }
@@ -303,7 +283,6 @@ input[type="text"],input[type="email"],input[type="url"],input[type="range"] {
 .fa-circle-exclamation {   /*warning icon */
   color: #ff0000;
 }
-
 .selectAnOption span{
   position: relative;
 }
@@ -359,16 +338,17 @@ input[type="text"],input[type="email"],input[type="url"],input[type="range"] {
   margin-top: 0.3em;
 }
 /* buttons - create task and reset */
-.task-buttons {
+.new-task .task-buttons {
   display: flex;
   align-items: center;
   justify-content: space-around;
   margin-bottom: 1.5em;
+  padding: 0 2em;
   gap: 1em;
 }
 .task-buttons .create-button {
   text-align: center;
-  padding: 1.6em 0;
+  padding: 1.4em 0;
   width: 45%;
   color: var(--white);
   white-space: nowrap;
@@ -381,7 +361,7 @@ input[type="text"],input[type="email"],input[type="url"],input[type="range"] {
 .task-buttons .reset-button {
   width: 30%;
   color: #000;
-  padding: 1em 0;
+  padding: 0.8em 0;
   background-color: rgb(231, 231, 231);
   border: 1px solid rgb(231, 231, 231);
   border-radius: 8px;
@@ -758,29 +738,28 @@ input[type="text"],input[type="email"],input[type="url"],input[type="range"] {
   max-height: 90vh;
   overflow-y: auto;
   border-radius: 10px;
+  padding: 1em;
   scrollbar-width: none;
 }
-  .edit-popup::-webkit-scrollbar {
-  width: 6px;
-}
 
- .edit-task{
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 1em 1em 0.5em 1em;
- }
- .edit-task button{
+.edit-popup h2{
+  text-align: center;
+  margin-bottom: 0.5em;
+}
+ .edit-close {
   font-size: 18px;
   border-radius: 5px;
   border: none;
   cursor: pointer;
+  display: flex;
+  justify-self: end;
+  margin-right: 1em;
  }
-  .edit-task button .fa-xmark{
+  .edit-close .fa-xmark{
   padding: 0.2em 0.4em;
   transition: 0.2s ease;
 }
-.edit-task button .fa-xmark:hover{
+.edit-close  .fa-xmark:hover{
   background-color: black;
   color: white;
   border-radius: 5px;
@@ -791,12 +770,8 @@ input[type="text"],input[type="email"],input[type="url"],input[type="range"] {
   display: flex;
   flex-direction: column;
   background-color: var(--white);
-  border-radius: 10px;
   font-family: "Arial", sans-serif;
-  box-shadow:
-    0px 0px 2px rgba(0, 0, 0, 0.2),
-    /* top shadow */ 0 5px 10px rgba(0, 0, 0, 0.2);
-  padding: 0.5em 1em;
+  margin: 0;
 }
 /* Form inputs and select are styled */
 .edit-popup input{
@@ -851,24 +826,8 @@ input[type="text"],input[type="email"],input[type="url"],input[type="range"] {
   color: black;
   resize: none;
 }
-.edit-popup textarea::placeholder {
-  font-family: "Arial", sans-serif;
-  padding: 2.2em 0em;
-}
+
 /*  Task Progress input */
-.borderbox.rangeinput .taskprogress-label {
-  color: #757575;
-  padding: 0;
-  margin: 0 0 0 0.5em;
-}
-.edit-popup input[type="range"] {
-  width: 100%;
-  margin: 0 0.6em;
-  padding: 0.3em 0;
-  accent-color: rgb(81, 81, 247);
-  cursor: pointer;
-  border: 0px;
-}
 .borderbox.rangeinput .progress-value {
   color: var(--highlight);
   font-weight: bolder;
@@ -885,49 +844,19 @@ input[type="text"],input[type="email"],input[type="url"],input[type="range"] {
 .borderbox.rangeinput .error-box {
   margin: 0 0.7em;
 }
-
 /* Task Type input */
-.task-type {
-  margin-top: 1em;
-}
-.task-type.borderbox .error-box {
-  margin: 0 1.4em;
-}
-.task-type input[type="checkbox"] {
-  cursor: pointer;
-  width: 20px;
-  height: 20px;
-  margin-left: 1.5em;
-  margin-right: -2.3em;
-  vertical-align: middle;
-  accent-color: var(--highlight);
-}
-.task-type .task-label {
-  padding: 0 0 0 2em;
+ .edit-popup .task-type .task-label,
+ .edit-popup .status-type .status-label {
+  padding: 0;
   vertical-align: middle;
   cursor: pointer;
 }
-
-/* status input */
-.status-type {
-  margin-top: 0.8em;
+.edit-popup .task-type,
+.edit-popup .status-type{
+  padding: 0 0.3em;
 }
-.status-type.borderbox .error-box {
-  margin: 0 1.4em 0.3em 0;
-}
-.status-type input[type="radio"] {
-  margin-left: 1.5em;
-  cursor: pointer;
-  width: 20px;
-  height: 20px;
-  margin-right: -2.3em;
-  vertical-align: middle;
-  accent-color: var(--highlight);
-}
-.status-type .status-label {
-  padding: 0 0 0 2em;
-  vertical-align: middle;
-  cursor: pointer;
+.edit-popup .status-type{
+  margin-bottom: 1em;
 }
 
 input[type="text"],input[type="email"],input[type="url"],input[type="range"] {
@@ -954,11 +883,17 @@ input[type="text"],input[type="email"],input[type="url"],input[type="range"] {
 }
 
 /* buttons - update task and cancel */
-
+.edit-popup .task-buttons {
+  display: flex;
+  align-items: center;
+  padding: 0 4em;
+  justify-content: space-around;
+  margin: 1.5em;
+}
 .task-buttons .update-button {
   text-align: center;
-  padding: 1.6em 0;
-  width: 50%;
+  width: 40%;
+  padding: 1.5em;
   color: var(--white);
   white-space: nowrap;
   border-radius: 8px;
@@ -968,9 +903,9 @@ input[type="text"],input[type="email"],input[type="url"],input[type="range"] {
   border: 1px solid var(--highlight);
 }
 .task-buttons .cancel-button {
-  width: 30%;
   color: #000;
-  padding: 1em 0;
+  width: 30%;
+  padding: 1.5em;
   background-color: rgb(231, 231, 231);
   border: 1px solid rgb(231, 231, 231);
   border-radius: 8px;
@@ -1072,7 +1007,7 @@ input[type="text"],input[type="email"],input[type="url"],input[type="range"] {
 }
 /* dropdown for active tasks by status */
 .status-dropdown{
-  width: 200px;
+  width: 220px;
 }
 .status-dropdown .selectAnOption {
   font-size: 1.3em;
@@ -1165,7 +1100,7 @@ input[type="text"],input[type="email"],input[type="url"],input[type="range"] {
   scrollbar-width: thin;
 }
 
-/* Active Tasks contents using masonry layout */
+/* Active Tasks contents using grid layout */
 .active-task {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
@@ -1520,20 +1455,22 @@ footer hr {
     margin: 0 auto;
     padding: 0;
   }
-  .task-buttons {
+  .new-task .task-buttons ,
+  .edit-popup .task-buttons{
     display: flex;
-    flex-direction: row; /* keep them side by side */
     justify-content: space-around;
     align-items: center;
+    padding: 0;
     margin: 0em 1.2em 1em 1.2em;
     gap: 0.8em;
   }
-  .task-buttons .create-button,.update-button{
+
+  .edit-popup .update-button{
     width: 50%;
     padding: 1em 1.2em;
     font-size: 1em;
   }
-  .task-buttons .reset-button,.cancel-button {
+  .edit-popup .cancel-button {
     width: 30%;
     padding: 0.5em 1.1em;
     font-size: 0.95em;
@@ -1628,9 +1565,9 @@ footer hr {
     width: 100%;
   }
 
-  .edit-popup .task-type label[for="edit-feature"]{
+  /* .edit-popup .task-type label[for="edit-feature"]{
     padding: 0 0 0 2em;
-  }
+  } */
   .success-toast,
   .update-toast,
   .delete-toast{
@@ -1747,8 +1684,8 @@ footer hr {
     margin-right: 0.5em;
   }
   .container1 {
-    display: flex;
-    flex-direction: column;
+    display: grid;
+    grid-template-columns: 1fr;
     align-items: center;
     justify-content: flex-start;
     gap: 2em;
@@ -1764,52 +1701,15 @@ footer hr {
     margin: 0;
     margin-top: -1em;
   }
-  .task-type {
-    white-space: nowrap;
-  }
-  .task-type #task-label {
-    padding-right: 0;
-  }
-  .status-type #status-label {
-    padding-right: 0;
-  }
-  .status-type {
-    white-space: nowrap;
-  }
-  .task-type #taskhead {
-    margin-right: 1em;
-  }
-  .status-type #statushead {
-    margin-right: 2.6em;
-  }
+
   .new-task {
     width: 100%;
     margin: 0 auto;
   }
-  .container2 {
-    width: 100%;
-    display: grid;
-    grid-template-columns: 1fr;
-  }
-
   .nav-buttons button{
     padding: 0.2em 0.5em;
   }
-  .task-buttons {
-    justify-content: space-evenly;
-    margin: 0em 1.2em 1em 1.2em;
-    gap: 1.5em;
-  }
-  .task-buttons .create-button {
-    width: 40%;
-    padding: 1.2em 1.3em;
-    font-size: 1.05em;
-  }
-  .task-buttons .reset-button {
-    width: 25%;
-    padding: 0.7em 1.2em;
-    font-size: 1em;
-  }
+
   /* Footer in  2 column grid */
   .footer-container {
     width: 100%;
@@ -1876,7 +1776,7 @@ footer hr {
     height: 1225px;
   }
   .task-buttons .create-button{
-    width: 50%;
+    width: 30%;
   }
   .task-buttons .reset-button{
     width: 30%;

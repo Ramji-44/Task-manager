@@ -249,7 +249,9 @@
 <div class="edit-popup">
 
   <form id="editTaskForm" novalidate>
-    <span class="edit-task"><h4>&#128221 Edit Task</h4> <button class="edit-close" type="button"><i class= "fa-solid fa-xmark"></i></button></span>
+
+    <span class="close-icon"><button class="edit-close" type="button"><i class= "fa-solid fa-xmark"></i></button></span>
+    <h2>&#128221 Edit  Task</h2>
 
     <div class="borderbox field">
   <label for="edit-taskname">Task Name*</label>
@@ -382,19 +384,15 @@
   <input type="radio" name="edit-status" id="edit-completed" value="Completed">
   <label for="edit-completed" class="status-label">Completed</label>
 
-  <span class="error-box">
-    <i class="fa-solid fa-circle-exclamation"></i>
-    <small class="error"></small>
-  </span>
 </div>
 
       <!-- task buttons - create and reset -->
     <div class="task-buttons">
       <button type="submit" class="update-button">&#10003 Update Task</button>
-      <button type="reset" class="cancel-button">&#10006 <br>Cancel</button>
+      <button type="reset" class="cancel-button">&#10006 Cancel</button>
     </div>
+    </form>
 </div>
-  </form>
 
 <!-- active tasks - nav bar -->
 <article class="container2" id="tasksPage">
@@ -430,7 +428,7 @@
   <!-- empty interface for focus on the input -->
     <div class="empty-task">
   <i class="fa-solid fa-list-check empty-icon"></i>
-  <h3>Start by adding your first task</h3>
+  <h3>Start by adding your tasks</h3>
   <button class="add-task-btn">+ Add Task</button>
     </div>
      <div class="active-task">

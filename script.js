@@ -436,13 +436,6 @@ function validateEditInputs(){
     }
   });
 
-  if (!statusChecked) {
-    return throwError(editRadios [0], "Select task status")
-  }
-  else{
-    clearError(editRadios[0])
-  }
-
 /* completed status and 100% progress */ 
 
   const editStatusValue =  document.querySelector('input[name="edit-status"]:checked')?.value || ""
@@ -767,10 +760,10 @@ const editPopup = document.querySelector(".edit-popup")
 const editCloseBtn = document.querySelector(".edit-close")
 const editCancelBtn = document.querySelector(".cancel-button")
 
-let editTaskId = null
+let editTaskId = 0
 
 // Open edit popup when edit button clicked
-document.addEventListener("click", (e) => {
+activeTaskContainer.addEventListener("click", (e) => {
   const editBtn = e.target.closest(".edit")    // content inside edit icon
   if (!editBtn) return
 
@@ -779,8 +772,7 @@ document.addEventListener("click", (e) => {
 
   // get task from localStorage
   const tasks = JSON.parse(localStorage.getItem("tasks")) || []
-  const editTask = tasks.find(t => t.id === editTaskId)
-  if (!editTask) return
+  const editTask = tasks.find(t => t.id === editTaskId)  // if ID matches return that task
   fillEditForm(editTask)
   openEditPopup()
 })
@@ -806,17 +798,14 @@ const priorityLabels = {
 }
 const arrowHTML = `<span><i class="fa-solid fa-angle-down arrowdown"></i></span>`
 
-const label = priorityLabels[task.priority] || "Low Priority"
+const label = priorityLabels[task.priority]
 
 editPriority.innerHTML = `${label} ${arrowHTML}`
 editPriority.dataset.value = task.priority
 
   //  checkboxes
    editCheckboxes.forEach(checks => {
-    checks.checked = false
-    if(task.taskTypes && task.taskTypes.includes(checks.value)){
-    checks.checked = true
-  }
+    checks.checked = task.taskTypes.includes(checks.value)
   })
   //  radio
   editRadios.forEach(radios => {
@@ -824,37 +813,14 @@ editPriority.dataset.value = task.priority
   })
 }
 
-function openEditPopup(){
-  editOverlay.classList.add("open-edit")
-  editPopup.classList.add("open-edit")
-}
-// Close button  popup
-function closeEditPopup(){
-  editOverlay.classList.remove("open-edit")
-  editPopup.classList.remove("open-edit")
-  editTaskId = null
-}
-editCloseBtn.addEventListener("click", closeEditPopup)
-editCancelBtn.addEventListener("click",closeEditPopup)
-
-
 // progress bar
 editProgress.addEventListener("input", () => {
   editProgressValue.textContent = `${editProgress.value}%`
 })
 
-// Submit edit form with validation
-editForm.addEventListener("submit", (e) => {
-  e.preventDefault()
-
-  // Call validation function - stops submit if validation fails
-  if(!validateEditInputs()) {
-    return
-  }
-
+function updateTask(){ 
   let tasks = JSON.parse(localStorage.getItem("tasks")) || []
-  const index = tasks.findIndex(t => t.id === editTaskId)
-  if (index === -1) return
+  const index = tasks.findIndex(t => t.id === editTaskId)   // index position of the task, that matches
 
   // checkboxes
   const types = [];
@@ -864,7 +830,7 @@ editForm.addEventListener("submit", (e) => {
   }
 });
 
-  tasks[index] = {
+  tasks[index] = {   // copy all existing properties then update with new values 
     ...tasks[index],
     title: editTaskName.value.trim(),
     assignee: editAssignee.value.trim(),
@@ -879,14 +845,42 @@ editForm.addEventListener("submit", (e) => {
     taskTypes: types,
     status: document.querySelector('input[name="edit-status"]:checked').value
   }
-
   setTasks(tasks)
   showTasks()
+}
 
-  editPopup.classList.remove("open-edit")
-  editOverlay.classList.remove("open-edit")  
+// Submit edit form with validation
+editForm.addEventListener("submit", (e) => {
+  e.preventDefault()
+
+  if(validateEditInputs()) {
+  updateTask()  // update in local storage and in UI
+  closeEditPopup()
   updateToast()  // Show success notification after edit
+}
 })
+function openEditPopup(){    
+  editOverlay.classList.add("open-edit")
+  editPopup.classList.add("open-edit")
+}
+// Close button and X button  
+function closeEditPopup(){
+  editOverlay.classList.remove("open-edit")
+  editPopup.classList.remove("open-edit")
+  editTaskId = 0
+  clearEditErrorMsg()
+}
+/* removes error msg when closing the edit form */
+function clearEditErrorMsg(){
+  const editFormErrorBox = editForm.querySelectorAll(".error-box")
+  const editFormErrorText = editForm.querySelectorAll(".error")
+
+  editFormErrorBox.forEach(box => box.classList.remove("show"))
+  editFormErrorText.forEach(text => text.innerText = "")
+}
+
+editCloseBtn.addEventListener("click", closeEditPopup)  // X-button
+editCancelBtn.addEventListener("click",closeEditPopup)  // cancel - button
 
 /* Delete task */
 const deletePopup = document.querySelector(".delete-confirmation")
