@@ -444,7 +444,7 @@ input[type="text"],input[type="email"],input[type="url"],input[type="range"] {
 
 /* Delete confirmation */
 .delete-confirmation{
-  width: 400px;
+  width: 50vw;
   padding: 2em;
   text-align: center;
   position: fixed;
@@ -472,6 +472,9 @@ input[type="text"],input[type="email"],input[type="url"],input[type="range"] {
   padding: 0.5em 1em;
   line-height: 1.3;
 }
+#delete-msg{
+  margin: 1em 0;
+}
 .delete-confirmation #delete-msg{
   color: #FF0000;
 }
@@ -493,11 +496,22 @@ input[type="text"],input[type="email"],input[type="url"],input[type="range"] {
   cursor: pointer;
   border-radius: 20px;
   background-color: white;
-  box-shadow: 3px 3px 3px var(--boxshadow);
+  box-shadow: 3px -2px 3px var(--boxshadow),
+  3px 2px 3px var(--boxshadow);
+}
+#cancel-btn{
+  background-color: #E4EFE7;
+}
+#cancel-btn:hover{
+  background-color: #F0FFC3;
 }
 #delete-btn{
   color: white;
-  background-color: #FF0000;
+  background-color: #db2c2c;
+}
+#delete-btn:hover{
+  color: #fff;
+  background-color: #ff0000;
 }
 .overlay{
   position: fixed;
@@ -1020,7 +1034,18 @@ input[type="text"],input[type="email"],input[type="url"],input[type="range"] {
   align-items: center;
   gap: 0.5em;
 }
-
+.status-dropdown .lines{
+  color: #134E8E;
+}
+.fa-clock{
+  color: #FFA240;
+}
+.fa-circle-check{
+ color: #41A67E;
+}
+.fa-spinner{
+  color:#1A3263;
+}
 .status-dropdown .selectAnOption:hover {
   border-color: var(--highlight);
   box-shadow: 0 2px 6px rgba(0,0,0,0.1);
@@ -1577,7 +1602,8 @@ footer hr {
     padding: 1em 0.5em;
   }
   .delete-confirmation{
-    width: 345px;
+    width: 350px;
+    padding: 0 0 1.5em 0;
   }
 }
 /* Smaller mobile screen widths below 350px */
@@ -1701,13 +1727,15 @@ footer hr {
     margin: 0;
     margin-top: -1em;
   }
-
   .new-task {
     width: 100%;
     margin: 0 auto;
   }
   .nav-buttons button{
     padding: 0.2em 0.5em;
+  }
+  .delete-confirmation{
+    width: 600px;
   }
 
   /* Footer in  2 column grid */

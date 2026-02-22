@@ -196,14 +196,14 @@
 <!-- Delete conformation popup -->
 <div class="delete-confirmation">
   <div class="delete-text">
-  <span id="delete-msg">"This action will permanently delete the item."</span>
+  <span id="delete-msg">"This action will permanently delete this task."</span>
   <span>Are you sure you want to Delete?</span>
   <h4 id="task-name"></h4>
   </div>
 
   <div class="cancel-delete-btn">
   <button id="cancel-btn">CANCEL</button>
-  <button id="delete-btn">DELETE</button>
+  <button id="delete-btn">CONFIRM</button>
   </div>
 </div>
 
@@ -402,10 +402,10 @@
     <div class="dropdown status-dropdown">
       <div class="selectAnOption" data-value="default"> Filter by Status <span><i class="fa-solid fa-angle-down arrowdown"></i></span></div>
         <div class="dropdown-options">
-          <div class="option" data-value="default"><i class="fa-solid fa-arrow-down-short-wide"></i>Filter by Status</div>
-          <div class="option" data-value="pending"><i class="fa-regular fa-clock"></i>Pending <span id="pending-count">0</span></div>
-          <div class="option" data-value="inprogress"><i class="fa-solid fa-spinner"></i>In Progress <span id="inprogress-count">0</span></div>
-          <div class="option" data-value="completed"><i class="fa-solid fa-circle-check"></i>Completed <span id="completed-count">0</span></div>
+          <div class="option" data-value="default"><i class="fa-solid fa-arrow-down-short-wide lines"></i>Filter by Status</div>
+          <div class="option" data-value="pending"><i class="fa-regular fa-clock"></i>Pending <span id="pending-count"></span></div>
+          <div class="option" data-value="inprogress"><i class="fa-solid fa-spinner"></i>In Progress <span id="inprogress-count"></span></div>
+          <div class="option" data-value="completed"><i class="fa-solid fa-circle-check"></i>Completed <span id="completed-count"></span></div>
         </div>
     </div> 
   
