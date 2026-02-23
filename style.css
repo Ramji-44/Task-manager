@@ -16,7 +16,6 @@
 body {
   height: 100vh;
   font-family: "Arial", sans-serif;
-  background-color: #fff;
   box-sizing: border-box;
   background-color: rgb(250, 250, 250);
 }
@@ -97,11 +96,9 @@ body {
   padding: 4px 0;
   border-radius: 8px;
   cursor: pointer;
-}
-
-.menu {
   display: none;
 }
+
 .menu-line {
   width: 1.4rem;
   height: 2px;
@@ -178,9 +175,7 @@ body {
   box-sizing: border-box;
   cursor: pointer;
 }
-.field input {
-  cursor: pointer;
-}
+
 .field label {
   padding: 0 2px;
   position: absolute;
@@ -194,14 +189,15 @@ body {
 }
 
 /* Text area input */
-.new-task textarea {
+.new-task textarea,
+.edit-popup textarea {
   font-size: 1rem;
   margin: 0.8em 1.1em auto 1.2em;
   border-radius: 6px;
   padding: 0.5em;
   cursor: text;
   border: 2px solid var(--bordercolor);
-  color: black;
+  color: #000;
   resize: none;
 }
 .new-task textarea::placeholder {
@@ -271,14 +267,14 @@ input[type="text"],input[type="email"],input[type="url"],input[type="range"] {
 .borderbox {
   padding-right: 2.2em;
 }
-.new-task .error-box {
+.new-task .error-box,
+.edit-popup .error-box {
   font-size: 14px;
   color: rgb(214, 21, 21);
   margin: -0.6em 0 0 1.2em;
   display: flex;
   align-items: center;
   gap: 0.4em;
-  visibility: hidden;
 }
 .fa-circle-exclamation {   /*warning icon */
   color: #ff0000;
@@ -373,7 +369,7 @@ input[type="text"],input[type="email"],input[type="url"],input[type="range"] {
 .field input:focus,
 .field .selectAnOption:focus,
 #editTaskForm input:focus,
-#ediTaskForm textarea:focus{
+#editTaskForm textarea:focus{
   outline: none;
   border-color: var(--highlight);
 }
@@ -552,6 +548,8 @@ input[type="text"],input[type="email"],input[type="url"],input[type="range"] {
   width: 5px;
 }
 .task-details .closeTD{
+  height: 2em;
+  width: 2em;
   outline: none;
   background: none;
   border-radius: 5px;
@@ -664,8 +662,9 @@ input[type="text"],input[type="email"],input[type="url"],input[type="range"] {
   line-height: 1.5;
   display: block;
   text-align: justify;
-  text-indent: 20px;
+  text-indent: 2.2em;
   grid-column: 1/4;
+  overflow-x: hidden;
 }
 /* task details overlay and popup toggle */
 .task-details,
@@ -746,36 +745,11 @@ input[type="text"],input[type="email"],input[type="url"],input[type="range"] {
   font-family: "Arial", sans-serif;
   margin: 0;
 }
-/* Form inputs and select are styled */
-.edit-popup input{
-  margin: 1em 1.3em;
-  padding: 0.8em;
-  border-radius: 6px;
-  background-color: var(--white);
-  border: 1px solid var(--bordercolor);
-  outline: none;
-  transition: border-color 0.2s ease;
-}
+
 .edit-popup .label {
   padding-left: 1.2em;
 }
 
-/* floating label used */
-.field {
-  position: relative;
-  width: 100%;
-  padding-right: 2.2em;
-  cursor: pointer;
-}
-.field input{
-  width: 100%;
-  background-color: var(--white);
-  box-sizing: border-box;
-  cursor: pointer;
-}
-.field input {
-  cursor: pointer;
-}
 .field .label {
   padding: 0 2px;
   position: absolute;
@@ -786,18 +760,6 @@ input[type="text"],input[type="email"],input[type="url"],input[type="range"] {
   left: 28px;
   font-size: 12px;
   color: var(--highlight);
-}
-
-/* Text area input */
-.edit-popup textarea {
-  font-size: 1rem;
-  margin: 0.8em 1.1em auto 1.2em;
-  border-radius: 6px;
-  padding: 0.5em;
-  cursor: text;
-  border: 2px solid var(--bordercolor);
-  color: black;
-  resize: none;
 }
 
 /*  Task Progress input */
@@ -832,25 +794,11 @@ input[type="text"],input[type="email"],input[type="url"],input[type="range"] {
   margin-bottom: 1em;
 }
 
-input[type="text"],input[type="email"],input[type="url"],input[type="range"] {
-  width: 100%;
-}
 #edit-descrip {
   width: 100%;
   margin-bottom: 0.6em;
 }
-.borderbox {
-  padding-right: 2.2em;
-}
-.edit-popup .error-box {
-  font-size: 14px;
-  color: rgb(214, 21, 21);
-  margin: -0.6em 0 0 1.2em;
-  display: flex;
-  align-items: center;
-  gap: 0.4em;
-  visibility: hidden;
-}
+
 .fa-circle-exclamation {   /*warning icon */
   color: #ff0000;
 }
@@ -884,10 +832,6 @@ input[type="text"],input[type="email"],input[type="url"],input[type="range"] {
   border-radius: 8px;
   font-weight: 600;
   cursor: pointer;
-}
-/*  custom dropdown for js toggle */
-.dropdown-options{
-  display: none;
 }
  .open-custom{    
   display: block;
@@ -993,17 +937,19 @@ input[type="text"],input[type="email"],input[type="url"],input[type="range"] {
   align-items: center;
   gap: 0.5em;
 }
-.status-dropdown .lines{
-  color: #134E8E;
+.status-dropdown .option.active,
+.selectAnOption.active{
+  color: white;
+  background-color: var(--highlight);
 }
 .fa-clock{
-  color: #FFA240;
+  color: #ffd000;
 }
 .fa-circle-check{
- color: #41A67E;
+ color: #00ff99;
 }
 .fa-spinner{
-  color:#1A3263;
+  color:#00fff2;
 }
 .status-dropdown .selectAnOption:hover {
   border-color: var(--highlight);
@@ -1110,6 +1056,8 @@ input[type="text"],input[type="email"],input[type="url"],input[type="range"] {
   text-overflow: ellipsis;
   position: relative;
   z-index: 1;
+  line-height: 1.5em;
+  height: 3em;
 }
 /* Task title and button */
 .content h3 {
@@ -1301,7 +1249,7 @@ input[type="text"],input[type="email"],input[type="url"],input[type="range"] {
   list-style-type: none;
   margin-bottom: 1em;
 }
-.footer-container li a,p{
+.footer-container li a, .p-line{
   text-decoration: none;
   color: var(--gray);
 }
@@ -1553,9 +1501,6 @@ footer hr {
     width: 100%;
   }
 
-  /* .edit-popup .task-type label[for="edit-feature"]{
-    padding: 0 0 0 2em;
-  } */
   .success-toast,
   .update-toast,
   .delete-toast{

@@ -70,16 +70,24 @@ function taskCounts(){    //  Update task counts for  filters
   const inprogressTasks = document.querySelectorAll('.active-task .content.inpro')
   const completedTasks = document.querySelectorAll('.active-task .content.completed')
 
-  // length count by priority
-  document.getElementById('all-count').textContent = allTasks.length
-  document.getElementById('high-count').textContent = highTasks.length
-  document.getElementById('medium-count').textContent = mediumTasks.length
-  document.getElementById('low-count').textContent = lowTasks.length
+// task counts (id-name and length) => display with () and []
+  function cardCount(id, count) {
+    document.getElementById(id).textContent = count > 0 ? `(${count})` : ""
+  }
+  function statusCount(id, count){
+    document.getElementById(id).textContent = count > 0 ? `[${count}]` : ""
+  }
+
+  // priority
+  cardCount('all-count', allTasks.length)
+  cardCount('high-count', highTasks.length)
+  cardCount('medium-count', mediumTasks.length)
+  cardCount('low-count', lowTasks.length)
 
   // length count by status
-  document.getElementById("pending-count").textContent = `[${pendingTasks.length}]`  // with []
-  document.getElementById("inprogress-count").textContent = `[${inprogressTasks.length}]`
-  document.getElementById("completed-count").textContent = `[${completedTasks.length}]`
+  statusCount("pending-count", pendingTasks.length)
+  statusCount("inprogress-count", inprogressTasks.length)
+  statusCount("completed-count", completedTasks.length)
 }
 
 /* filter by priority, status, matching count an icon  */
@@ -1006,22 +1014,18 @@ function showInterface() {
   }
 }
 
-document.addEventListener("DOMContentLoaded", () => {
-
 // default highlight color for all
 filterButtons.forEach(label => {
   if(label.getAttribute("data-filter") === "all"){
     label.classList.add("active")
   }
 })
-statusDropdown()
-pageSwitch()  // page navigation
-})
 
 /* display filter tasks  */
 function statusFilter(value){
   if (value === "default") {
     currentFilterStatus = "all"  // show all tasks
+    document.querySelector(".selectAnOption").classList.remove("active")
   }
   else if (value === "inprogress") {
     currentFilterStatus = "inpro"
@@ -1036,9 +1040,14 @@ function statusFilter(value){
 function statusDropdown(){
   const statusDropdown = document.querySelector(".status-dropdown")
   const options = statusDropdown.querySelectorAll(".option")
-
+  const selectBtn = statusDropdown.querySelector(".selectAnOption")
   options.forEach(function(option) {
     option.addEventListener("click", () => {
+
+      options.forEach(opt => opt.classList.remove("active"))  // remove color from all
+      option.classList.add("active")   // add color for selected status
+      selectBtn.classList.add("active") // apply on the UI option
+
       let value = option.dataset.value
       statusFilter(value)
     })
@@ -1092,3 +1101,5 @@ function pageSwitch() {
 window.addEventListener("hashchange", () => { 
   pageSwitch()  
 })
+statusDropdown() // custom status dropdown for filter 
+pageSwitch()  // page navigation

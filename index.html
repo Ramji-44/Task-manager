@@ -221,7 +221,7 @@
       <div class="info-row"><i class="fa-solid fa-clock"></i> <strong id="strong-time">Due Time </strong><span class="td-time"></span></div>
       <div class="info-row"><i class="fa-solid fa-stopwatch"></i> <strong id="strong-hour">Estimated Hours </strong> <span class="td-hours"></span></div>
       <div class="info-row"><i class="fa-solid fa-link"></i> <strong>Project Url </strong> <span><a class="td-url" target="_blank">Project Link</a></span></div>
-    <hr>
+
       <!-- <div class="priority-and-status"> -->
     <div class="info-row"><i class="fa-solid fa-flag"></i><strong>Priority </strong> <span class="td-priority"></span></div>
     <div class="info-row"><i class="fa-solid fa-hourglass-half"></i><strong>Status </strong><span><span class="td-status"></span></div>
@@ -230,7 +230,6 @@
       <div class="info-row progress-icon-line"><i class="fa-solid fa-chart-line"></i><strong>Progress</strong> <span class="td-progress-value"></span></div>
       <input type="range" min="0" max="100" step="1" class="td-progress-range">
     </div>
-<hr>
     <div class="info-row"><i class="fa-solid fa-layer-group"></i><strong>Task Type </strong><span class="td-tasktype"></span></div>
 
     <div class="info-row"><i class="fa-solid fa-align-left"></i><strong>Description </strong>
@@ -404,10 +403,10 @@
     </div> 
   
   <div class="nav-buttons">
-    <button data-filter="all">All(<span id="all-count">0</span>)</button>
-    <button data-filter="high">High(<span id="high-count">0</span>)</button>
-    <button data-filter="medium">Medium(<span id="medium-count">0</span>)</button>
-    <button data-filter="low">Low(<span id="low-count">0</span>)</button>
+    <button data-filter="all">All<span id="all-count"></span></button>
+    <button data-filter="high">High<span id="high-count"></span></button>
+    <button data-filter="medium">Medium<span id="medium-count"></span></button>
+    <button data-filter="low">Low<span id="low-count"></span></button>
   </div>
 </nav>
 
@@ -457,7 +456,7 @@
   <div class="footer-container">
     <div class="footer-section1">
       <h4>TaskManager</h4>
-      <p>Organize your work and life, finally.</p>
+      <p class="p-line">Organize your work and life, finally.</p>
     </div>
 
     <div class="footer-section2">
@@ -493,7 +492,7 @@
      <hr>
     <!-- copyrights footer -->
     <div class="footer-bottom">
-    <p>© <span id="copy-year"></span> TaskManager. All rights reserved. Built with <i class="fa-solid fa-heart"></i> for productivity.</p>
+    <p class="p-line">© <span id="copy-year"></span> TaskManager. All rights reserved. Built with <i class="fa-solid fa-heart"></i> for productivity.</p>
     </div>
   
 </footer>
