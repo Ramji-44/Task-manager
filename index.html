@@ -210,37 +210,31 @@
 <!-- task details of new task cards -->
 <div class="overlay"></div>
 <div class="task-details">
-   <div class="heading">
+    <span class="close-x"><button class="closeTD"><i class="fa-solid fa-xmark"></i></button></span>
     <h2 class="td-title"></h2>
-    <button class="closeTD"><i class="fa-solid fa-xmark"></i></button>
-  </div>
 
     <div class="task-info1">
-    <p><i class="fa-solid fa-circle-user"></i> <strong id="strong-name">Assignee Name </strong><span class="semi-colon">:</span> <span class="td-assignee"></span></p>
-    <p class="email-break"><i class="fa-solid fa-envelope"></i><span class="label"><strong id="strong-email">Email </strong> <span class="semi-colon">:</span></span> <span class="td-email"></span></p>
-    <p><i class="fa-solid fa-calendar-days"></i> <strong id="strong-date">Due Date </strong><span class="semi-colon">:</span> <span class="td-date"></span></p>
-    <p><i class="fa-solid fa-clock"></i> <strong id="strong-time">Due Time </strong><span class="semi-colon">:</span> <span class="td-time"></span></p>
-    <p><i class="fa-solid fa-stopwatch"></i> <strong id="strong-hour">Estimated Hours :</strong> <span class="td-hours"></span></p>
-    <p><i class="fa-solid fa-link"></i> <strong id="strong-url">Project Url </strong><span class="semi-colon">:</span> <a class="td-url">Project Link</a></p>
+
+      <div class="info-row"><i class="fa-solid fa-circle-user"></i> <strong id="strong-name">Assignee Name </strong><span class="td-assignee"></span></div>
+      <div class="info-row"><i class="fa-solid fa-envelope"></i><strong id="strong-email">Email </strong> <span class="td-email"></span></div>
+      <div class="info-row"><i class="fa-solid fa-calendar-days"></i> <strong id="strong-date">Due Date </strong> <span class="td-date"></span></div>
+      <div class="info-row"><i class="fa-solid fa-clock"></i> <strong id="strong-time">Due Time </strong><span class="td-time"></span></div>
+      <div class="info-row"><i class="fa-solid fa-stopwatch"></i> <strong id="strong-hour">Estimated Hours </strong> <span class="td-hours"></span></div>
+      <div class="info-row"><i class="fa-solid fa-link"></i> <strong>Project Url </strong> <span><a class="td-url" target="_blank">Project Link</a></span></div>
+    <hr>
+      <!-- <div class="priority-and-status"> -->
+    <div class="info-row"><i class="fa-solid fa-flag"></i><strong>Priority </strong> <span class="td-priority"></span></div>
+    <div class="info-row"><i class="fa-solid fa-hourglass-half"></i><strong>Status </strong><span><span class="td-status"></span></div>
+
+    <div class="view-progress">
+      <div class="info-row progress-icon-line"><i class="fa-solid fa-chart-line"></i><strong>Progress</strong> <span class="td-progress-value"></span></div>
+      <input type="range" min="0" max="100" step="1" class="td-progress-range">
     </div>
-    <!-- right -->
-      <div class="priorityAndstatus">
-        <span class="td-priority"></span>
-      <span class="td-status"></span>
-      </div>
+<hr>
+    <div class="info-row"><i class="fa-solid fa-layer-group"></i><strong>Task Type </strong><span class="td-tasktype"></span></div>
 
-      <div class="progress-box">
-        <strong>Progress:</strong> <span class="td-progress-value"></span>
-        <input type="range" min="0" max="100" step="1" class="td-progress-range">
-    </div>
-
-    <div class="types-box">
-    <strong>Task Type: </strong><span class="td-tasktype"></span>
-      </div>
-
-    <div class="View-Description">
-    <strong>Description: </strong>
-    <span class="td-description"></span>
+    <div class="info-row"><i class="fa-solid fa-align-left"></i><strong>Description </strong>
+    <span class="td-description"></span></div>
     </div>
   </div>
 
@@ -250,7 +244,7 @@
 
   <form id="editTaskForm" novalidate>
 
-    <span class="close-icon"><button class="edit-close" type="button"><i class= "fa-solid fa-xmark"></i></button></span>
+    <span><button class="edit-close" type="button"><i class= "fa-solid fa-xmark"></i></button></span>
     <h2>&#128221 Edit  Task</h2>
 
     <div class="borderbox field">
