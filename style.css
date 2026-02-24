@@ -790,6 +790,9 @@ input[type="text"],input[type="email"],input[type="url"],input[type="range"] {
 .edit-popup .status-type{
   padding: 0 0.3em;
 }
+.edit-popup br{
+  display: none;
+}
 .edit-popup .status-type{
   margin-bottom: 1em;
 }
@@ -1519,10 +1522,7 @@ footer hr {
   body {
     overflow-x: hidden;
   }
-  .task-type {
-    padding: 0;
-  }
-  .status-type {
+  .task-type, .status-type {
     padding: 0;
   }
   .status-type .status-label {
@@ -1558,10 +1558,6 @@ footer hr {
   .nav-buttons button {
     padding: 0.5em 0;
   }
-  #editTaskForm .status-label[for="edit-pending"],
-   #editTaskForm .status-label[for="edit-inprogress"]{
-    padding: 0 0 0 2em;
-  }
   .task-details{
     top: 55%;
     padding: 1em 0.4em;
@@ -1585,7 +1581,7 @@ footer hr {
   font-size: 0.9em;
 }
 
-  #matchingTasks{
+#matchingTasks{
     width: 150px;
     font-size: 0.9em;
   }
@@ -1602,6 +1598,13 @@ footer hr {
   }
   .delete-confirmation{
     width: 290px;
+  }
+  .task-buttons .update-button{
+    width: 55%;
+    padding: 1em 0;
+  }
+  .task-buttons .cancel-button{
+    width: 40%;
   }
 }
 /*  Tablet views for 601px to 1024px */

@@ -450,9 +450,6 @@ function validateEditInputs(){
   if(editStatusValue === "Completed" && Number(editProgress.value) !== 100){
     return throwError(editProgress, "Completed tasks must have 100% progress")
   }
-  else if(editStatusValue === "Pending" && Number(editProgress.value) !== 0){
-    return throwError(editProgress, "Pending tasks must have 0% progress");
-  }
   else if(editStatusValue === "In Progress" && Number(editProgress.value) === 100){
     return throwError(editProgress, "In Progress tasks cannot have 100% progress")
   }
