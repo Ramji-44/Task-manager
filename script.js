@@ -195,11 +195,14 @@ function validateInputs() {
   if (taskName.value.trim() === "") {
     return throwError(taskName, "Task Name is required.");
   }
-  else if(TaskNameExist(taskName.value.trim())){
+  else if(TaskNameExist(taskName.value.trim(), 0)){
     return throwError(taskName,"Task Name already exists.")
   }
   else if(!taskNameLength(taskName.value.trim())){
     return throwError(taskName,"Task Name must contain a minimum of 3 characters.")
+  }
+  else if(!NumLettersregEx(taskName.value.trim())){
+    return throwError(taskName, "only letters, numbers, and spaces are allowed")
   }
   else if(taskName.value.trim().length > 50){
     return throwError(taskName,"Task Name cannot exceed 50 characters")
@@ -279,6 +282,9 @@ else {
   if (textArea.value.trim() === "") {
     return throwError(textArea, "Task description is required");
   }
+  else if(!NumLettersregEx(textArea.value.trim())){
+    return throwError(textArea, "only letters, numbers, and spaces are allowed")
+  }
   else{
     clearError(textArea)
   }
@@ -337,8 +343,11 @@ function validateEditInputs(){
   else if(!taskNameLength(editTaskName.value.trim())){
     return throwError(editTaskName,"Task Name must contain a minimum of 3 characters.")
   }
-  else if(TaskNameExist(taskName.value.trim())){
-    return throwError(taskName,"Task Name already exists.")
+  else if(TaskNameExist(editTaskName.value.trim(), editTaskId)){
+    return throwError(editTaskName,"Task Name already exists.")
+  }
+  else if(!NumLettersregEx(editTaskName.value.trim())){
+    return throwError(editTaskName,"only letters, numbers, and spaces are allowed")
   }
   else if(editTaskName.value.trim().length > 50){
     return throwError(editTaskName,"Task Name cannot exceed 50 characters")
@@ -417,6 +426,9 @@ function validateEditInputs(){
   if (editDescription.value.trim() === "") {
     return throwError(editDescription, "Task description is required")
   }
+  else if(!NumLettersregEx(editDescription.value.trim())){
+    return throwError(editDescription, "only letters, numbers and spaces are allowed")
+  }
   else{
     clearError(editDescription)
   }
@@ -449,6 +461,9 @@ function validateEditInputs(){
   const editStatusValue =  document.querySelector('input[name="edit-status"]:checked')?.value || ""
   if(editStatusValue === "Completed" && Number(editProgress.value) !== 100){
     return throwError(editProgress, "Completed tasks must have 100% progress")
+  }
+  else if(editStatusValue === "Pending" && Number(editProgress.value) === 100){
+    return throwError(editProgress, "Pending Tasks cannot have 100% progress")
   }
   else if(editStatusValue === "In Progress" && Number(editProgress.value) === 100){
     return throwError(editProgress, "In Progress tasks cannot have 100% progress")
@@ -516,14 +531,19 @@ let taskNameLength = (name) => {
   return name.length >= 3
 }
 // Task Name repeating not allowed function 
-function TaskNameExist(taskNameValue){ 
+function TaskNameExist(taskNameValue, presentId){ 
+
   const tasks = JSON.parse(localStorage.getItem("tasks")) || [] 
   for(let i = 0; i< tasks.length; i++){ 
-    if(tasks[i].title.toLowerCase() === taskNameValue.toLowerCase()){
+    if(tasks[i].title.toLowerCase() === taskNameValue.toLowerCase() && tasks[i].id !== presentId){
        return true 
     }
   }
     return false
+}
+function NumLettersregEx(taskname){
+  const allowed = /^[a-zA-Z0-9\s]+$/
+  return allowed.test(taskname)
 }
 // Assignee Name 
 function AssigneeNameChar(name){
