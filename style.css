@@ -672,11 +672,10 @@ input[type="range"] {
 }
 .task-details .td-description {
   line-height: 1.5;
-  display: block;
   text-align: justify;
   text-indent: 2.2em;
   grid-column: 1/4;
-  overflow-x: hidden;
+  word-wrap: break-word;
 }
 /* task details overlay and popup toggle */
 .task-details,

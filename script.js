@@ -934,16 +934,6 @@ activeTaskContainer.addEventListener("click", (e) => {
   Overlay.classList.add("openTD")
 })
 
-/* delete task function */
-function deleteTask(id){
-  
-  let storedTasks = JSON.parse(localStorage.getItem("tasks")) || []
-  storedTasks = storedTasks.filter(task => Number(task.id) !== Number(id))   // remove
-
-  setTasks(storedTasks)
-  showTasks()
-}
-
 // delete confirm button - deletes 
 confirmBtn.addEventListener("click", () => {
   if(!currentId) return
@@ -954,6 +944,22 @@ confirmBtn.addEventListener("click", () => {
   deletePopup.classList.remove("showDeleteConfirm")  // popup close
   Overlay.classList.remove("openTD")
 })
+
+/* delete task function */
+function deleteTask(id){
+  
+  let storedTasks = JSON.parse(localStorage.getItem("tasks")) || []
+
+  let newTask = []
+  for(let i = 0; i< storedTasks.length; i++){
+    if(Number(storedTasks[i].id) !== Number(id)){
+      newTask.push(storedTasks[i])
+    }
+  }
+  setTasks(newTask)  
+  showTasks()
+}
+
 // cancel button -> close
 cancelDBtn.addEventListener("click", () => {
   currentId = null
